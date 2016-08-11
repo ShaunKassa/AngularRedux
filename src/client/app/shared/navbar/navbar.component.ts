@@ -6,7 +6,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
  */
 @Component({
   moduleId: module.id,
-  selector: 'sd-navbar',
+  selector: 'aethic-navbar',
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.css'],
   directives: [ROUTER_DIRECTIVES]

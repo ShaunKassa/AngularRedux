@@ -1,5 +1,12 @@
 import { APP_BASE_HREF } from '@angular/common';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
+import { provideStore, combineReducers } from '@ngrx/store';
+import { runEffects } from '@ngrx/effects';
+import { JobsEffects } from './shared/effects/index';
+import { storeLogger } from 'ngrx-store-logger';
+import { jobs } from './shared/reducers/index';
+import { JobsService } from './shared/services/index';
 import { enableProdMode } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
@@ -13,6 +20,10 @@ if ('<%= ENV %>' === 'prod') { enableProdMode(); }
  * @see https://angular.io/docs/ts/latest/api/platform-browser-dynamic/index/bootstrap-function.html
  */
 bootstrap(AppComponent, [
+  HTTP_PROVIDERS,
+  provideStore(combineReducers({jobs})),
+  runEffects(JobsEffects),
+  JobsService,
   disableDeprecatedForms(),
   provideForms(),
   APP_ROUTER_PROVIDERS,

@@ -1,11 +1,11 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 
-import { AboutRoutes } from './+about/index';
-import { HomeRoutes } from './+home/index';
+import { JobsRoutes } from './+jobs/index';
+import { PresetsRoutes } from './+presets/index';
 
 const routes: RouterConfig = [
-  ...HomeRoutes,
-  ...AboutRoutes
+  ...JobsRoutes,
+  ...PresetsRoutes
 ];
 
 export const APP_ROUTER_PROVIDERS = [

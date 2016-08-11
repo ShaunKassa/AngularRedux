@@ -1,0 +1,47 @@
+//
+// Typography
+// --------------------------------------------------
+
+
+@font-face {
+    font-family: 'Nokia Pure Text Regular';
+    font-weight: normal;
+    src: url("../assets/fonts/NokiaPureText_Rg.eot?#iefix") format("embedded-opentype"), 
+         url("../assets/fonts/NokiaPureText_Rg.woff") format("woff"), 
+         url("../assets/fonts/NokiaPureText_Rg.ttf") format("truetype"), 
+         url("../assets/fonts/NokiaPureText_Rg.svg#nokia_pure_text_regular") format("svg");
+}
+
+@font-face {
+    font-family: 'Nokia Pure Text Bold';
+    src: url("../assets/fonts/NokiaPureText_Bd.eot?#iefix") format("embedded-opentype"), 
+         url("../assets/fonts/NokiaPureText_Bd.woff") format("woff"), 
+         url("../assets/fonts/NokiaPureText_Bd.ttf") format("truetype"), 
+         url("../assets/fonts/NokiaPureText_Bd.svg#nokia_pure_text_bold") format("svg");
+}
+
+@font-face {
+    font-family: 'Nokia Pure Text Light';
+    src: url("../assets/fonts/NokiaPureText_Lt.eot?#iefix") format("embedded-opentype"), 
+         url("../assets/fonts/NokiaPureText_Lt.woff") format("woff"), 
+         url("../assets/fonts/NokiaPureText_Lt.ttf") format("truetype"), 
+         url("../assets/fonts/NokiaPureText_Lt.svg#nokia_pure_text_lighter") format("svg");
+}
+
+@font-face {
+    font-family: 'Nokia Pure Text Medium';
+    src: url("../assets/fonts/NokiaPureText_Md.eot?#iefix") format("embedded-opentype"), 
+         url("../assets/fonts/NokiaPureText_Md.woff") format("woff"), 
+         url("../assets/fonts/NokiaPureText_Md.ttf") format("truetype"), 
+         url("../assets/fonts/NokiaPureText_Md.svg#nokia_pure_text_medium") format("svg");
+}
+
+/* Reset */
+html, body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width:1024px;
+  overflow-x:scroll;
+}
+
