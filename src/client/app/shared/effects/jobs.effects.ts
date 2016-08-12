@@ -23,6 +23,6 @@ export class JobsEffects{
             .switchMap(({action}) => (
                 this._jobsService
                     .fetchJobs()
-                    .map(({data}) => ({ type: RECEIVE_JOBS, payload: {data}})
+                    .map((jobs) => ({ type: RECEIVE_JOBS, payload: {jobs}})
             )));  
 }

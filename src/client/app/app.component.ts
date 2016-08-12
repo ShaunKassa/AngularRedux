@@ -3,7 +3,7 @@ import {Store} from '@ngrx/store';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HTTP_PROVIDERS } from '@angular/http';
 
-import { Config, NameListService, NavbarComponent} from './shared/index';
+import { Config, NavbarComponent, REQUEST_JOBS} from './shared/index';
 
 /**
  * This class represents the main application component. Within the @Routes annotation is the configuration of the
@@ -12,12 +12,13 @@ import { Config, NameListService, NavbarComponent} from './shared/index';
 @Component({
   moduleId: module.id,
   selector: 'aethic-app',
-  viewProviders: [NameListService, HTTP_PROVIDERS],
+  viewProviders: [HTTP_PROVIDERS],
   templateUrl: 'app.component.html',
   directives: [ROUTER_DIRECTIVES, NavbarComponent]
 })
 export class AppComponent {
   constructor(private _store: Store<any>) {
+    this._store.dispatch({type: REQUEST_JOBS});
     console.log('Environment config', Config);
   }
 }

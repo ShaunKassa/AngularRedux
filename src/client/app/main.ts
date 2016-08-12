@@ -5,8 +5,7 @@ import { provideStore, combineReducers } from '@ngrx/store';
 import { runEffects } from '@ngrx/effects';
 import { JobsEffects } from './shared/effects/index';
 import { storeLogger } from 'ngrx-store-logger';
-import { jobs } from './shared/reducers/index';
-import { JobsService } from './shared/services/index';
+import { jobs, JobsService } from './shared/index';
 import { enableProdMode } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 

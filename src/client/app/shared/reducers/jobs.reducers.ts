@@ -36,7 +36,7 @@ export const jobs : ActionReducer<AethicJobs> = (state: AethicJobs = {
             return Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false,
-                jobs: action.payload.data.children((child: any) => child.data),
+                jobs: action.payload.jobs,
                 lastUpdated: Date.now()
             });
         default:
