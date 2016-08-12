@@ -5,7 +5,7 @@ import { provideStore, combineReducers } from '@ngrx/store';
 import { runEffects } from '@ngrx/effects';
 import { JobsEffects } from './shared/effects/index';
 import { storeLogger } from 'ngrx-store-logger';
-import { jobs, JobsService } from './shared/index';
+import { jobs, jobTypes, JobsService } from './shared/index';
 import { enableProdMode } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
@@ -20,7 +20,7 @@ if ('<%= ENV %>' === 'prod') { enableProdMode(); }
  */
 bootstrap(AppComponent, [
   HTTP_PROVIDERS,
-  provideStore(combineReducers({jobs})),
+  provideStore(combineReducers({jobs, jobTypes})),
   runEffects(JobsEffects),
   JobsService,
   disableDeprecatedForms(),

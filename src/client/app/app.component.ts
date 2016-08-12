@@ -3,7 +3,7 @@ import {Store} from '@ngrx/store';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HTTP_PROVIDERS } from '@angular/http';
 
-import { Config, NavbarComponent, REQUEST_JOBS} from './shared/index';
+import { Config, NavbarComponent, REQUEST_JOBS, REQUEST_JOBTYPES} from './shared/index';
 
 /**
  * This class represents the main application component. Within the @Routes annotation is the configuration of the
@@ -19,6 +19,7 @@ import { Config, NavbarComponent, REQUEST_JOBS} from './shared/index';
 export class AppComponent {
   constructor(private _store: Store<any>) {
     this._store.dispatch({type: REQUEST_JOBS});
+    this._store.dispatch({type: REQUEST_JOBTYPES});
     console.log('Environment config', Config);
   }
 }

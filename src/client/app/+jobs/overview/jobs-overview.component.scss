@@ -1,0 +1,136 @@
+$colorWhite :#FFFFFF;
+$progressColor1:#DDE5E9;
+$progressColor2:#273142;
+$fontConsolas: Consolas;
+
+.overview {
+    background-color:$colorWhite;
+    width:948px;
+    position:relative;
+    top:85px;
+    z-index:1;
+    padding:{
+        left:38px;
+        right:38px;
+    }
+    margin: {
+        top:54px;
+        left:auto;
+        right:auto;
+    }
+    .descrption {
+      font-family:$fontConsolas;
+      font-style:italic;
+      font-size:16px;
+      color:#273142;
+      text-align:left;
+      height:24px;
+      margin:0;
+      border-bottom: 1px solid #BEC8D2;
+      line-height:24px;
+        span{
+          display:inline-block;
+          font-size:11px;
+          font-weight:normal;
+          color:#BEC8D2;
+          text-align:right;
+          margin-left:10px;
+          margin-right:3px;
+          width:15px;
+          height:24px;
+        } 
+    }
+
+}
+
+.instances {
+        display:flex;
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content: flex-start;
+        margin:24px 24px;
+        margin-bottom:48px;
+        .instance { 
+            position: relative;
+            height:180px;
+            width:164px;
+            margin-bottom:24px;
+            margin-right:8px;
+            margin-left:8px;
+            background-color: #EBF0F2;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            box-shadow: 0px 1px rgba(0,0,0,0.5);
+            .instanceName {
+                border:none;
+                text-align:center;
+                word-wrap:break-word;
+                color:#273142;
+                padding:0;
+                height: 15px;
+                width:144px;
+                margin: {
+                    top:5px;
+                    bottom:20px;
+                    right:10px;
+                    left:10px;
+                }
+                font: {
+                    size:13px;
+                    style:normal;
+                    family:$fontConsolas;
+                }
+            }
+            .chart {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100px;
+                width: 100px;
+
+                svg {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100px;
+                    width: 100px;
+                    transform: rotate(-90deg);
+                }
+
+                .percentage {
+                    color: #273142;
+                    padding: 0;
+                    margin: 0;
+                    font: {
+                        size: 24px;
+                        style: italic;
+                        family: $fontConsolas;
+                    }
+
+                    > span {
+                        font: {
+                            size: 13px;
+                            style: italic;
+                            family: $fontConsolas;
+                        }
+                    }
+                }
+            }
+            .timeElapsed {
+               font-family:Consolas;
+               font-size:13px;
+               font-style:Italic;
+               color:#BEC8D2;
+            }
+        }
+}
+
+.instance:hover {
+                outline: 1px solid #BEC8D2;
+                box-shadow: 0px 2px rgba(0,0,0,0.5);
+}
+.instance:active {
+                box-shadow: inset 0px 0px 1px #BEC8D2;
+}

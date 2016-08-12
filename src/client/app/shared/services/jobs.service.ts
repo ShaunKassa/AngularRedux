@@ -65,7 +65,11 @@ export class JobsService {
           };
       }).toArray();
   }
-
+  
+  fetchJobTypes(): Observable<any> {
+      return this.http.get(this.endpoint + 'Jobtypes')
+          .map(res => res.json());
+  }
 
   private generatePercentages(job: any) {
       let totalCount = job.children.length;

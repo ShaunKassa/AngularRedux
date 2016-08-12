@@ -7,7 +7,9 @@ import {Subject} from "rxjs/Subject";
 import {JobsService} from "../services/index";
 import {
     REQUEST_JOBS,
-    RECEIVE_JOBS
+    RECEIVE_JOBS,
+    REQUEST_JOBTYPES,
+    RECEIVE_JOBTYPES
 } from "../reducers/index";
 
 
@@ -19,10 +21,18 @@ export class JobsEffects{
     ){}
     
     @Effect() fetchJobs$ = this._updates$
-            .whenAction(REQUEST_JOBS) 
-            .switchMap(({action}) => (
-                this._jobsService
+        .whenAction(REQUEST_JOBS) 
+        .switchMap(({action}) => (
+                    this._jobsService
                     .fetchJobs()
-                    .map((jobs) => ({ type: RECEIVE_JOBS, payload: {jobs}})
-            )));  
+                    .map((jobs) => ({ type: RECEIVE_JOBS, payload: {jobs}}))
+                    ));  
+
+    @Effect() fetchJobTypes$ = this._updates$
+        .whenAction(REQUEST_JOBTYPES)
+        .switchMap(({action}) => (
+                    this._jobsService
+                    .fetchJobTypes()
+                    .map((jobTypes) => ({ type: RECEIVE_JOBTYPES, payload: {jobTypes}}))
+                    ));
 }
