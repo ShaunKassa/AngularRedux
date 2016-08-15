@@ -1,35 +1,34 @@
 import '@ngrx/core/add/operator/select';
 import { Action, ActionReducer } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { JobsActions } from '../actions/index';
+import { JobTypesActions } from '../actions/index';
 
-export interface JobsState {
+export interface JobTypesState {
     loaded: boolean,
     loading: boolean,
-    jobs: Array<any>,
+    jobTypes: Array<any>,
     lastUpdated?: Date
 }
 
-const initialState: JobsState = {
+const initialState: JobTypesState = {
     loaded: false,
     loading: false,
-    jobs: []
+    jobTypes: []
 };
 
-export default (state: JobsState = initialState, action: Action) => {
+export default (state: JobTypesState = initialState, action: Action) => {
         switch(action.type) {
-            case JobsActions.REQUEST_JOBS:
+            case JobTypesActions.REQUEST_JOBTYPES:
                 return Object.assign({}, state, {
                     loading: true
                 })
-            case JobsActions.RECEIVE_JOBS:
+            case JobTypesActions.RECEIVE_JOBTYPES:
                 return Object.assign({}, state, {
                     loaded: true,
                     loading: false,
-                    jobs: action.payload
+                    jobTypes: action.payload
                 });
             default:
                 return state
         }
 };
-

@@ -326,6 +326,8 @@ export class SeedConfig {
       '@ngrx/core': `node_modules/@ngrx/core/index.js`,
       '@ngrx/store': `node_modules/@ngrx/store/index.js`,
       '@ngrx/effects': `node_modules/@ngrx/effects/index.js`,
+      '@ngrx/store-devtools': `node_modules/@ngrx/store-devtools/index.js`,
+      '@ngrx/store-log-monitor': `node_modules/@ngrx/store-log-monitor/index.js`,
       'rxjs/*': `node_modules/rxjs/*`,
       'app/*': `/app/*`,
       '*': `node_modules/*`
@@ -399,6 +401,14 @@ export class SeedConfig {
         defaultExtension: 'js'
       },
       '@ngrx/effects': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      '@ngrx/store-devtools': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      '@ngrx/store-log-monitor': {
         main: 'index.js',
         defaultExtension: 'js'
       },

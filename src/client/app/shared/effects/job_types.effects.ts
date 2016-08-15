@@ -5,22 +5,22 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/switchMap";
 import {Subject} from "rxjs/Subject";
 import {JobsService} from "../services/index";
-import {JobsActions} from '../actions/index';
+import { JobTypesActions } from '../actions/index';
 
 
 @Injectable()
-export class JobsEffects{
+export class JobTypesEffects{
     constructor(
         private _updates$: StateUpdates<any>,
         private _jobsService : JobsService,
-        private jobsActions: JobsActions
+        private jobTypesActions: JobTypesActions
     ){}
     
-    @Effect() fetchJobs$ = this._updates$
-        .whenAction(JobsActions.REQUEST_JOBS) 
+    @Effect() fetchJobTypes$ = this._updates$
+        .whenAction(JobTypesActions.REQUEST_JOBTYPES)
         .switchMap(({action}) => (
                     this._jobsService
-                    .fetchJobs()
-                    .map((jobs) => this.jobsActions.receiveJobs(jobs))
-                    ));  
+                    .fetchJobTypes()
+                    .map((jobTypes) => this.jobTypesActions.receiveJobTypes(jobTypes))
+                    ));
 }

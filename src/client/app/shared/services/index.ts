@@ -1,4 +1,9 @@
-/**
- * This barrel file provides the export for the shared JobsService.
- */
-export * from './jobs.service';
+import { JobsService } from './jobs.service';
+
+export {
+    JobsService
+};
+
+export default [
+    JobsService
+];

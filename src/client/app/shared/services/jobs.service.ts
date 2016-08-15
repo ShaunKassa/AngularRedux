@@ -31,7 +31,7 @@ export class JobsService {
   fetchJobs(): Observable<any> {
       let that = this;
       var cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - 5);
+      cutoffDate.setDate(cutoffDate.getDate() - 10);
       //
       return this.http.get(this.endpoint +
               'Jobs?filter[where][and][0][parentjobid]=null&filter[where][and][1][createDate][gt]=' + cutoffDate.toISOString())
