@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { JobsComponent } from './jobs.component';
 import { JobsOverviewComponent } from './overview/jobs-overview.component';
@@ -9,7 +10,7 @@ import { routing } from './jobs.routing';
 
 
 @NgModule({
-    imports: [ CommonModule, routing ],
+    imports: [ CommonModule, routing, FormsModule, ReactiveFormsModule ],
     declarations: [JobsComponent, JobsOverviewComponent, JobsDetailviewComponent, JobsCreateComponent],
     exports: [JobsComponent]
 })

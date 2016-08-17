@@ -1,10 +1,10 @@
 <div class="overview">
     <div>
-        <div class ="mainContainer" *ngFor="#group of jobGroups | async; #i=index">
+        <div class ="mainContainer" *ngFor="let group of jobGroups | async; let i=index">
             <div class="descrption" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
             <div class="descrption" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
             <div class="instances">
-                <div class="instance" *ngFor="#runningJob of group.jobs" (click)="gotoDetail(runningJob)" >
+                <div class="instance" *ngFor="let runningJob of group.jobs" (click)="gotoDetail(runningJob)" >
                     <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                     <div class="chart">
                         <svg viewbox="0 0 100 100">

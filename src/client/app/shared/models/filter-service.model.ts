@@ -1,0 +1,19 @@
+export interface FilterServiceModel {
+        attributeTypes:string[],
+        provider:string[],
+        filterList:Object[],
+        preset:string,
+        instanceLabel:string,
+        publicationDate:Date,
+        areaOfInterest:string,
+        input:string,
+        driveStartDate:Date,
+        driveEndDate:Date,
+        weight:string,
+        qualityFilterLow:number,
+        qualityFilterMedium:number,
+        qualityFilterHigh:number,
+        qualityTreshold:string,
+        saveAsPreset:boolean,
+        presetLable:string
+}

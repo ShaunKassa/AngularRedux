@@ -7,6 +7,8 @@
   <title><%= APP_TITLE %></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.19.min.js"></script>
   <!-- inject:css -->
   <!-- endinject -->
 </head>
@@ -17,6 +19,9 @@
   <script>
   // Fixes undefined module function in SystemJS bundle
   function module() {}
+  //AWS config 
+   AWS.config.update({accessKeyId: 'AKIAJLF7QRKUPB2C7XUA', secretAccessKey: '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'});
+   AWS.config.region = 'us-east-1';
   </script>
 
   <!-- shims:js -->
