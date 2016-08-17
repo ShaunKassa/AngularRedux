@@ -26,4 +26,26 @@ export class JobsActions {
       payload: jobs
     };
   }
+
+  static SAVE_JOB = '[Job] Save a job';
+  saveJob(job: any): Action {
+      return {
+          type: JobsActions.SAVE_JOB,
+          payload: job
+      }
+  }
+
+  static SAVE_JOB_SUCCESS = '[Job] Save job success';
+  saveJobSuccess(): Action {
+      return {
+          type: JobsActions.SAVE_JOB_SUCCESS
+      }
+  }
+
+  static SAVE_JOB_FAILURE = '[Job] Save job failure';
+  saveJobFailure(): Action {
+      return {
+          type: JobsActions.SAVE_JOB_FAILURE
+      }
+  }
 }

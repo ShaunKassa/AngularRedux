@@ -1,11 +1,17 @@
 {
   "dev": {
-    "API": "https://demo.com"
+    "API": "https://demo.com",
+    "AWS_ACCESS_KEY_ID": "AKIAJLF7QRKUPB2C7XUA",
+    "AWS_SECRET_ACCESS_KEY":"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"
   },
   "prod": {
-    "API": "https://prod.com"
+    "API": "https://prod.com",
+    "AWS_ACCESS_KEY_ID": "AKIAJLF7QRKUPB2C7XUA",
+    "AWS_SECRET_ACCESS_KEY":"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"
   },
   "staging": {
-    "API": "https://staging.com"
+    "API": "https://staging.com",
+    "AWS_ACCESS_KEY_ID": "AKIAJLF7QRKUPB2C7XUA",
+    "AWS_SECRET_ACCESS_KEY":"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"
   }
 }
