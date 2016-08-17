@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { SharedModule } from '../shared/shared.module';
 
 import { JobsComponent } from './jobs.component';
 import { JobsOverviewComponent } from './overview/jobs-overview.component';
@@ -9,7 +10,7 @@ import { routing } from './jobs.routing';
 
 
 @NgModule({
-    imports: [ CommonModule, routing ],
+    imports: [ SharedModule, routing ],
     declarations: [JobsComponent, JobsOverviewComponent, JobsDetailviewComponent, JobsCreateComponent],
     exports: [JobsComponent]
 })

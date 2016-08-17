@@ -1,6 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/index';
 
 /* Store related imports */
@@ -16,9 +18,9 @@ import actions from './actions/index';
 import services from './services/index';
 
 @NgModule({
-    imports: [ CommonModule ],
+    imports: [ CommonModule, HttpModule ],
     declarations: [ NavbarComponent ],
-    exports: [ NavbarComponent ],
+    exports: [ NavbarComponent, CommonModule, FormsModule ],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {
@@ -29,6 +31,7 @@ export class SharedModule {
                 provide: APP_BASE_HREF,
                 useValue: '<%= APP_BASE %>'
             },
+            provideStore(reducer), 
             instrumentStore({
               monitor: useLogMonitor({
                   // Default log monitor options
@@ -38,7 +41,6 @@ export class SharedModule {
               })
             }),
             services, 
-            provideStore(reducer), 
             runEffects(effects), 
             actions ]
         };
