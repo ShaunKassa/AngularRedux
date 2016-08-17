@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 
 /**
  * This class represents the navigation bar component.
@@ -8,7 +7,6 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
   moduleId: module.id,
   selector: 'aethic-navbar',
   templateUrl: 'navbar.component.html',
-  styleUrls: ['navbar.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  styleUrls: ['navbar.component.css']
 })
 export class NavbarComponent {}

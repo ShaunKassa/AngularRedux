@@ -1,11 +1,11 @@
-import { RouterConfig } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { JobsComponent } from './index';
 import { JobsOverviewComponent } from './overview/index';
 import { JobsDetailviewComponent } from './detailview/index';
 import { JobsCreateComponent } from './create/index';
 
-export const JobsRoutes: RouterConfig = [
+const routes: Routes = [
   {
       path: '',
       redirectTo: '/jobs/overview',
@@ -21,3 +21,5 @@ export const JobsRoutes: RouterConfig = [
     ]
   }
 ];
+
+export const routing = RouterModule.forChild(routes);
