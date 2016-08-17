@@ -18,7 +18,11 @@ import { SharedModule } from './shared/shared.module';
         routing, 
         SharedModule.forRoot() 
     ],
-    declarations: [ AppComponent ],
-    bootstrap: [ AppComponent ]
+    declarations: [ 
+        AppComponent 
+    ],
+    bootstrap: [ 
+        AppComponent 
+    ]
 })
 export class AppModule {}

@@ -1,0 +1,357 @@
+<div class="createContainer">
+
+    <div class="header">
+        <div class="title">Add a new job</div>
+        <div class="cancel" [routerLink]="['overview']"  >Finish</div> 
+    </div>
+
+       <div class="content">
+
+             <div class="leftOptions">
+                 <div class="title">Select a job type</div>
+                 <ul >
+                     <li  *ngFor="let jobType of jobTypesList; let i=index" class="items" (click) = "SelectJob(jobType, $event)">
+                         <span>0{{i+1}}</span>{{jobType}}
+                     </li>
+                 </ul>
+             </div>
+
+
+             <div class="switch" [ngSwitch]="selectedJobType" >
+
+<!-- Start of Depth Generation Template -->
+                <form [formGroup] = "depthGenerationForm">
+                     <div class="rightOptions"  *ngSwitchCase="'Depth Generation'">
+                        <div class="title">Fill in the blanks</div>
+                        <div class= "rightContent"> 
+
+                           <div class="label" >City</div>
+                           <span class="dot">•</span>
+ 						   <input  type="text" placeholder="Enter city name" formControlName="city">
+
+                           <div class="label">Publication Date</div>
+                           <span class="dot">•</span>
+                           <input  type="date" class="date" formControlName="publicationDate">
+
+                           <div class="label">Validation Type</div>
+                           <span class="dot">•</span><select  class="select" formControlName="validationType">
+                             <option selected>validatePanoCount</option>
+                           </select>
+
+                           <div class="label">Submission Type</div>
+                           <span class="dot">•</span><select class="select" formControlName="submissionType">
+                             <option value="" selected disabled>Select</option>
+                             <option >full</option>
+                             <option >noaissubmit</option>
+                           </select>
+
+                           <div class="label">Input Type</div>
+                           <span class="dot">•</span><select class="select" formControlName="inputType">
+                             <option selected>drive</option>
+                           </select>
+
+                           <div id="input" class="label">Input</div>
+                           <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
+                        </div> 
+                           <button type="submit" 
+                                   [disabled]="false" 
+                                   [disabled]="fasle" 
+                                   [disabled]="false" >Submit</button>
+
+                 </div>
+             </form>
+<!-- End of Depth Generation Template -->
+
+
+<!-- Start of CSV Template -->
+                <form [formGroup] ="coverageCsvForm">
+                     <div class="rightOptions" *ngSwitchCase="'Coverage CSV Generation'" >
+                       <div class="title">Fill in the blanks</div>
+                        <div class= "rightContent"> 
+
+                           <div class="label">City</div>
+                           <span class="dot">•</span>
+						   <input  type="text" placeholder="Enter city name" class="form-control" formControlName="city">
+
+                           <div class="label">Publication Date</div>
+                           <span class="dot">•</span>
+						   <input  type="date"  formControlName="publicationDate" >
+
+                           <div  class="label">Environment</div>
+                           <span class="dot">•</span>
+						   <select  class="select" formControlName="environment" >
+                             <option value="" selected disabled>Select</option>
+                             <option >dev</option>
+                             <option >stage</option>
+                             <option >stable</option>
+                           </select>
+
+                           <div class="label">Input Type</div>
+                           <span class="dot">•</span>
+                           <select class="select" formControlName="inputType" >
+                             <option selected>mosquads</option>
+                           </select>
+
+                           <div id="input" class="label">Input</div>
+                           <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
+                        </div>
+                           <button type="submit">Submit</button>
+                     </div>
+               </form>
+<!-- End of CSV Template -->
+
+
+
+<!-- Start of PostIngest Template -->
+                <form [formGroup] ="postIngestForm">
+                     <div class="rightOptions" *ngSwitchCase="'PostIngest Depth Statistics'" >
+
+                           <div class="title">Fill in the blanks</div>
+
+                        <div class= "rightContent"> 
+
+                           <div class="label">Publication Date</div>
+                           <span class="dot">•</span>
+                           <input  type="date" formControlName="publicationDate">
+
+                           <div  class="label">Environment</div>
+                           <span class="dot">•</span>
+                           <select class="select" formControlName="environment">
+                             <option value="" selected disabled>Select</option>
+                             <option >dev</option>
+                             <option >stage</option>
+                             <option >stable</option>
+                           </select>
+
+                           <div id="input" class="label">Input</div>
+                           <textarea placeholder="Enter input here" formControlName="input">  </textarea>            
+                        </div>
+                           <button type="submit">Submit</button>
+                     </div>
+               </form>
+<!-- End of PostIngest Template -->
+
+
+
+<!-- Start of PreIngest Template -->
+                <form [formGroup] ="preIngestForm">
+                      <div class="rightOptions" *ngSwitchCase="'PreIngest'" >
+
+                        <div class="title">Fill in the blanks</div>
+
+                        <div class= "rightContent"> 
+
+                           <div class="label">City</div>
+                           <span class="dot">•</span>
+						   <input  type="text" placeholder="Enter city name" class="form-control" formControlName="city">
+
+                           <div class="label">Publication Date</div>
+                           <span class="dot">•</span>
+                           <input  type="date"  formControlName="publicationDate">
+
+                           <div  class="label">Environment</div>
+                           <span class="dot">•</span>
+                           <select  class="select" formControlName="environment">
+                             <option selected >Dev</option>
+                           </select>
+
+                           <div class="label">Input Type</div>
+                           <span class="dot">•</span>
+                           <select class="select" formControlName="inputType">
+                             <option selected>mosquads</option>
+                           </select>
+
+                           <div id="input" class="label">Input</div>
+                           <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
+                           <div class="message">(A CoverageCSV will automatically be generated upon submission.)</div>
+                        </div>
+                           <button type="submit">Submit</button>
+                     </div>
+               </form>
+<!-- End of PreIngest Template -->
+
+
+
+<!-- Start of CSV generation Template -->
+                <form [formGroup] ="filterServiceForm">
+                      <div class="rightOptions" *ngSwitchCase="'CSV generation'" >
+
+                        <div class="title">Fill in the blanks</div>
+
+                        <div class= "rightContent"> 
+                               <div class="label">Preset</div>
+                               <span class="dot">•</span>
+                               <select class="select">
+                                 <option value="" selected disabled>none</option>
+                               </select>
+
+                               <div class="label">Instance label</div>
+                               <span class="dot">•</span>
+                               <input  type="text" placeholder="Enter label" class="form-control" >
+
+                               <div class="label">Publication Date</div>
+                               <span class="dot">•</span>
+                               <input  type="date">
+
+                               <div class="label">Area of interest</div>
+                                    <div class="areaCheckboxs">
+                                          <div class="dot">•</div>
+
+                                                <div class="areaLabel">Bounding Box</div>
+                                                <div class="areaCheckbox">
+                                                       <input  type="radio" name="areaInterest"  checked  class="filterRadio">
+                                                       <label for="boundbox"></label>
+                                                </div>
+
+                                                <div class="areaLabel">Tile Coordinates</div>
+                                                <div class="areaCheckbox">
+                                                       <input  type="radio" name="areaInterest" class="filterRadio">
+                                                       <label for="tileCoord"></label>
+                                                </div>
+
+                                                <div class="areaLabel">Mosquads</div>
+                                                <div class="areaCheckbox">
+                                                       <input  type="radio" name="areaInterest" class="filterRadio">
+                                                       <label for="mosquads"></label>
+                                                </div>
+                                    </div>
+
+
+                               <textarea class= "CSVtextarea" rows="144"  placeholder="Enter input here" required >  </textarea>            
+
+                               <div class="label">Drive type</div>
+                                   <div class="driveCheckboxs" > 
+                                         <div class="dot">•</div>
+
+                                         <div class="driveLabel">First Gen</div>
+                                            <div class="driveCheckbox"> 
+                                                <input  type="checkbox" name="driveType"  checked  class="filterCheckbox" >
+                                                <label for="fistGen"></label>i
+                                            </div>
+                                         <div class="driveLabel">TRUE 1.O</div>
+                                                <div class="driveCheckbox">
+                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" >
+                                                    <label for="true1"></label>
+                                                </div>
+                                         <div class="driveLabel">HERE TRUE</div>
+                                                <div class="driveCheckbox"> 
+                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" >
+                                                    <label for="hereTrue"></label>
+                                                </div>
+                                   </div> 
+
+                               <div class="driveDates">
+                                   <div class = "startDate">
+                                         <div class="label">Drive Start date</div>
+                                         <span class="dot">•</span>
+                                         <input  type="date" />
+                                   </div>
+
+                                   <div class = "endDate">
+                                         <div class="label">Drive End date</div>
+                                         <span class="dot">•</span>
+                                         <input type="date" required />
+                                   </div>
+                               </div>
+
+                               <div class="label">Quality filters</div>
+                               <table class="qualityFilter">
+                                   <tr>
+                                       <th class = "provider">provider</th>
+                                       <th class = "attribute">attribute</th>
+                                       <th class = "quality">quality prioritisation</th>
+                                       <th class = "weight">weight</th>
+                                       <th class = "delete"></th>
+                                   </tr>
+
+                                   <tr>
+                                       <td></td>
+                                       <td></td>
+                                       <td class="secondRow">
+                                           <div class="low">low</div>
+                                           <div class="medium">medium</div>
+                                           <div class="high">high</div>
+                                       </td>
+                                       <td>
+                                           <div class="weightLabel">in %</div>
+                                       </td>
+                                       <td></td>
+                                   </tr>
+
+                                   <tr *ngFor="let item of filterList; let idx = index"> 
+                                       <td>
+                                          <select class="providerSelect"  required >
+                                                  <option value="" selected disabled>Select</option>
+                                                  <option >RCP</option>
+                                         </select>
+                                       </td>
+                                       <td>
+                                          <select class="attributeSelect"  required >
+                                                  <option value="" selected disabled>Select</option>
+                                                  <option *ngFor="let attributeType of attributeTypes" >{{attributeType}}</option>
+                                         </select>
+                                       </td>
+                                       <td>
+                                           <div>
+                                               <!-- Start of Slider Component-->
+
+                                               <ng2-slider
+                                                         #range
+                                                         min="0"
+                                                         max="100"
+                                                         startValue="33"
+                                                         midValue="34"
+                                                         middleValue="67"
+                                                         endValue="33"
+                                                         (onRangeChanged)="rangeValueChanged($event, 'range-1-start', 'range_1_end')">
+                                                </ng2-slider>
+                                                <!-- End of Slider Component -->
+                                           </div>
+                                       </td>
+                                       <td>
+                                       </td>
+                                       <td >
+                                           <div class="deleteFilter" (click) = "deleteFilter(idx)"></div>
+                                       </td>
+                                   </tr> 
+                               </table>
+                               
+                       <div class="addFilter">
+                            <div class="addButton" (click) = "addFilter(true)"></div>
+                            <div class="addMessage">add a new quality filter</div>
+                       </div>
+
+                       <div class="label">Quality threshold</div>
+                           <span class="dot">•</span>
+                           <input  type="text" placeholder="Enter minimum quality requirement (in %)" class="form-control">
+
+                           <div class="preset" >
+                               <div class="presetLabel">Save as preset</div>
+                               <div class="presetCheckbox">
+                                   <input type="checkbox" class="presetFilter">i
+                                   <label for="persetFilter"></label><br/>
+                               </div>
+                           </div>
+                           
+                            <span class="dot">•</span>
+                            <input  type="text" placeholder="Enter preset label" class="form-control">
+                       </div>
+                       
+                       <button type="submit" >Submit</button>
+
+                    </div>
+               </form>
+<!-- End of CSV generation Template -->
+
+
+
+<!-- Start Default -->
+                     <div class="rightOptions"  *ngSwitchCase="'Default'">
+                           <div class="title">Fill in the blanks</div>
+                           <div class="default">Pick a job from the list to proceed</div>
+                     </div>
+<!-- End Default -->
+
+            </div>
+         </div>
+</div>

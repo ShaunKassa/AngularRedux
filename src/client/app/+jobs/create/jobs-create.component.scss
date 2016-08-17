@@ -1,0 +1,570 @@
+.alert {
+  width:376px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  border-radius: 1px;
+  margin-left:16px;
+  font-family:consolas;
+  font-style:Italic;
+  font-size:12px;
+}
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  }
+.createContainer {
+   position:fixed;
+   top:64px;
+   left:0px;
+   height:100%;
+   width:100%;
+   z-index:4;
+}
+.header {
+  height:40px;
+  background-color:#010B1E;
+  padding-left:32px;
+  padding-right:32px;
+  display:flex;
+  flex-direction:row;
+  .title {
+      padding:0px;
+      margin:0px;
+      color:#FFFFFF;
+      font-size:18px;
+      font-family:'Nokia Pure Text Light';
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .cancel {
+      padding:0px;
+      margin:0px;
+      margin-left:auto;
+      width:110px;
+      height:24px;
+      background-color:#DDE5E9;
+      font-family:'Nokia Pure Text Regular';
+      border-radius:2px;
+      color:#273142;
+      margin-top:auto;
+      margin-bottom:auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor:pointer;
+  }
+}
+
+.content {
+    background-color:#DDE5E9;
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:row;
+    .leftOptions {
+        width:314px;
+        height:520px;
+        margin-left:auto;
+        margin-right:0px;
+        margin-bottom:50px;
+        margin-top:50px;
+        border:1px solid #BEC8D2;
+        border-right:2px solid #BEC8D2;
+        background-color:#EBF0F2;
+        .highlight {
+            background-color:#FFFFFF;
+        }
+        .title {
+			text-align:center;
+            font-color:#273142;
+            font-size:16px;
+            font-family:consolas;
+            font-style:Italic;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+        ul {
+            list-style-type:none;
+            padding:0px;
+            margin:0px;
+            display:block;
+             
+            li {
+                height:24px;
+                width:274px;
+                font-family:consolas;
+                color:#273142;
+                font-style:Italic;
+                font-size:16px;
+                margin:none;
+                padding:none;
+                padding-right:20px;
+                padding-left:20px;
+                padding-top:12px;
+                padding-bottom:12px;
+                line-height:27px;
+                span {
+                   display:inline-block;
+                   width:16px;
+                   margin-right:2px;
+                   margin-left:0px;
+                   font-family:consolas;
+                   color:#BEC8D2;
+                   font-size:11px;
+                   font-style:Italic;
+               }
+           }
+        }
+    }
+    .switch {
+       margin-left:0px;
+       margin-right:auto;
+       margin-bottom:50px;
+       margin-top:50px;
+       padding:0px;
+       .label {
+           font-family:consolas;
+           font-style:Italic;
+           font-size:16px;
+           color:#273142;
+           height:24px;
+           width:376px;
+           line-height:24px;
+           padding-left:15px;
+           margin-top:24px;
+       }       
+       .rightOptions {
+           width:644px;
+           height:520px;
+           margin:0px;
+           background-color:#EBF0F2;
+           border:1px solid #BEC8D2;
+           padding-left:54px;
+
+           .default {
+	           text-align:center;
+               font-family:consolas;
+               font-style:Italic;
+               margin-top:200px;
+               font-size:13px;
+           }
+           .title {
+	           text-align:center;
+               font-color:#273142;
+               font-size:16px;
+               font-family:consolas;
+               font-style:Italic;
+               margin-top:20px;
+           }
+           .rightContent {
+                height:437px;
+                overflow-y:scroll;
+                  input[type=text] {
+                      width:376px;
+                      height:24px;
+                      border:none;
+                      outline:none;
+                      background-color:#EBF0F2;
+                      font-style:Italic;
+                      font-size:13px;
+                      font-family:consolas;
+                      color:#00C9FF;
+                  }
+                  input[type=date] {
+                      height:24px;
+                      border:none;
+                      outline:none;
+                      background-color:#EBF0F2;
+                      font-style:Italic;
+                      font-size:13px;
+                      font-family:consolas;
+                      color:#BEC8D2;
+                  }
+                  .dot {
+                      display:block-inline;
+                      width:16px;
+                      color:#BEC8D2;
+                      margin-right:2px;
+                      margin-left:15px;
+                  }
+                  span {
+                      margin-left:10px;
+                      margin-right:20px;
+                      font-family:consolas;
+                      font-style:Italic;
+                  }
+                  .date {
+                      width:376px;
+                      height:24px;
+                      font-family:consolas;
+                      font-size:13px;
+                      font-style:Italic;
+                      color:#BEC8D2;
+                      border:none;
+                      background-color:#EBF0F2;
+
+                  }
+                   .select {
+                      width:376px;
+                      height:24px;
+                      font-family:consolas;
+                      font-size:13px;
+                      font-style:Italic;
+                      border:none;
+                      background-color:#EBF0F2;
+                      color:#BEC8D2;
+                  }
+                  textarea {
+                      width:376px;
+                      height:94px;
+                      font-size:13px;
+                      font-style:Italic;
+                      font-family:consolas;
+                      font-size:13px;
+                      background-color:#DDE5E9;
+                      margin-left:15px;
+                      padding-left:5px;
+                      padding-right:5px;
+                      padding-top:10px;
+                      padding-bottom:10px;
+                  }
+                  .message {
+                      text-align:center;
+                      font-size:12px;
+                      font-family:consolas;
+                      font-style:Italic;
+                      border-bottom:10px;
+                  }          
+           }
+           button {
+               width:98px;
+               height:24px;
+               border-radius:2px;
+               font-family:'Nokia Pure Text Regular';
+               background-color:#00C9FF;
+               color:#FFFFFF;
+               display:block;
+               margin-left:auto;
+               margin-right:15px;
+               margin-top:10px;
+               border:0px;
+           }
+
+       }
+   }
+}
+button:disabled {
+    opacity:0.3;
+}
+
+.areaCheckboxs {
+    display:flex;
+    flex-direction:row;
+    .dot {
+        height:24px;
+        vertical-align:middle;
+        line-height:24px;
+    }
+    .areaLabel {
+        color:#BEC8D2;
+        margin-right:10px;
+        font-style:Italic;
+        font-family:Consolas;
+        font-size:13px;
+        height:24px;
+        vertical-align:middle;
+        line-height:24px;
+    }
+    .areaCheckbox {
+        width:24px;
+        height:24px;
+    }
+
+}
+
+.driveCheckboxs {
+    display:flex;
+    flex-direction:row;
+    .dot {
+        height:24px;
+        vertical-align:middle;
+        line-height:24px;
+    }
+    .driveLabel {
+        color:#BEC8D2;
+        margin-right:10px;
+        font-style:Italic;
+        font-family:Consolas;
+        font-size:13px;
+        height:24px;
+        vertical-align:middle;
+        line-height:24px;
+    }
+    .driveCheckbox {
+        width:24px;
+        height:24px;
+    }
+
+}
+
+.CSVtextarea {
+    margin-top:24px;
+}
+
+.filterRadio {
+    display:none;
+}
+
+.filterRadio + label
+{
+    background:url("../../assets/icons/radio_off_normal.png") no-repeat;
+    height:24px;
+    width:24px;
+    padding: 0 0 0 0px;
+    display:inline-block;
+    &:hover {
+          background:url("../../assets/icons/radio_off_hover.png") no-repeat;
+    }
+}
+
+input[type=radio]:checked + label {
+    background:url("../../assets/icons/radio_on_normal.png") no-repeat;
+    height:24px;
+    width:24px;
+    padding: 0 0 0 0px;
+    display:inline-block;
+    &:hover {
+          background:url("../../assets/icons/radio_on_hover.png") no-repeat;
+    }
+}
+
+.filterCheckbox, .presetFilter {
+    display:none;
+}
+
+.filterCheckbox + label, .presetFilter + label {
+    background:url("../../assets/icons/checkbox_off_normal.png") no-repeat;
+    height:24px;
+    width:24px;
+    padding: 0 0 0 0px;
+    display:inline-block;
+    &:hover {
+          background:url("../../assets/icons/checkbox_off_hover.png") no-repeat;
+    }
+}
+input[type=checkbox]:checked + label {
+    background:url("../../assets/icons/checkbox_on_normal.png") no-repeat;
+    height:24px;
+    width:24px;
+    padding: 0 0 0 0px;
+    display:inline-block;
+    &:hover {
+          background:url("../../assets/icons/checkbox_on_hover.png") no-repeat;
+    }
+}
+
+.driveDates {
+    display:flex;
+    flex-direction:row;
+    width:376px;
+    .startDate {
+        width:188px;
+    }
+    .endDate {
+        width:188px;
+    }
+}
+.preset {
+       display:flex;
+       flex-direction:row;
+       .presetLabel {
+                  font-family:consolas;
+                  font-style:Italic;
+                  font-size:16px;
+                  color:#273142;
+                  height:24px;
+                  width:188px;
+                  line-height:24px;
+                  padding-left:15px;
+                  margin-top:20px;
+                  display:inline-block;
+       }
+       .presetCheckbox {
+           margin-top:20px;
+           height:24px;
+           width:24px;
+       }
+}
+
+.qualityFilter {
+    width:630px;
+    margin-left:14px;
+    padding:0px;
+    tr th {
+       line-height:24px;
+    }
+    td {
+        border-left:1px solid #FFFFFF;
+    }
+    .provider {
+        font-family:consolas;
+        font-style:Italic;
+        color:#273142;
+        font-weight:lighter;
+        column-width:124px;
+        width:19.682539682539684%;
+        text-align:left;
+        padding:0px;
+    }
+    .attribute {
+        font-family:consolas;
+        font-style:Italic;
+        color:#273142;
+        font-weight:lighter;
+        width:19.682539682539684%;
+        text-align:left;
+    }
+    .quality {
+        font-family:consolas;
+        font-style:Italic;
+        color:#273142;
+        font-weight:lighter;
+        width:33.01587301587301%;
+        text-align:left;
+    }
+    .weight {
+        font-family:consolas;
+        font-style:Italic;
+        color:#273142;
+        font-weight:lighter;
+        width:7.6190476190476195%;
+        text-align:left;
+    }
+    .secondRow {
+        display:flex;
+        flex-direction:row;
+    }
+    .low, .medium, .high,.weightLabel {
+        text-align: center;
+        vertical-align: middle;
+        line-height: 24px; 
+        font-family:consolas;
+        font-size:11px;
+        font-style:Italic;
+        font-weight:lighter;
+        height:24px;
+        padding:0px;
+        margin:0px;
+        width:67px;
+    }
+    .low {
+        width:64px;
+    }
+    .providerSelect, .attributeSelect {
+        width:116px;
+        height:20px;
+        font-family:consolas;
+        font-size:11px;
+        font-style:Italic;
+        border:none;
+        background-color:#EBF0F2;
+        color:black;
+    }
+     
+    #slider {
+        width:200px;
+        height:24px;
+    }
+
+
+    .filterInputLow {
+        text-align:center;
+        color:#BEC8D2 !important;
+    }
+    .filterInputMedium {
+        text-align:center;
+        color:#9398A0 !important;
+    }
+    .filterInputHigh {
+        text-align:center;
+        color:#273142 !important;
+    }
+    .deleteFilter {
+        background:url("../../assets/icons/btn_remove_normal.png") left center no-repeat;
+        width:24px;
+        height:24px;
+        &:hover, &:active {
+               background:url("../../assets/icons/btn_remove_hover-active.png") left center no-repeat;
+        }
+     }
+   
+}
+.addFilter {
+     height:24px;
+     display:flex;
+     flex-direction:row;
+        .addButton  {
+         display:inline-block;
+         width:24px;
+         height:24px;
+         margin:0px;
+         margin-left:14px;
+         background:url("../../assets/icons/btn_add_normal.png") left center no-repeat;
+         &:hover, &:active {
+                  background:url("../../assets/icons/btn_add_hover-active.png") left center no-repeat;
+         }
+
+       }
+       .addMessage {
+           display:inline-block;
+           font-family:consolas;
+           font-size:13px;
+           font-style:Italic;
+           text-align:left;
+           color:#BEC8D2;
+           height:24px;
+           vertical-align:middle;
+           line-height:24px;
+       } 
+    
+}
+
+
+
+
+.vertical .progress-bar {
+  float: left;
+  height: 16px;
+  width: 40px;
+  margin-right: 4px;
+  margin-left:4px;
+}
+
+.vertical .progress-track {
+  position: relative;
+  width: 40px;
+  height: 100%;
+  background: #ebebeb;
+}
+
+.vertical .progress-fill {
+  position: relative;
+  background: #FF6700;
+  height: 50%;
+  width: 40px;
+  color: #fff;
+  text-align: center;
+  font-family: "Lato","Verdana",sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+
+
+
+
+

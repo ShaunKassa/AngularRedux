@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/index';
 
 /* Store related imports */
@@ -20,7 +20,7 @@ import services from './services/index';
 @NgModule({
     imports: [ CommonModule, HttpModule ],
     declarations: [ NavbarComponent ],
-    exports: [ NavbarComponent, CommonModule, FormsModule ],
+    exports: [ NavbarComponent, CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {
