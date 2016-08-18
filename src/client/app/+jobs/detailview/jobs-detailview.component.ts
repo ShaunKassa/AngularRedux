@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
 
@@ -8,10 +9,10 @@ import {Observable} from 'rxjs/Rx';
   templateUrl: 'jobs-detailview.component.html',
   styleUrls: ['jobs-detailview.component.css']
 })
-export class JobsDetailviewComponent implements OnInit {
+export class JobsDetailviewComponent implements AfterViewInit {
     jobGroups: any;
 
-    constructor(private _store: Store<any>) {
+    constructor(private _store: Store<any>, private _route: ActivatedRoute, private _el: ElementRef) {
         let that = this;
 
         this.jobGroups = Observable.combineLatest(
@@ -75,8 +76,9 @@ export class JobsDetailviewComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
-        console.log('OnInit');
+    ngAfterViewInit() {
+        let id = parseInt(this._route.snapshot.params['id'], 10);
+        $(this._el.nativeElement).find('#' + id)[0].scrollIntoView();
     }
 
 }
