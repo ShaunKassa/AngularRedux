@@ -158,7 +158,7 @@
                            <div  class="label">Environment</div>
                            <span class="dot">•</span>
                            <select  class="select" formControlName="environment">
-                             <option selected >Dev</option>
+                             <option selected >dev</option>
                            </select>
 
                            <div class="label">Input Type</div>
@@ -208,19 +208,19 @@
 
                                                 <div class="areaLabel">Bounding Box</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" name="areaOfInterest"  checked  class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="boundbox"></label>
+                                                       <input  type="radio" id="boundBox"  checked  class="filterRadio" formControlName="areaOfInterest">
+                                                       <label for="boundBox"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Tile Coordinates</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" name="areaOfInterest" class="filterRadio" formControlName="areaOfInterest">
+                                                       <input  type="radio" id="tileCoord" class="filterRadio" formControlName="areaOfInterest">
                                                        <label for="tileCoord"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" name="areaOfInterest" class="filterRadio" formControlName="areaOfInterest">
+                                                       <input  type="radio" id="mosquads" class="filterRadio" formControlName="areaOfInterest">
                                                        <label for="mosquads"></label>
                                                 </div>
                                     </div>
@@ -234,17 +234,17 @@
 
                                          <div class="driveLabel">First Gen</div>
                                             <div class="driveCheckbox"> 
-                                                <input  type="checkbox" name="driveType"  checked  class="filterCheckbox" formControlName="driveType">
-                                                <label for="fistGen"></label>
+                                                <input  type="checkbox" name="driveType"  checked id="firstGen"  class="filterCheckbox" formControlName="driveType">
+                                                <label for="firstGen"></label>
                                             </div>
                                          <div class="driveLabel">TRUE 1.O</div>
                                                 <div class="driveCheckbox">
-                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" formControlName="driveType">
+                                                    <input  type="checkbox" name="driveType" id="true1" class="filterCheckbox" formControlName="driveType">
                                                     <label for="true1"></label>
                                                 </div>
                                          <div class="driveLabel">HERE TRUE</div>
                                                 <div class="driveCheckbox"> 
-                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" formControlName="driveType">
+                                                    <input  type="checkbox" name="driveType" id="hereTrue" class="filterCheckbox" formControlName="driveType">
                                                     <label for="hereTrue"></label>
                                                 </div>
                                    </div> 
@@ -259,7 +259,7 @@
                                    <div class = "endDate">
                                          <div class="label">Drive End date</div>
                                          <span class="dot">•</span>
-                                         <input type="date" required formControlName="driveEndDate">
+                                         <input type="date" formControlName="driveEndDate">
                                    </div>
                                </div>
 
@@ -337,8 +337,8 @@
                      <div class="preset" >
                          <div class="presetLable">Save as preset</div>
                          <div class="presetCheckbox">
-                             <input type="checkbox" class="presetFilter" formControlName="saveAsPreset">
-                             <label for="persetFilter"></label><br/>
+                             <input type="checkbox" class="presetFilter" id="saveAsPreset" formControlName="saveAsPreset">
+                             <label for="saveAsPreset"></label><br/>
                          </div>
                     </div>
 

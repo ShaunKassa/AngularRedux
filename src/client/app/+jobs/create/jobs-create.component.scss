@@ -315,11 +315,11 @@ button:disabled {
     margin-top:24px;
 }
 
-.filterRadio {
+input[type=radio] {
     display:none;
 }
 
-.filterRadio + label
+input[type=radio] + label
 {
     background:url("../../assets/icons/radio_off_normal.png") no-repeat;
     height:24px;
@@ -331,7 +331,7 @@ button:disabled {
     }
 }
 
-input[type=radio]:checked + label {
+input[type=radio]:checked + label  {
     background:url("../../assets/icons/radio_on_normal.png") no-repeat;
     height:24px;
     width:24px;
@@ -342,11 +342,11 @@ input[type=radio]:checked + label {
     }
 }
 
-.filterCheckbox, .presetFilter {
+input[type=checkbox] {
     display:none;
 }
 
-.filterCheckbox + label, .presetFilter + label {
+input[type=checkbox] + label {
     background:url("../../assets/icons/checkbox_off_normal.png") no-repeat;
     height:24px;
     width:24px;
