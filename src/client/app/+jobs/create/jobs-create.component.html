@@ -337,17 +337,21 @@
                                                          #range
                                                          min="0"
                                                          max="100"
-                                                         startValue="33"
-                                                         midValue="34"
                                                          middleValue="67"
-                                                         endValue="33"
-                                                         (onRangeChanged)="rangeValueChanged($event, 'range-1-start', 'range_1_end')">
+                                                         [(startValue)]="item.filterInputLow"
+                                                         [(midValue)]="item.filterInputMedium"
+                                                         [(endValue)]="item.filterInputHigh"
+                                                         (onRangeChanged)="rangeValueChanged($event, idx)">
                                                 </ng2-slider>
                                                 <!-- End of Slider Component -->
                                            </div>
                                        </td>
                                        <td class="weightInputTd">
-                                           <input type="number" class="weightInput" fomrControlName="weight" min="0" max="100" value="100"><span>%</span>
+                                           <input type="number" class="weightInput" 
+                                                                fomrControlName="weight" 
+                                                                min="0" 
+                                                                max="100" 
+                                                                value="100"><span>%</span>
                                        </td>
                                        <td >
                                            <div class="deleteFilter" (click) = "deleteFilter(idx)"></div>

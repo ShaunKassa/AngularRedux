@@ -130,7 +130,12 @@ export class JobsCreateComponent implements OnInit {
  			   let fileName: string = '';
  			   let text: string = '';
                let date: string = '';
-               if(this.jobTYPE === 'Depth Generation') {
+
+               if(this.selectedJobType === 'CSV Generation') {
+                   this.buildFilterModel(value);
+                   return;
+               }
+               if(this.selectedJobType === 'Depth Generation') {
                  value.jobTypes = this.jobTYPE;
                    address = (
                        'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
@@ -141,7 +146,7 @@ export class JobsCreateComponent implements OnInit {
                    text = value.driveInput;
               }
 
-              if(this.jobTYPE === 'Coverage CSV Generation') {
+              if(this.selectedJobType === 'Coverage CSV Generation') {
                  value.jobTypes = this.jobTYPE;
                  address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.env);
                  date = (value.pubDate).replace('/','_');
@@ -150,7 +155,7 @@ export class JobsCreateComponent implements OnInit {
                  text = value.mosquadInput;
              }
 
-             if(this.jobTYPE=== 'PostIngest Depth Statistics') {
+             if(this.selectedJobType=== 'PostIngest Depth Statistics') {
                  value.jobTypes = this.jobTYPE;
                  address = ('home/selvaraj/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.env);
                  date = (value.pubDate).replace('/','_');
@@ -159,7 +164,7 @@ export class JobsCreateComponent implements OnInit {
                  text = value.postIngestInput;
              }
 
-             if(this.jobTYPE === 'PreIngest') {
+             if(this.selectedJobType === 'PreIngest') {
                  value.jobTypes = this.jobTYPE;
                  address = 'home/selvaraj/depthAutomation/jobs/PreIngest/input/';
                  date = (value.pubDate).replace('/','_');
@@ -180,6 +185,10 @@ export class JobsCreateComponent implements OnInit {
            $('li.items').removeClass('highlight');
 
             return;
+    }
+
+    buildFilterModel(value) {
+        console.log(value);
     }
 
       SelectJob(jobType, $event) {
@@ -212,6 +221,10 @@ export class JobsCreateComponent implements OnInit {
           this.filterList.splice(idx, 1);
           this.filterServiceForm.controls['filterList' + this._filterIndices[idx]] = undefined;
           this._filterIndices.splice(idx, 1);
+      }
+
+
+      rangeValueChanged($event, idx) {
       }
 
       private emptyLineValidator(control: FormControl):{[s: string] } {
