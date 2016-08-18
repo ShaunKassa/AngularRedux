@@ -40,6 +40,9 @@ export class JobsCreateComponent implements OnInit {
         }
     ];
 
+    _filterIndices: Array<Number> = [0];
+    _filterCurrentIndex: Number = 0;
+
 
     selectedJobType = 'Default';
 
@@ -93,9 +96,14 @@ export class JobsCreateComponent implements OnInit {
                });
 
                this.filterServiceForm = this.formBuilder.group({
-                       attributeTypes:['',Validators.compose([Validators.required])],
-                       provider:['',Validators.compose([Validators.required])],
-                       filterList:['',Validators.compose([Validators.required])],
+                       filterList0: this.formBuilder.group({
+                           attributeTypes:['',Validators.compose([Validators.required])],
+                           provider:['',Validators.compose([Validators.required])],
+                           weight:['',Validators.compose([Validators.required])],
+                           qualityFilterLow:['',Validators.compose([Validators.required])],
+                           qualityFilterMedium:['',Validators.compose([Validators.required])],
+                           qualityFilterHigh:['',Validators.compose([Validators.required])]
+                       }),
                        preset:['',Validators.compose([Validators.required])],
                        instanceLabel:['',Validators.compose([Validators.required])],
                        publicationDate:['',Validators.compose([Validators.required])],
@@ -104,10 +112,6 @@ export class JobsCreateComponent implements OnInit {
                        input:['',Validators.compose([Validators.required])],
                        driveStartDate:['',Validators.compose([Validators.required])],
                        driveEndDate:['',Validators.compose([Validators.required])],
-                       weight:['',Validators.compose([Validators.required])],
-                       qualityFilterLow:['',Validators.compose([Validators.required])],
-                       qualityFilterMedium:['',Validators.compose([Validators.required])],
-                       qualityFilterHigh:['',Validators.compose([Validators.required])],
                        qualityTreshold:['',Validators.compose([Validators.required])],
                        saveAsPreset:['',Validators.compose([Validators.required])],
                        presetLable:['',Validators.compose([Validators.required])]
@@ -180,6 +184,8 @@ export class JobsCreateComponent implements OnInit {
       }
 
       addFilter(add:Boolean) {
+          this._filterCurrentIndex = this._filterCurrentIndex + 1;
+          this._filterIndices.push(this._filterCurrentIndex)
           this.filterList.push(
               {
                filterInputLow : '33',
@@ -187,10 +193,20 @@ export class JobsCreateComponent implements OnInit {
                filterInputHigh : '33'
               }
           );
+          this.filterServiceForm.controls['filterList' + this._filterCurrentIndex] = this.formBuilder.group({
+                           attributeTypes:['',Validators.compose([Validators.required])],
+                           provider:['',Validators.compose([Validators.required])],
+                           weight:['',Validators.compose([Validators.required])],
+                           qualityFilterLow:['',Validators.compose([Validators.required])],
+                           qualityFilterMedium:['',Validators.compose([Validators.required])],
+                           qualityFilterHigh:['',Validators.compose([Validators.required])]
+                       });
       }
 
       deleteFilter(idx:Number) {
           this.filterList.splice(idx, 1);
+          this.filterServiceForm.controls['filterList' + this._filterIndices[idx]] = undefined;
+          this._filterIndices.splice(idx, 1);
       }
 
       private emptyLineValidator(control: FormControl):{[s: string] } {
