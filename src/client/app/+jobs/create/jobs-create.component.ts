@@ -23,7 +23,7 @@ export class JobsCreateComponent implements OnInit {
         'Coverage CSV Generation',
         'PostIngest Depth Statistics',
         'PreIngest',
-        'CSV generation'
+        'CSV Generation'
     ];
 
     attributeTypes = ['ORIENT','XYALIGN','ZJUMP','INTERVAL','DRIFT',
@@ -34,9 +34,10 @@ export class JobsCreateComponent implements OnInit {
     
     filterList: Object[] = [
         {
-            filterInputLow : '33',
-            filterInputMedium : '33',
-            filterInputHigh : '33'
+            filterInputLow : 33,
+            filterInputMedium : 33,
+            filterInputHigh : 33,
+            weight: 0
         }
     ];
 
@@ -185,7 +186,44 @@ export class JobsCreateComponent implements OnInit {
     }
 
     buildFilterModel(value) {
+        this._filterIndices.forEach((filterIndex: number, index: number) => {
+            value['filterList' + filterIndex].qualityFilterHigh = this.filterList[index].filterInputHigh;
+            value['filterList' + filterIndex].qualityFilterLow = this.filterList[index].filterInputLow;
+            value['filterList' + filterIndex].qualityFilterMedium = this.filterList[index].filterInputMedium;
+            value['filterList' + filterIndex].weight = this.filterList[index].weight;
+        });
+        let filterPayload = {
+        };
         console.log(value);
+        /*
+        {
+          "minLat": 48.82324,
+          "minLon": 2.32910,
+          "maxLat": 48.84521,
+          "maxLon": 2.35107,
+          "dataFormats": "AMA",
+          "qualityFilter": {
+            "qualityThreshold": 50,
+            "providers": [
+              {
+                "provider": {
+                  "provider": "RCP",
+                  "name": "RCP"
+                },
+                "weight": 100,
+                "qweights": [
+                  {
+                    "name": "OVEREXP",
+                    "weight": 100
+                  }
+                ]
+              }
+            ]
+          },
+          "kind": "box"
+        }
+ 
+         */
     }
 
       SelectJob(jobType, $event) {
@@ -199,9 +237,10 @@ export class JobsCreateComponent implements OnInit {
           this._filterIndices.push(this._filterCurrentIndex)
           this.filterList.push(
               {
-               filterInputLow : '33',
-               filterInputMedium : '33',
-               filterInputHigh : '33'
+               filterInputLow : 33,
+               filterInputMedium : 33,
+               filterInputHigh : 33,
+               weight: 0
               }
           );
           this.filterServiceForm.controls['filterList' + this._filterCurrentIndex] = this.formBuilder.group({
@@ -222,6 +261,9 @@ export class JobsCreateComponent implements OnInit {
 
 
       rangeValueChanged($event, idx) {
+          this.filterList[idx].filterInputLow = $event.startValue;
+          this.filterList[idx].filterInputMedium = $event.midValue;
+          this.filterList[idx].filterInputHigh = $event.endValue;
       }
 
       private emptyLineValidator(control: FormControl):{[s: string] } {
