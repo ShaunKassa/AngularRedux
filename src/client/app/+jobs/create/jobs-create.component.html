@@ -20,7 +20,7 @@
              <div class="switch" [ngSwitch]="selectedJobType" >
 
 <!-- Start of Depth Generation Template -->
-                <form [formGroup] = "depthGenerationForm">
+                <form [formGroup] = "depthGenerationForm" (ngSubmit)="onSubmit(depthGenerationForm.value)">
                      <div class="rightOptions"  *ngSwitchCase="'Depth Generation'">
                         <div class="title">Fill in the blanks</div>
                         <div class= "rightContent"> 
@@ -53,10 +53,7 @@
                            <div id="input" class="label">Input</div>
                            <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
                         </div> 
-                           <button type="submit" 
-                                   [disabled]="false" 
-                                   [disabled]="fasle" 
-                                   [disabled]="false" >Submit</button>
+                        <button type="submit" [disabled]="!depthGenerationForm.valid">Submit</button>
 
                  </div>
              </form>
@@ -64,7 +61,7 @@
 
 
 <!-- Start of CSV Template -->
-                <form [formGroup] ="coverageCsvForm">
+                <form [formGroup] ="coverageCsvForm" (ngSubmit)="onSubmit(coverageCsvForm.value)">
                      <div class="rightOptions" *ngSwitchCase="'Coverage CSV Generation'" >
                        <div class="title">Fill in the blanks</div>
                         <div class= "rightContent"> 
@@ -95,7 +92,7 @@
                            <div id="input" class="label">Input</div>
                            <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
                         </div>
-                           <button type="submit">Submit</button>
+                        <button type="submit" [disabled]="!coverageCsvForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of CSV Template -->
@@ -103,7 +100,7 @@
 
 
 <!-- Start of PostIngest Template -->
-                <form [formGroup] ="postIngestForm">
+                <form [formGroup] ="postIngestForm" (ngSubmit)="onSubmit(postIngestForm.value)">
                      <div class="rightOptions" *ngSwitchCase="'PostIngest Depth Statistics'" >
 
                            <div class="title">Fill in the blanks</div>
@@ -126,7 +123,7 @@
                            <div id="input" class="label">Input</div>
                            <textarea placeholder="Enter input here" formControlName="input">  </textarea>            
                         </div>
-                           <button type="submit">Submit</button>
+                        <button type="submit" [disabled]="!postIngestForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of PostIngest Template -->
@@ -134,7 +131,7 @@
 
 
 <!-- Start of PreIngest Template -->
-                <form [formGroup] ="preIngestForm">
+                <form [formGroup] ="preIngestForm" (ngSubmit)="onSubmit(preIngestForm.value)">
                       <div class="rightOptions" *ngSwitchCase="'PreIngest'" >
 
                         <div class="title">Fill in the blanks</div>
@@ -165,7 +162,7 @@
                            <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
                            <div class="message">(A CoverageCSV will automatically be generated upon submission.)</div>
                         </div>
-                           <button type="submit">Submit</button>
+                        <button type="submit" [disabled]="!preIngestForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of PreIngest Template -->
@@ -173,7 +170,7 @@
 
 
 <!-- Start of CSV generation Template -->
-                <form [formGroup] ="filterServiceForm">
+                <form [formGroup] ="filterServiceForm" (ngSubmit)="onSubmit(filterServiceForm.value)">
                       <div class="rightOptions" *ngSwitchCase="'CSV generation'" >
 
                         <div class="title">Fill in the blanks</div>
@@ -336,9 +333,7 @@
                             <span class="dot">•</span>
                             <input  type="text" placeholder="Enter preset label" class="form-control">
                        </div>
-                       
-                       <button type="submit" >Submit</button>
-
+                       <button type="submit" [disabled]="!filterServiceForm.valid">Submit</button>
                     </div>
                </form>
 <!-- End of CSV generation Template -->

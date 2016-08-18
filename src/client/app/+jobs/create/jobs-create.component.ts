@@ -85,6 +85,72 @@ export class JobsCreateComponent implements OnInit {
                });
      }
 
+
+
+     onSubmit(value): void {
+         let address: string = '';
+         let fileName: string = '';
+         let text: string = '';
+         let date: string = '';
+         if(this.jobTYPE === 'Depth Generation') {
+             value.jobTypes = this.jobTYPE;
+             address = (
+                     'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
+                 ;
+             date = (value.pubDate).replace('/','_');
+             fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_drives.txt';
+             address = address + fileName;
+             text = value.driveInput;
+             this.formValues.jobType = 'Default';
+             $('li.items').removeClass('highlight');
+         }
+
+         if(this.jobTYPE === 'Coverage CSV Generation') {
+             value.jobTypes = this.jobTYPE;
+             address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.env);
+             date = (value.pubDate).replace('/','_');
+             fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_mosquad.csv';
+             address = address + fileName;
+             text = value.mosquadInput;
+             this.formValues.jobType = 'Default';
+             $('li.items').removeClass('highlight');
+         }
+
+         if(this.jobTYPE=== 'PostIngest Depth Statistics') {
+             value.jobTypes = this.jobTYPE;
+             address = ('home/selvaraj/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.env);
+             date = (value.pubDate).replace('/','_');
+             fileName = '/'+ date + '_mosquad.txt';
+             address = address + fileName;
+             text = value.postIngestInput;
+             this.formValues.jobType = 'Default';
+             $('li.items').removeClass('highlight');
+         }
+
+         if(this.jobTYPE === 'PreIngest') {
+             value.jobTypes = this.jobTYPE;
+             address = 'home/selvaraj/depthAutomation/jobs/PreIngest/input/';
+             date = (value.pubDate).replace('/','_');
+             fileName = (value.city.toUpperCase())+'_' + date + '_mosquads.txt';
+             address = address + fileName;
+             text = value.mosquadInput;
+             this.formValues.jobType = 'Default';
+             $('li.items').removeClass('highlight');
+         }
+
+         var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
+         var params = {Key: address, Body: text};
+         bucket.upload(params, function (err) {
+             if(err) {
+                 console.log(err);
+             } else {
+                 console.log('Success');
+             }
+         });
+
+         return;
+     }
+
       SelectJob(jobType, $event) {
            this.selectedJobType = jobType;
            $('li.items').removeClass('highlight');

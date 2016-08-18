@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/index';
+import { Ng2SliderComponent } from './slider/ng2-slider.component';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
@@ -18,9 +19,9 @@ import actions from './actions/index';
 import services from './services/index';
 
 @NgModule({
-    imports: [ CommonModule, HttpModule ],
-    declarations: [ NavbarComponent ],
-    exports: [ NavbarComponent, CommonModule, FormsModule, ReactiveFormsModule ],
+    imports: [ CommonModule, HttpModule, FormsModule ],
+    declarations: [ NavbarComponent, Ng2SliderComponent ],
+    exports: [ NavbarComponent, Ng2SliderComponent, CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {
