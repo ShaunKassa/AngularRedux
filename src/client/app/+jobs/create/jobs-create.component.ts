@@ -116,7 +116,7 @@ export class JobsCreateComponent implements OnInit {
                        driveEndDate:['',Validators.compose([Validators.required])],
                        qualityTreshold:['',Validators.compose([Validators.required])],
                        saveAsPreset:['',Validators.compose([Validators.required])],
-                       presetLable:['',Validators.compose([Validators.required])]
+                       presetLabel:['',Validators.compose([Validators.required])]
                });
      }
 
