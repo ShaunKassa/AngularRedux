@@ -208,20 +208,20 @@
 
                                                 <div class="areaLabel">Bounding Box</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" id="boundBox"  checked  class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="boundBox"></label>
+                                                       <input  type="radio"  checked  class="filterRadio" formControlName="areaOfInterest">
+                                                       <label for="areaOfInterest"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Tile Coordinates</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" id="tileCoord" class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="tileCoord"></label>
+                                                       <input  type="radio"  class="filterRadio" formControlName="areaOfInterest">
+                                                       <label for="areOfInterest"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" id="mosquads" class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="mosquads"></label>
+                                                       <input  type="radio" class="filterRadio" formControlName="areaOfInterest">
+                                                       <label for="areOfInterest"></label>
                                                 </div>
                                     </div>
 
@@ -234,17 +234,17 @@
 
                                          <div class="driveLabel">First Gen</div>
                                             <div class="driveCheckbox"> 
-                                                <input  type="checkbox" name="driveType"  checked id="firstGen"  class="filterCheckbox" formControlName="driveType">
+                                                <input  type="checkbox" name="driveType"  checked id="firstGen"  class="filterCheckbox" formControlName="firstGenDriveType">
                                                 <label for="firstGen"></label>
                                             </div>
                                          <div class="driveLabel">TRUE 1.O</div>
                                                 <div class="driveCheckbox">
-                                                    <input  type="checkbox" name="driveType" id="true1" class="filterCheckbox" formControlName="driveType">
+                                                    <input  type="checkbox" name="driveType" id="true1" class="filterCheckbox" formControlName="true1DriveType">
                                                     <label for="true1"></label>
                                                 </div>
                                          <div class="driveLabel">HERE TRUE</div>
                                                 <div class="driveCheckbox"> 
-                                                    <input  type="checkbox" name="driveType" id="hereTrue" class="filterCheckbox" formControlName="driveType">
+                                                    <input  type="checkbox" name="driveType" id="hereTrue" class="filterCheckbox" formControlName="hereTrueDriveType">
                                                     <label for="hereTrue"></label>
                                                 </div>
                                    </div> 
@@ -320,6 +320,7 @@
                                            </div>
                                        </td>
                                        <td>
+                                           <input type="tex" class="weight" fomrControlName="weight">
                                        </td>
                                        <td >
                                            <div class="deleteFilter" (click) = "deleteFilter(idx)"></div>
