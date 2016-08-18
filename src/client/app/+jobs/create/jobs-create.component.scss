@@ -534,8 +534,9 @@ input[type=checkbox]:checked + label {
 }
 
 .weightInput {
+    display:inline;
     width:59px;
-    margin-right:4px;
+    margin-right:0px;
     margin-left:4px;
     text-align:center;
     background-color:#EBF0F2;
@@ -547,8 +548,9 @@ input[type=checkbox]:checked + label {
     box-sizing:content-box;
 }
 
-.weightInputTd {
-    padding-top:0px;
+td.weightInputTd {
+    padding:0px;
+    margin-bottom:24px;
 }
 
 .vertical .progress-bar {
