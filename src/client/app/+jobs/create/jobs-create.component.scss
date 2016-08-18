@@ -533,8 +533,23 @@ input[type=checkbox]:checked + label {
     
 }
 
+.weightInput {
+    width:59px;
+    margin-right:4px;
+    margin-left:4px;
+    text-align:center;
+    background-color:#EBF0F2;
+    font-size:13px;
+    font-family:consolas;
+    font-color:#273142;
+    font-style:Italic;
+    border:none;
+    box-sizing:content-box;
+}
 
-
+.weightInputTd {
+    padding-top:0px;
+}
 
 .vertical .progress-bar {
   float: left;

@@ -104,19 +104,22 @@ export class JobsCreateComponent implements OnInit {
                            qualityFilterMedium:['',Validators.compose([Validators.required])],
                            qualityFilterHigh:['',Validators.compose([Validators.required])]
                        }),
-                       preset:['',Validators.compose([Validators.required])],
+                       preset:['',Validators.compose([])],
                        instanceLabel:['',Validators.compose([Validators.required])],
                        publicationDate:['',Validators.compose([Validators.required])],
-                       firstGenDriveType:['',Validators.compose([Validators.required])],
-                       true1DriveType:['',Validators.compose([Validators.required])],
-                       hereTrueDriveType:['',Validators.compose([Validators.required])],
-                       areaOfInterest:['',Validators.compose([Validators.required])],
-                       input:['',Validators.compose([Validators.required])],
+                       firstGenDriveType:['',Validators.compose([])],
+                       true1DriveType:['',Validators.compose([])],
+                       hereTrueDriveType:['',Validators.compose([])],
+                       areaOfInterest:['mosquads',Validators.compose([Validators.required])],
+                       input:['',Validators.compose([Validators.required
+                                                    this.emptyLineValidator,
+                                                    this.whitespaceValidator,
+                                                    this.mosquadIdValidator])],
                        driveStartDate:['',Validators.compose([Validators.required])],
                        driveEndDate:['',Validators.compose([Validators.required])],
                        qualityTreshold:['',Validators.compose([Validators.required])],
-                       saveAsPreset:['',Validators.compose([Validators.required])],
-                       presetLable:['',Validators.compose([Validators.required])]
+                       saveAsPreset:['',Validators.compose([])],
+                       presetLable:['',Validators.compose([])]
                });
      }
 

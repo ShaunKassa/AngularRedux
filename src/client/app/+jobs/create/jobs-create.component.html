@@ -208,25 +208,28 @@
 
                                                 <div class="areaLabel">Bounding Box</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio"  checked  class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="areaOfInterest"></label>
+                                                       <input  type="radio"  disabled class="filterRadio" >
+                                                       <label for="boundingBox"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Tile Coordinates</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio"  class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="areOfInterest"></label>
+                                                       <input  type="radio"  disabled class="filterRadio" >
+                                                       <label for="tileCoord"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" class="filterRadio" formControlName="areaOfInterest">
-                                                       <label for="areOfInterest"></label>
+                                                       <input  type="radio" id="mosquads" checked class="filterRadio" >
+                                                       <label for="mosquads"></label>
                                                 </div>
                                     </div>
 
 
                                <textarea class= "CSVtextarea" rows="144"  placeholder="Enter input here" required formControlName="input">  </textarea>            
+                               <div *ngIf="filterServiceForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                               <div *ngIf="filterServiceForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                               <div *ngIf="filterServiceForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
 
                                <div class="label">Drive type</div>
                                    <div class="driveCheckboxs" > 
@@ -319,8 +322,8 @@
                                                 <!-- End of Slider Component -->
                                            </div>
                                        </td>
-                                       <td>
-                                           <input type="tex" class="weight" fomrControlName="weight">
+                                       <td class="weightInputTd">
+                                           <input type="number" class="weightInput" fomrControlName="weight" min="0" max="100" value="100"><span>%</span>
                                        </td>
                                        <td >
                                            <div class="deleteFilter" (click) = "deleteFilter(idx)"></div>
