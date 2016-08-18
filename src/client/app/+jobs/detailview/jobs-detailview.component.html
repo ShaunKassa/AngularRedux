@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="detailView" *ngFor="#group of jobGroups | async; #i=index">
+        <div class="descrption" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
+        <div class="descrption" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
+        <div class="detailInstance"  *ngFor="#runningJob of group.jobs" id={{runningJob.id}}>
+            <div class="detailLeft">
+                <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
+                <div class="chart">
+                    <svg viewbox="0 0 100 100">
+                        <circle cx="120" cy="120" r="95" fill="transparent" 
+                                [attr.stroke-width]="50"  stroke="#dde5e9"/>
+                        <circle cx="120" cy="120" r="95" 
+                                fill="transparent" 
+                                [attr.stroke-width]="runningJob.slice2 ? 50: 0" 
+                                [attr.stroke-dashoffset]="runningJob.detail_width1" 
+                                stroke="#273142" 
+                                opacity="0.5"
+                                stroke-dasharray="596.9"/>
+                        <circle cx="120" cy="120" r="95" fill="transparent" 
+                                [attr.stroke-width]="runningJob.slice3 ? 50: 0" 
+                                [attr.stroke-dashoffset]="runningJob.detail_width2" 
+                                stroke="#ff670d" 
+                                stroke-dasharray="596.9"/>
+                        <circle cx="120" cy="120" r="95" fill="transparent" 
+                                [attr.stroke-width]="runningJob.slice4 ? 50: 0" 
+                                [attr.stroke-dashoffset]="runningJob.detail_width3" 
+                                stroke="#273142" 
+                                stroke-dasharray="596.9"/>
+                    </svg>
+                    <p class="percentage" *ngIf="(runningJob.slice3 + runningJob.slice4) < 100">
+                     {{runningJob.percent}}<span>%</span>
+                    </p>
+                    <p class="percentage" *ngIf="(runningJob.slice3 + runningJob.slice4) == 100">
+                    done 
+                    </p>
+                </div>
+                <div class="elapsedTime">{{runningJob.createdDate}}</div>
+                <div class="createdDate">started on: {{runningJob.startedDate}}</div>
+            </div>
+            <div class="detailRight">
+                <div class="instanceName">instance monitoring</div>
+                <div class="infoContainer">
+                    <div class="totalJobs">
+                        <div class="name">started instance with</div>
+                        <div class ="number">{{runningJob.TotalCount}} jobs</div>
+                    </div>
+                    <div class="toBeProcessed">
+                        <div class="name">waiting to process</div>
+                        <div class="number">{{runningJob.NotStartedCount}}</div>
+                        <div class="percent">{{runningJob.slice}}%</div>
+                    </div>
+                    <div class="currentlyProccessingJobs">
+                        <div class="name">currently processing</div>
+                        <div class="number">{{runningJob.InProgressCount}}</div>
+                        <div class="percent">{{runningJob.slice2}}%</div>
+                    </div>
+                    <div class="jobResults">
+                        <div class="name">finished processing</div>
+                        <div class="success">successful: {{runningJob.SucceededCount}}</div>
+                        <div class="fail">failed:&nbsp;<span>{{runningJob.FailedCount}}</span></div>
+                        <div class="percent">
+                            {{runningJob.slice3 + runningJob.slice4}}%
+                        </div>
+                    </div>
+                    <!-- <div class="createDate" *ngIf ="runningJob.percent == 100">03/01/2016 - 10:11:21 AM</div> -->
+                    <div class="finishedInstance" *ngIf ="runningJob.percent == 100">
+                        <div class="name">finished instance</div>
+                        <div class="timeElapsed">in {{runningJob.hours}} hours, {{runningJob.minutes}} minutes and {{runningJob.seconds}} seconds.</div>
+                    </div>
+                    <div class="stat" [innerHTML] = 'runningJob.statistics'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

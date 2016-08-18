@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
 
@@ -11,7 +12,7 @@ import {Observable} from 'rxjs/Rx';
 export class JobsOverviewComponent implements OnInit {
     jobGroups: any;
 
-    constructor(private _store: Store<any>) {
+    constructor(private _store: Store<any>, private _router: Router) {
         let that = this;
 
         this.jobGroups = Observable.combineLatest(
@@ -31,10 +32,6 @@ export class JobsOverviewComponent implements OnInit {
 
                     return groups;
                 });
-    }
-    gotoDetail(runningJob: any) {
-        let link = ['ViewDetail', { id: runningJob.id }];
-        // this.router.navigate(link);
     }
 
     private displayTimeStamp(job: any) {

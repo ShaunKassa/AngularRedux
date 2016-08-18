@@ -4,7 +4,7 @@
             <div class="descrption" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
             <div class="descrption" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
             <div class="instances">
-                <div class="instance" *ngFor="let runningJob of group.jobs" (click)="gotoDetail(runningJob)" >
+                <div class="instance" *ngFor="let runningJob of group.jobs" routerLink="../detailview/{{runningJob.id}}"  >
                     <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                     <div class="chart">
                         <svg viewbox="0 0 100 100">
