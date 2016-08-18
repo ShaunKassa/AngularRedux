@@ -210,7 +210,10 @@
                                                 <div class="areaCheckbox">
                                                        <input  type="radio" 
                                                                value="Bounding Box"
-                                                               class="filterRadio" >
+                                                               class="filterRadio" 
+                                                               name="areaOfInterest" 
+                                                               checked
+                                                               formControlName="areaOfInterest">
                                                        <label for="areaOfInterest"></label>
                                                 </div>
 
@@ -226,20 +229,19 @@
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
                                                        <input  type="radio" 
-                                                               name="areaOfInterest" 
                                                                value="mosquads"
-                                                               class="filterRadio" 
-                                                               checked
-                                                               formControlName="areaOfInterest">
+                                                               class="filterRadio">
                                                        <label for="areaOfInterest"></label>
                                                 </div>
                                     </div>
 
 
                                <textarea class= "CSVtextarea" rows="144"  placeholder="Enter input here" required formControlName="input">  </textarea>            
+                               <!--
                                <div *ngIf="filterServiceForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
                                <div *ngIf="filterServiceForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
                                <div *ngIf="filterServiceForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
+                               -->
 
                                <div class="label">Drive type</div>
                                    <div class="driveCheckboxs" > 
