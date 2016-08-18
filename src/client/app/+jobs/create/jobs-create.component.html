@@ -183,7 +183,7 @@
 
 <!-- Start of CSV generation Template -->
                 <form [formGroup] ="filterServiceForm" (ngSubmit)="onSubmit(filterServiceForm.value)">
-                      <div class="rightOptions" *ngSwitchCase="'CSV generation'" >
+                      <div class="rightOptions" *ngSwitchCase="'CSV Generation'" >
 
                         <div class="title">Fill in the blanks</div>
 
@@ -338,9 +338,9 @@
                                                          min="0"
                                                          max="100"
                                                          middleValue="67"
-                                                         [(startValue)]="item.filterInputLow"
-                                                         [(midValue)]="item.filterInputMedium"
-                                                         [(endValue)]="item.filterInputHigh"
+                                                         [startValue]="item.filterInputLow"
+                                                         [midValue]="item.filterInputMedium"
+                                                         [endValue]="item.filterInputHigh"
                                                          (onRangeChanged)="rangeValueChanged($event, idx)">
                                                 </ng2-slider>
                                                 <!-- End of Slider Component -->
@@ -348,10 +348,11 @@
                                        </td>
                                        <td class="weightInputTd">
                                            <input type="number" class="weightInput" 
-                                                                fomrControlName="weight" 
+                                                                name="weight"
+                                                                formControlName="weight" 
                                                                 min="0" 
                                                                 max="100" 
-                                                                value="100"><span>%</span>
+                                                                [value]="item.weight"><span>%</span>
                                        </td>
                                        <td >
                                            <div class="deleteFilter" (click) = "deleteFilter(idx)"></div>
@@ -383,7 +384,7 @@
                     <button type="submit" >Submit</button>
                 </div>
             </form>
-<!-- End of CSV generation Template -->
+<!-- End of CSV Generation Template -->
 
 
 
