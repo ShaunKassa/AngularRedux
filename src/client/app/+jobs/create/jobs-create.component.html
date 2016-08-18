@@ -28,7 +28,6 @@
                            <div class="label" >City</div>
                            <span class="dot">•</span>
  						   <input  type="text" placeholder="Enter city name" formControlName="city">
-                           <p *ngIf="depthGenerationForm.controls.firstname.errors">This field is required!</p>
 
                            <div class="label">Publication Date</div>
                            <span class="dot">•</span>
@@ -53,8 +52,11 @@
 
                            <div id="input" class="label">Input</div>
                            <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
+                           <div *ngIf="depthGenerationForm.controls['input'].hasError('emptyLine')" class="alert alert-danger">Please remove empty lines.</div>
+                           <div *ngIf="depthGenerationForm.controls['input'].hasError('whitespace')"class="alert alert-danger">Please remove all whitespaces. </div>
+                           <div *ngIf="depthGenerationForm.controls['input'].hasError('driveId')" class="alert alert-danger">Please follow driveId format. </div>
                         </div> 
-                        <button type="submit" >Submit</button>
+                        <button type="submit" [disabled]="!depthGenerationForm.valid">Submit</button>
 
                  </div>
              </form>
@@ -92,8 +94,11 @@
 
                            <div id="input" class="label">Input</div>
                            <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
+                           <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                           <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                           <div *ngIf="coverageCsvForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
                         </div>
-                           <button type="submit">Submit</button>
+                        <button type="submit" [disabled]="!coverageCsvForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of CSV Template -->
@@ -123,8 +128,11 @@
 
                            <div id="input" class="label">Input</div>
                            <textarea placeholder="Enter input here" formControlName="input">  </textarea>            
+                           <div *ngIf="postIngestForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                           <div *ngIf="postIngestForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                           <div *ngIf="postIngestForm.controls['input'].hasError('postIngest')" class="alert alert-danger" >Please follow post_IngestId format. </div>
                         </div>
-                           <button type="submit">Submit</button>
+                        <button type="submit" [disabled]="!postIngestForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of PostIngest Template -->
@@ -161,9 +169,12 @@
 
                            <div id="input" class="label">Input</div>
                            <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
+                           <div *ngIf="preIngestForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                           <div *ngIf="preIngestForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                           <div *ngIf="preIngestForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
                            <div class="message">(A CoverageCSV will automatically be generated upon submission.)</div>
                         </div>
-                           <button type="submit">Submit</button>
+                        <button type="submit" [disabled]="!preIngestForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of PreIngest Template -->
@@ -334,9 +345,7 @@
                             <span class="dot">•</span>
                             <input  type="text" placeholder="Enter preset label" class="form-control">
                        </div>
-                       
-                       <button type="submit" >Submit</button>
-
+                       <button type="submit" [disabled]="!filterServiceForm.valid">Submit</button>
                     </div>
                </form>
 <!-- End of CSV generation Template -->

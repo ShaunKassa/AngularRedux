@@ -59,7 +59,7 @@ export class JobsCreateComponent implements OnInit {
                this.postIngestForm = this.formBuilder.group({
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required
+                      input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.postIngestValidator])]
@@ -70,7 +70,7 @@ export class JobsCreateComponent implements OnInit {
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    		      inputType:['',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required
+                      input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.mosquadIdValidator])]
@@ -96,6 +96,65 @@ export class JobsCreateComponent implements OnInit {
                        presetLable:['',Validators.compose([Validators.required])]
                });
      }
+
+
+
+    onSubmit(value): void {
+ 			   let address: string = '';
+ 			   let fileName: string = '';
+ 			   let text: string = '';
+               let date: string = '';
+               if(this.jobTYPE === 'Depth Generation') {
+                 value.jobTypes = this.jobTYPE;
+                   address = (
+                       'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
+                       ;
+                   date = (value.pubDate).replace('/','_');
+                   fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_drives.txt';
+                   address = address + fileName;
+                   text = value.driveInput;
+              }
+
+              if(this.jobTYPE === 'Coverage CSV Generation') {
+                 value.jobTypes = this.jobTYPE;
+                 address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.env);
+                 date = (value.pubDate).replace('/','_');
+                 fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_mosquad.csv';
+                 address = address + fileName;
+                 text = value.mosquadInput;
+             }
+
+             if(this.jobTYPE=== 'PostIngest Depth Statistics') {
+                 value.jobTypes = this.jobTYPE;
+                 address = ('home/selvaraj/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.env);
+                 date = (value.pubDate).replace('/','_');
+                 fileName = '/'+ date + '_mosquad.txt';
+                 address = address + fileName;
+                 text = value.postIngestInput;
+             }
+
+             if(this.jobTYPE === 'PreIngest') {
+                 value.jobTypes = this.jobTYPE;
+                 address = 'home/selvaraj/depthAutomation/jobs/PreIngest/input/';
+                 date = (value.pubDate).replace('/','_');
+                 fileName = (value.city.toUpperCase())+'_' + date + '_mosquads.txt';
+                 address = address + fileName;
+                 text = value.mosquadInput;
+             }
+            var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
+            var params = {Key: address, Body: text};
+            bucket.upload(params, function (err) {
+                if(err) {
+                   console.log(err);
+                } else {
+                   console.log('Success');
+                }
+           });
+           this.formValues.jobType = 'Default';
+           $('li.items').removeClass('highlight');
+
+            return;
+    }
 
       SelectJob(jobType, $event) {
            this.selectedJobType = jobType;
@@ -128,7 +187,7 @@ export class JobsCreateComponent implements OnInit {
       }
 
       private postIngestValidator(control: FormControl):{[s: string] } {
-               if(control.value.match(/^[A-Za-z\s,]*"([0-3]{14}\s*)*"$/)) {
+               if(!control.value.match(/^([A-Za-z,\s]*"([0-3]{14}){1}((\n)?[0-3]{14})*")*$/)) {
                    return {postIngest: true};
                }
       }
