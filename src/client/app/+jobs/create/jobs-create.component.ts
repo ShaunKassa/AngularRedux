@@ -33,55 +33,67 @@ export class JobsCreateComponent implements OnInit {
      ngOnInit() {
                
                this.depthGenerationForm = this.formBuilder.group({
-                      city: ['',Validators.required],
-                      publicationDate:['',Validators.required],
- 	    		      validationType:['',Validators.required],
-                      submissionType:['',Validators.required],
-	    		      inputType:['',Validators.required],
-                      input:['',Validators.required]
+                      city: ['',Validators.compose([Validators.required])],
+                      publicationDate:['',Validators.compose([Validators.required])],
+ 	    		      validationType:['',Validators.compose([Validators.required])],
+                      submissionType:['',Validators.compose([Validators.required])],
+	    		      inputType:['',Validators.compose([Validators.required])],
+                      input:['',Validators.compose([Validators.required,
+                                                    this.emptyLineValidator,
+                                                    this.whitespaceValidator,
+                                                    this.driveIdValidator])]
                });
 
 
                this.coverageCsvForm= this.formBuilder.group({
-                      city: ['',Validators.required],
-                      publicationDate:['',Validators.required],
-	    			  environment:['',Validators.required],
-	    		      inputType:['',Validators.required],
-                      input:['',Validators.required]
+                      city: ['',Validators.compose([Validators.required])],
+                      publicationDate:['',Validators.compose([Validators.required])],
+	    			  environment:['',Validators.compose([Validators.required])],
+	    		      inputType:['',Validators.compose([Validators.required])],
+                      input:['',Validators.compose([Validators.required,
+                                                    this.emptyLineValidator,
+                                                    this.whitespaceValidator,
+                                                    this.mosquadIdValidator])]
                });
 
                this.postIngestForm = this.formBuilder.group({
-                      publicationDate:['',Validators.required],
-	    			  environment:['',Validators.required],
-                      input:['',Validators.required]
+                      publicationDate:['',Validators.compose([Validators.required])],
+	    			  environment:['',Validators.compose([Validators.required])],
+                      input:['',Validators.compose([Validators.required
+                                                    this.emptyLineValidator,
+                                                    this.whitespaceValidator,
+                                                    this.postIngestValidator])]
                });
 
                this.preIngestForm = this.formBuilder.group({
-                      city: ['',Validators.required],
-                      publicationDate:['',Validators.required],
-	    			  environment:['',Validators.required],
-	    		      inputType:['',Validators.required],
-                      input:['',Validators.required]
+                      city: ['',Validators.compose([Validators.required])],
+                      publicationDate:['',Validators.compose([Validators.required])],
+	    			  environment:['',Validators.compose([Validators.required])],
+	    		      inputType:['',Validators.compose([Validators.required])],
+                      input:['',Validators.compose([Validators.required
+                                                    this.emptyLineValidator,
+                                                    this.whitespaceValidator,
+                                                    this.mosquadIdValidator])]
                });
 
                this.filterServiceForm = this.formBuilder.group({
-                       attributeTypes:['',Validators.required],
-                       provider:['',Validators.required],
-                       filterList:['',Validators.required],
-                       preset:['',Validators.required],
-                       instanceLabel:['',Validators.required],
-                       publicationDate:['',Validators.required],
-                       areaOfInterest:['',Validators.required],
-                       input:['',Validators.required],
-                       driveStartDate:['',Validators.required],
-                       driveEndDate:['',Validators.required],
-                       weight:['',Validators.required],
-                       qualityFilterLow:['',Validators.required],
-                       qualityFilterMedium:['',Validators.required],
-                       qualityFilterHigh:['',Validators.required],
-                       qualityTreshold:['',Validators.required],
-                       saveAsPreset:['',Validators.required],
-                       presetLable:['',Validators.required]
+                       attributeTypes:['',Validators.compose([Validators.required])],
+                       provider:['',Validators.compose([Validators.required])],
+                       filterList:['',Validators.compose([Validators.required])],
+                       preset:['',Validators.compose([Validators.required])],
+                       instanceLabel:['',Validators.compose([Validators.required])],
+                       publicationDate:['',Validators.compose([Validators.required])],
+                       areaOfInterest:['',Validators.compose([Validators.required])],
+                       input:['',Validators.compose([Validators.required])],
+                       driveStartDate:['',Validators.compose([Validators.required])],
+                       driveEndDate:['',Validators.compose([Validators.required])],
+                       weight:['',Validators.compose([Validators.required])],
+                       qualityFilterLow:['',Validators.compose([Validators.required])],
+                       qualityFilterMedium:['',Validators.compose([Validators.required])],
+                       qualityFilterHigh:['',Validators.compose([Validators.required])],
+                       qualityTreshold:['',Validators.compose([Validators.required])],
+                       saveAsPreset:['',Validators.compose([Validators.required])],
+                       presetLable:['',Validators.compose([Validators.required])]
                });
      }
 
@@ -90,4 +102,35 @@ export class JobsCreateComponent implements OnInit {
            $('li.items').removeClass('highlight');
            $($event.target).addClass('highlight');
       }
+
+      private emptyLineValidator(control: FormControl):{[s: string] } {
+               if(control.value.match(/\n\s*\n/) ) {
+                   return {emptyLine: true};
+               }
+      }
+
+      private whitespaceValidator(control: FormControl):{[s: string] } {
+               if(control.value.match(/^ +/m) || control.value.match(/[ \t]+$/m) ) {
+                   return {whitespace: true};
+               }
+      }
+
+      private driveIdValidator(control: FormControl):{[s: string] } {
+               if(!control.value.match(/^(HT[\w\d]+_(\d)+,?.*\s*)*$/)) {
+                   return {driveId: true};
+               }
+      }
+
+      private mosquadIdValidator(control: FormControl):{[s: string] } {
+               if(!control.value.match(/^([0-3]{14}\s*)*$/)) {
+                   return {mosquadId: true};
+               }
+      }
+
+      private postIngestValidator(control: FormControl):{[s: string] } {
+               if(control.value.match(/^[A-Za-z\s,]*"([0-3]{14}\s*)*"$/)) {
+                   return {postIngest: true};
+               }
+      }
+
   }
