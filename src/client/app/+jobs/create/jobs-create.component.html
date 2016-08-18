@@ -287,15 +287,17 @@
                                        <td></td>
                                    </tr>
 
-                                   <tr *ngFor="let item of filterList; let idx = index"> 
+                                   <tr *ngFor="let item of filterList; let idx = index" formGroupName="filterList{{idx}}"> 
                                        <td>
-                                          <select class="providerSelect"  required formControlName="provider">
+                                           <select class="providerSelect"  required 
+                                               formControlName="provider">
                                                   <option value="" selected disabled>Select</option>
                                                   <option >RCP</option>
                                          </select>
                                        </td>
                                        <td>
-                                          <select class="attributeSelect"  required formControlName="attributeTypes">
+                                           <select class="attributeSelect"  required 
+                                               formControlName="attributeTypes">
                                                   <option value="" selected disabled>Select</option>
                                                   <option *ngFor="let attributeType of attributeTypes" >{{attributeType}}</option>
                                          </select>
