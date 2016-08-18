@@ -208,20 +208,30 @@
 
                                                 <div class="areaLabel">Bounding Box</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio"  disabled class="filterRadio" >
-                                                       <label for="boundingBox"></label>
+                                                       <input  type="radio" 
+                                                               value="Bounding Box"
+                                                               class="filterRadio" >
+                                                       <label for="areaOfInterest"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Tile Coordinates</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio"  disabled class="filterRadio" >
-                                                       <label for="tileCoord"></label>
+                                                       <input  
+                                                            type="radio" 
+                                                            value="Tile Coordinates"
+                                                            class="filterRadio">
+                                                       <label for="areaOfInterest"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" id="mosquads" checked class="filterRadio" >
-                                                       <label for="mosquads"></label>
+                                                       <input  type="radio" 
+                                                               name="areaOfInterest" 
+                                                               value="mosquads"
+                                                               class="filterRadio" 
+                                                               checked
+                                                               formControlName="areaOfInterest">
+                                                       <label for="areaOfInterest"></label>
                                                 </div>
                                     </div>
 
@@ -237,17 +247,31 @@
 
                                          <div class="driveLabel">First Gen</div>
                                             <div class="driveCheckbox"> 
-                                                <input  type="checkbox" name="driveType"  checked id="firstGen"  class="filterCheckbox" formControlName="firstGenDriveType">
+                                                <input  type="checkbox" 
+                                                        name="firstGenDriveType"  
+                                                        value="FIRSTGEN"
+                                                        checked id="firstGen"  
+                                                        class="filterCheckbox" 
+                                                        formControlName="firstGenDriveType">
                                                 <label for="firstGen"></label>
                                             </div>
                                          <div class="driveLabel">TRUE 1.O</div>
                                                 <div class="driveCheckbox">
-                                                    <input  type="checkbox" name="driveType" id="true1" class="filterCheckbox" formControlName="true1DriveType">
+                                                    <input  type="checkbox" 
+                                                            name="true1DriveType" 
+                                                            value="TRUE1" id="true1" 
+                                                            class="filterCheckbox" 
+                                                            formControlName="true1DriveType">
                                                     <label for="true1"></label>
                                                 </div>
                                          <div class="driveLabel">HERE TRUE</div>
                                                 <div class="driveCheckbox"> 
-                                                    <input  type="checkbox" name="driveType" id="hereTrue" class="filterCheckbox" formControlName="hereTrueDriveType">
+                                                    <input  type="checkbox" 
+                                                            name="hereTrueDriveType" 
+                                                            value="HERETRUE"
+                                                            id="hereTrue" 
+                                                            class="filterCheckbox" 
+                                                            formControlName="hereTrueDriveType">
                                                     <label for="hereTrue"></label>
                                                 </div>
                                    </div> 
@@ -350,9 +374,9 @@
 
                      
                     <span class="dot">•</span>
-                    <input  type="text" placeholder="Enter preset label" class="form-control" formControlName="presetLable">
+                    <input  type="text" placeholder="Enter preset label" class="form-control" formControlName="presetLabel">
                     </div>
-                    <button type="submit" [disabled]="!filterServiceForm.valid">Submit</button>
+                    <button type="submit" >Submit</button>
                 </div>
             </form>
 <!-- End of CSV generation Template -->

@@ -111,7 +111,7 @@ export class JobsCreateComponent implements OnInit {
                        true1DriveType:['',Validators.compose([])],
                        hereTrueDriveType:['',Validators.compose([])],
                        areaOfInterest:['mosquads',Validators.compose([Validators.required])],
-                       input:['',Validators.compose([Validators.required
+                       input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.mosquadIdValidator])],
@@ -119,7 +119,7 @@ export class JobsCreateComponent implements OnInit {
                        driveEndDate:['',Validators.compose([Validators.required])],
                        qualityTreshold:['',Validators.compose([Validators.required])],
                        saveAsPreset:['',Validators.compose([])],
-                       presetLable:['',Validators.compose([])]
+                       presetLabel:['',Validators.compose([Validators.required])]
                });
      }
 

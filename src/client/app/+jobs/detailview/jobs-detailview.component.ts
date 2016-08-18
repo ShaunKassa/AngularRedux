@@ -78,7 +78,10 @@ export class JobsDetailviewComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         let id = parseInt(this._route.snapshot.params['id'], 10);
-        $(this._el.nativeElement).find('#' + id)[0].scrollIntoView();
+        let targetEl = $(this._el.nativeElement).find('#' + id)[0];
+        if(targetEl) {
+            targetEl.scrollIntoView();
+        }
     }
 
 }
