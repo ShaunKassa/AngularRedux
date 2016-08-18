@@ -35,7 +35,7 @@
 
                            <div class="label">Validation Type</div>
                            <span class="dot">•</span><select  class="select" formControlName="validationType">
-                             <option selected>validatePanoCount</option>
+                             <option>validatePanoCount</option>
                            </select>
 
                            <div class="label">Submission Type</div>
@@ -190,17 +190,17 @@
                         <div class= "rightContent"> 
                                <div class="label">Preset</div>
                                <span class="dot">•</span>
-                               <select class="select">
+                               <select class="select" formControlName="preset">
                                  <option value="" selected disabled>none</option>
                                </select>
 
                                <div class="label">Instance label</div>
                                <span class="dot">•</span>
-                               <input  type="text" placeholder="Enter label" class="form-control" >
+                               <input  type="text" placeholder="Enter label" class="form-control" formControlName="instanceLabel">
 
                                <div class="label">Publication Date</div>
                                <span class="dot">•</span>
-                               <input  type="date">
+                               <input  type="date" formControlName="publicationDate">
 
                                <div class="label">Area of interest</div>
                                     <div class="areaCheckboxs">
@@ -208,25 +208,25 @@
 
                                                 <div class="areaLabel">Bounding Box</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" name="areaInterest"  checked  class="filterRadio">
+                                                       <input  type="radio" name="areaOfInterest"  checked  class="filterRadio" formControlName="areaOfInterest">
                                                        <label for="boundbox"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Tile Coordinates</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" name="areaInterest" class="filterRadio">
+                                                       <input  type="radio" name="areaOfInterest" class="filterRadio" formControlName="areaOfInterest">
                                                        <label for="tileCoord"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" name="areaInterest" class="filterRadio">
+                                                       <input  type="radio" name="areaOfInterest" class="filterRadio" formControlName="areaOfInterest">
                                                        <label for="mosquads"></label>
                                                 </div>
                                     </div>
 
 
-                               <textarea class= "CSVtextarea" rows="144"  placeholder="Enter input here" required >  </textarea>            
+                               <textarea class= "CSVtextarea" rows="144"  placeholder="Enter input here" required formControlName="input">  </textarea>            
 
                                <div class="label">Drive type</div>
                                    <div class="driveCheckboxs" > 
@@ -234,17 +234,17 @@
 
                                          <div class="driveLabel">First Gen</div>
                                             <div class="driveCheckbox"> 
-                                                <input  type="checkbox" name="driveType"  checked  class="filterCheckbox" >
-                                                <label for="fistGen"></label>i
+                                                <input  type="checkbox" name="driveType"  checked  class="filterCheckbox" formControlName="driveType">
+                                                <label for="fistGen"></label>
                                             </div>
                                          <div class="driveLabel">TRUE 1.O</div>
                                                 <div class="driveCheckbox">
-                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" >
+                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" formControlName="driveType">
                                                     <label for="true1"></label>
                                                 </div>
                                          <div class="driveLabel">HERE TRUE</div>
                                                 <div class="driveCheckbox"> 
-                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" >
+                                                    <input  type="checkbox" name="driveType" class="filterCheckbox" formControlName="driveType">
                                                     <label for="hereTrue"></label>
                                                 </div>
                                    </div> 
@@ -253,13 +253,13 @@
                                    <div class = "startDate">
                                          <div class="label">Drive Start date</div>
                                          <span class="dot">•</span>
-                                         <input  type="date" />
+                                         <input  type="date" formControlName="driveStartDate">
                                    </div>
 
                                    <div class = "endDate">
                                          <div class="label">Drive End date</div>
                                          <span class="dot">•</span>
-                                         <input type="date" required />
+                                         <input type="date" required formControlName="driveEndDate">
                                    </div>
                                </div>
 
@@ -289,13 +289,13 @@
 
                                    <tr *ngFor="let item of filterList; let idx = index"> 
                                        <td>
-                                          <select class="providerSelect"  required >
+                                          <select class="providerSelect"  required formControlName="provider">
                                                   <option value="" selected disabled>Select</option>
                                                   <option >RCP</option>
                                          </select>
                                        </td>
                                        <td>
-                                          <select class="attributeSelect"  required >
+                                          <select class="attributeSelect"  required formControlName="attributeTypes">
                                                   <option value="" selected disabled>Select</option>
                                                   <option *ngFor="let attributeType of attributeTypes" >{{attributeType}}</option>
                                          </select>
@@ -332,22 +332,23 @@
 
                        <div class="label">Quality threshold</div>
                            <span class="dot">•</span>
-                           <input  type="text" placeholder="Enter minimum quality requirement (in %)" class="form-control">
+                           <input  type="text" placeholder="Enter minimum quality requirement (in %)" class="form-control" formControlName="qualityTreshold">
 
-                           <div class="preset" >
-                               <div class="presetLabel">Save as preset</div>
-                               <div class="presetCheckbox">
-                                   <input type="checkbox" class="presetFilter">i
-                                   <label for="persetFilter"></label><br/>
-                               </div>
-                           </div>
-                           
-                            <span class="dot">•</span>
-                            <input  type="text" placeholder="Enter preset label" class="form-control">
-                       </div>
-                       <button type="submit" [disabled]="!filterServiceForm.valid">Submit</button>
+                     <div class="preset" >
+                         <div class="presetLable">Save as preset</div>
+                         <div class="presetCheckbox">
+                             <input type="checkbox" class="presetFilter" formControlName="saveAsPreset">
+                             <label for="persetFilter"></label><br/>
+                         </div>
                     </div>
-               </form>
+
+                     
+                    <span class="dot">•</span>
+                    <input  type="text" placeholder="Enter preset label" class="form-control" formControlName="presetLable">
+                    </div>
+                    <button type="submit" [disabled]="!filterServiceForm.valid">Submit</button>
+                </div>
+            </form>
 <!-- End of CSV generation Template -->
 
 

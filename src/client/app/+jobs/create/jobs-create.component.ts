@@ -25,6 +25,22 @@ export class JobsCreateComponent implements OnInit {
         'PreIngest',
         'CSV generation'
     ];
+
+    attributeTypes = ['ORIENT','XYALIGN','ZJUMP','INTERVAL','DRIFT',
+                      'LOWERED','ACCURACY','LENSOB','UNDEREXP','OVEREXP',
+                      'FOGGING','CARMASK','SEAMLINE','SINGLE_CAM_EXP','ALIGNMENT',
+                      'DROPPACK','SENSORCAL','LIDARFAIL','SKYNOISE'
+    ];
+    
+    filterList: Object[] = [
+        {
+            filterInputLow : '33',
+            filterInputMedium : '33',
+            filterInputHigh : '33'
+        }
+    ];
+
+
     selectedJobType = 'Default';
 
      constructor(private formBuilder:FormBuilder) { }
@@ -35,9 +51,9 @@ export class JobsCreateComponent implements OnInit {
                this.depthGenerationForm = this.formBuilder.group({
                       city: ['',Validators.compose([Validators.required])],
                       publicationDate:['',Validators.compose([Validators.required])],
- 	    		      validationType:['',Validators.compose([Validators.required])],
+ 	    		      validationType:['validatePanoCount',Validators.compose([Validators.required])],
                       submissionType:['',Validators.compose([Validators.required])],
-	    		      inputType:['',Validators.compose([Validators.required])],
+	    		      inputType:['drive',Validators.compose([Validators.required])],
                       input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
@@ -83,6 +99,7 @@ export class JobsCreateComponent implements OnInit {
                        preset:['',Validators.compose([Validators.required])],
                        instanceLabel:['',Validators.compose([Validators.required])],
                        publicationDate:['',Validators.compose([Validators.required])],
+                       driveType:['',Validators.compose([Validators.required])],
                        areaOfInterest:['',Validators.compose([Validators.required])],
                        input:['',Validators.compose([Validators.required])],
                        driveStartDate:['',Validators.compose([Validators.required])],
@@ -160,6 +177,20 @@ export class JobsCreateComponent implements OnInit {
            this.selectedJobType = jobType;
            $('li.items').removeClass('highlight');
            $($event.target).addClass('highlight');
+      }
+
+      addFilter(add:Boolean) {
+          this.filterList.push(
+              {
+               filterInputLow : '33',
+               filterInputMedium : '33',
+               filterInputHigh : '33'
+              }
+          );
+      }
+
+      deleteFilter(idx:Number) {
+          this.filterList.splice(idx, 1);
       }
 
       private emptyLineValidator(control: FormControl):{[s: string] } {
