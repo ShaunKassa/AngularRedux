@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { NgSwitch, NgSwitchCase } from '@angular/common';
 
 import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component'; 
+import { JobsService } from '../../shared/services/jobs.service';
 
 @Component({
   moduleId: module.id,
@@ -47,7 +48,7 @@ export class JobsCreateComponent implements OnInit {
 
     selectedJobType = 'Default';
 
-     constructor(private formBuilder:FormBuilder) { }
+     constructor(private formBuilder:FormBuilder, private _jobsService: JobsService) { }
      
 
      ngOnInit() {
@@ -115,7 +116,7 @@ export class JobsCreateComponent implements OnInit {
                        input:['',Validators.compose([Validators.required])],
                        driveStartDate:['',Validators.compose([Validators.required])],
                        driveEndDate:['',Validators.compose([Validators.required])],
-                       qualityTreshold:['',Validators.compose([Validators.required])],
+                       qualityThreshold:['',Validators.compose([Validators.required])],
                        saveAsPreset:['',Validators.compose([])],
                        presetLabel:['',Validators.compose([Validators.required])]
                });
@@ -192,9 +193,45 @@ export class JobsCreateComponent implements OnInit {
             value['filterList' + filterIndex].qualityFilterMedium = this.filterList[index].filterInputMedium;
             value['filterList' + filterIndex].weight = this.filterList[index].weight;
         });
+        let providers = [];
+        this._filterIndices.forEach((filterIndex: number, index: number) => {
+            providers[index] = {
+                provider: {
+                    provider: value['filterList' + filterIndex].provider,
+                    name: value['filterList' + filterIndex].attributeTypes
+                },
+                weight: value['filterList' + filterIndex].weight,
+                qweihgts:[
+                {
+                    name: 'LOW',
+                    weight: value['filterList' + filterIndex].qualityFilterLow
+                },
+                {
+                    name: 'MEDIUM',
+                    weight: value['filterList' + filterIndex].qualityFilterMedium
+                },
+                {
+                    name: 'HIGH',
+                    weight: value['filterList' + filterIndex].qualityFilterHigh
+                }
+                ]
+            }; 
+        });
+        let box = value.input.split(',');
         let filterPayload = {
+            minLat: box[0],
+            minLon: box[1],
+            maxLat: box[2],
+            maxLon: box[3],
+            dataFormats: 'AMA',
+            kind: 'box',
+            qualityFilter: {
+                qualityThreshold: value.qualityThreshold,
+                providers: providers
+            }
         };
-        console.log(value);
+        console.log(filterPayload);
+        this._jobsService.saveFilters(filterPayload).subscribe(data => console.log(data));
         /*
         {
           "minLat": 48.82324,

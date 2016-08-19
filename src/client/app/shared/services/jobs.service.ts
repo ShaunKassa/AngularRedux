@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/reduce';
@@ -19,6 +19,7 @@ import 'rxjs/add/operator/catch';
 export class JobsService {
 
    endpoint: string = 'http://52.10.1.113:3000/api/';
+   filterService: string = 'http://index-service.rcp-p.solo-experiments.com:80/api/rest/v1/filter/box';
 
   /**
    * Creates a new JobsService with the injected Http.
@@ -69,6 +70,15 @@ export class JobsService {
   fetchJobTypes(): Observable<any> {
       return this.http.get(this.endpoint + 'Jobtypes')
           .map(res => res.json());
+  }
+
+  saveFilters(filtersPayload): Observable<any> {
+    let body = JSON.stringify(filtersPayload);
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Request-Method': this.filterService });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(this.filterService, body, options)
+                    .catch(this.handleError);
   }
 
   private generatePercentages(job: any) {
