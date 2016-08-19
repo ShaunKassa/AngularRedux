@@ -28,10 +28,10 @@
                                     stroke="#273142" 
                                     stroke-dasharray="251.3"/>
                         </svg>
-                        <p class="percentage" *ngIf ="(runningJob.slice3 + runningJob.slice4) < 100">
+                        <p class="percentage" *ngIf ="runningJob.percent < 100">
                          {{runningJob.percent}}<span>%</span>
                         </p>
-                        <p class="percentage" *ngIf ="(runningJob.slice3 + runningJob.slice4) == 100">
+                        <p class="percentage" *ngIf ="runningJob.percent == 100">
                         done 
                         </p>
                     </div>
