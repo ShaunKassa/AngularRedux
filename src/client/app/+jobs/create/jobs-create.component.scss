@@ -1,12 +1,28 @@
+@mixin flexRow {
+    display:flex;
+    flex-direction:row;
+} 
+
+@mixin flexCenterContent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+@mixin fontStyleFamily {
+    font-family:consolas;
+    font-style:Italic;
+}
+
+
 .alert {
+  @include fontStyleFamily;
   width:376px;
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid transparent;
   border-radius: 1px;
   margin-left:16px;
-  font-family:consolas;
-  font-style:Italic;
   font-size:12px;
 }
 .alert-danger {
@@ -23,23 +39,21 @@
    z-index:4;
 }
 .header {
+  @include flexRow;
   height:40px;
   background-color:#010B1E;
   padding-left:32px;
   padding-right:32px;
-  display:flex;
-  flex-direction:row;
   .title {
+      @include flexCenterContent;
       padding:0px;
       margin:0px;
       color:#FFFFFF;
       font-size:18px;
       font-family:'Nokia Pure Text Light';
-      display: flex;
-      justify-content: center;
-      align-items: center;
   }
   .cancel {
+      @include flexCenterContent;
       padding:0px;
       margin:0px;
       margin-left:auto;
@@ -51,20 +65,16 @@
       color:#273142;
       margin-top:auto;
       margin-bottom:auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       cursor:pointer;
   }
 }
 
 .content {
+    @include flexRow;
     background-color:#DDE5E9;
     position:absolute;
     width:100%;
     height:100%;
-    display:flex;
-    flex-direction:row;
     .leftOptions {
         width:314px;
         height:520px;
@@ -79,11 +89,10 @@
             background-color:#FFFFFF;
         }
         .title {
+            @include fontStyleFamily;
 			text-align:center;
             font-color:#273142;
             font-size:16px;
-            font-family:consolas;
-            font-style:Italic;
             margin-top:20px;
             margin-bottom:20px;
         }
@@ -94,11 +103,10 @@
             display:block;
              
             li {
+                @include fontStyleFamily;
                 height:24px;
                 width:274px;
-                font-family:consolas;
                 color:#273142;
-                font-style:Italic;
                 font-size:16px;
                 margin:none;
                 padding:none;
@@ -108,14 +116,13 @@
                 padding-bottom:12px;
                 line-height:27px;
                 span {
+                   @include fontStyleFamily;
                    display:inline-block;
                    width:16px;
                    margin-right:2px;
                    margin-left:0px;
-                   font-family:consolas;
                    color:#BEC8D2;
                    font-size:11px;
-                   font-style:Italic;
                }
            }
         }
@@ -127,8 +134,7 @@
        margin-top:50px;
        padding:0px;
        .label {
-           font-family:consolas;
-           font-style:Italic;
+           @include fontStyleFamily;
            font-size:16px;
            color:#273142;
            height:24px;
@@ -146,42 +152,38 @@
            padding-left:54px;
 
            .default {
+               @include fontStyleFamily;
 	           text-align:center;
-               font-family:consolas;
-               font-style:Italic;
                margin-top:200px;
                font-size:13px;
            }
            .title {
+               @include fontStyleFamily;
 	           text-align:center;
                font-color:#273142;
                font-size:16px;
-               font-family:consolas;
-               font-style:Italic;
                margin-top:20px;
            }
            .rightContent {
                 height:437px;
                 overflow-y:scroll;
                   input[type=text] {
+                      @include fontStyleFamily;
                       width:376px;
                       height:24px;
                       border:none;
                       outline:none;
                       background-color:#EBF0F2;
-                      font-style:Italic;
                       font-size:13px;
-                      font-family:consolas;
                       color:#00C9FF;
                   }
                   input[type=date] {
+                      @include fontStyleFamily;
                       height:24px;
                       border:none;
                       outline:none;
                       background-color:#EBF0F2;
-                      font-style:Italic;
                       font-size:13px;
-                      font-family:consolas;
                       color:#BEC8D2;
                   }
                   .dot {
@@ -192,38 +194,34 @@
                       margin-left:15px;
                   }
                   span {
+                      @include fontStyleFamily;
                       margin-left:10px;
                       margin-right:20px;
-                      font-family:consolas;
-                      font-style:Italic;
                   }
                   .date {
+                      @include fontStyleFamily;
                       width:376px;
                       height:24px;
-                      font-family:consolas;
                       font-size:13px;
-                      font-style:Italic;
                       color:#BEC8D2;
                       border:none;
                       background-color:#EBF0F2;
 
                   }
                    .select {
+                      @include fontStyleFamily;
                       width:376px;
                       height:24px;
-                      font-family:consolas;
                       font-size:13px;
-                      font-style:Italic;
                       border:none;
                       background-color:#EBF0F2;
                       color:#BEC8D2;
                   }
                   textarea {
+                      @include fontStyleFamily;
                       width:376px;
                       height:94px;
                       font-size:13px;
-                      font-style:Italic;
-                      font-family:consolas;
                       font-size:13px;
                       background-color:#DDE5E9;
                       margin-left:15px;
@@ -233,10 +231,9 @@
                       padding-bottom:10px;
                   }
                   .message {
+                      @include fontStyleFamily;
                       text-align:center;
                       font-size:12px;
-                      font-family:consolas;
-                      font-style:Italic;
                       border-bottom:10px;
                   }          
            }
@@ -262,18 +259,16 @@ button:disabled {
 }
 
 .areaCheckboxs {
-    display:flex;
-    flex-direction:row;
+    @include flexRow;
     .dot {
         height:24px;
         vertical-align:middle;
         line-height:24px;
     }
     .areaLabel {
+        @include fontStyleFamily;
         color:#BEC8D2;
         margin-right:10px;
-        font-style:Italic;
-        font-family:Consolas;
         font-size:13px;
         height:24px;
         vertical-align:middle;
@@ -287,28 +282,23 @@ button:disabled {
 }
 
 .driveCheckboxs {
-    display:flex;
-    flex-direction:row;
-    .dot {
-        height:24px;
-        vertical-align:middle;
-        line-height:24px;
-    }
-    .driveLabel {
-        color:#BEC8D2;
-        margin-right:10px;
-        font-style:Italic;
-        font-family:Consolas;
-        font-size:13px;
-        height:24px;
-        vertical-align:middle;
-        line-height:24px;
-    }
-    .driveCheckbox {
-        width:24px;
-        height:24px;
-    }
-
+    @include flexRow;
+    @include fontStyleFamily;
+    height:24px;
+       .dot {
+           vertical-align:middle;
+           line-height:24px;
+       }
+       .driveLabel {
+           color:#BEC8D2;
+           margin-right:10px;
+           font-size:13px;
+           vertical-align:middle;
+           line-height:24px;
+       }
+       .driveCheckbox {
+           width:24px;
+       }
 }
 
 .CSVtextarea {
@@ -368,22 +358,16 @@ input[type=checkbox]:checked + label {
 }
 
 .driveDates {
-    display:flex;
-    flex-direction:row;
+    @include flexRow;
     width:376px;
-    .startDate {
-        width:188px;
-    }
-    .endDate {
-        width:188px;
-    }
+        .startDate,.endDate {
+            width:188px;
+        }
 }
 .preset {
-       display:flex;
-       flex-direction:row;
+       @include flexRow;
        .presetLable {
-                  font-family:consolas;
-                  font-style:Italic;
+                  @include fontStyleFamily;
                   font-size:16px;
                   color:#273142;
                   height:24px;
@@ -411,8 +395,7 @@ input[type=checkbox]:checked + label {
         border-left:1px solid #FFFFFF;
     }
     .provider {
-        font-family:consolas;
-        font-style:Italic;
+        @include fontStyleFamily;
         color:#273142;
         font-weight:lighter;
         column-width:124px;
@@ -421,40 +404,36 @@ input[type=checkbox]:checked + label {
         padding:0px;
     }
     .attribute {
-        font-family:consolas;
-        font-style:Italic;
+        @include fontStyleFamily;
         color:#273142;
         font-weight:lighter;
         width:19.682539682539684%;
         text-align:left;
     }
     .quality {
-        font-family:consolas;
-        font-style:Italic;
+        @include fontStyleFamily;
         color:#273142;
         font-weight:lighter;
         width:33.01587301587301%;
         text-align:left;
     }
     .weight {
-        font-family:consolas;
-        font-style:Italic;
+        @include fontStyleFamily;
+        color:#273142;
         color:#273142;
         font-weight:lighter;
         width:7.6190476190476195%;
         text-align:left;
     }
     .secondRow {
-        display:flex;
-        flex-direction:row;
+       @include flexRow;
     }
     .low, .medium, .high,.weightLabel {
+        @include fontStyleFamily;
         text-align: center;
         vertical-align: middle;
         line-height: 24px; 
-        font-family:consolas;
         font-size:11px;
-        font-style:Italic;
         font-weight:lighter;
         height:24px;
         padding:0px;
@@ -465,11 +444,10 @@ input[type=checkbox]:checked + label {
         width:64px;
     }
     .providerSelect, .attributeSelect {
+        @include fontStyleFamily;
         width:116px;
         height:20px;
-        font-family:consolas;
         font-size:11px;
-        font-style:Italic;
         border:none;
         background-color:#EBF0F2;
         color:black;
@@ -504,9 +482,8 @@ input[type=checkbox]:checked + label {
    
 }
 .addFilter {
+     @include flexRow;
      height:24px;
-     display:flex;
-     flex-direction:row;
         .addButton  {
          display:inline-block;
          width:24px;
@@ -520,10 +497,9 @@ input[type=checkbox]:checked + label {
 
        }
        .addMessage {
+           @include fontStyleFamily;
            display:inline-block;
-           font-family:consolas;
            font-size:13px;
-           font-style:Italic;
            text-align:left;
            color:#BEC8D2;
            height:24px;
@@ -534,6 +510,7 @@ input[type=checkbox]:checked + label {
 }
 
 .weightInput {
+    @include fontStyleFamily;
     display:inline;
     width:59px;
     margin-right:0px;
@@ -541,15 +518,13 @@ input[type=checkbox]:checked + label {
     text-align:center;
     background-color:#EBF0F2;
     font-size:13px;
-    font-family:consolas;
     font-color:#273142;
-    font-style:Italic;
     border:none;
     box-sizing:content-box;
 }
 
 td.weightInputTd {
-    padding:0px;
+    padding-bottom:24px;
     margin-bottom:24px;
 }
 
