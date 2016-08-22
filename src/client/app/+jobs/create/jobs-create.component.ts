@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { NgSwitch, NgSwitchCase } from '@angular/common';
 
 import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component'; 
@@ -41,10 +41,6 @@ export class JobsCreateComponent implements OnInit {
             weight: 0
         }
     ];
-
-    _filterIndices: Array<Number> = [0];
-    _filterCurrentIndex: Number = 0;
-
 
     selectedJobType = 'Default';
 
@@ -98,14 +94,14 @@ export class JobsCreateComponent implements OnInit {
                });
 
                this.filterServiceForm = this.formBuilder.group({
-                       filterList0: this.formBuilder.group({
+                       filterList: new FormArray([this.formBuilder.group({
                            attributeTypes:['',Validators.compose([Validators.required])],
                            provider:['',Validators.compose([Validators.required])],
                            weight:['',Validators.compose([Validators.required])],
                            qualityFilterLow:['',Validators.compose([Validators.required])],
                            qualityFilterMedium:['',Validators.compose([Validators.required])],
                            qualityFilterHigh:['',Validators.compose([Validators.required])]
-                       }),
+                       })]),
                        preset:['',Validators.compose([])],
                        instanceLabel:['',Validators.compose([Validators.required])],
                        publicationDate:['',Validators.compose([Validators.required])],
@@ -187,32 +183,32 @@ export class JobsCreateComponent implements OnInit {
     }
 
     buildFilterModel(value) {
-        this._filterIndices.forEach((filterIndex: number, index: number) => {
-            value['filterList' + filterIndex].qualityFilterHigh = this.filterList[index].filterInputHigh;
-            value['filterList' + filterIndex].qualityFilterLow = this.filterList[index].filterInputLow;
-            value['filterList' + filterIndex].qualityFilterMedium = this.filterList[index].filterInputMedium;
-            value['filterList' + filterIndex].weight = this.filterList[index].weight;
+        this.filterList.forEach((fitler: any, index: number) => {
+            value.filterList[index].qualityFilterHigh = filter.filterInputHigh;
+            value.filterList[index].qualityFilterLow = filter.filterInputLow;
+            value.filterList[index].qualityFilterMedium = filter.filterInputMedium;
+            value.filterList[index].weight = filter.weight;
         });
         let providers = [];
-        this._filterIndices.forEach((filterIndex: number, index: number) => {
+        this.filterList.forEach((filter: any, index: number) => {
             providers[index] = {
                 provider: {
-                    provider: value['filterList' + filterIndex].provider,
-                    name: value['filterList' + filterIndex].attributeTypes
+                    provider: value.filterList[index].provider,
+                    name: value.filterList[index].attributeTypes
                 },
-                weight: value['filterList' + filterIndex].weight,
+                weight: value.filterList[index].weight,
                 qweihgts:[
                 {
                     name: 'LOW',
-                    weight: value['filterList' + filterIndex].qualityFilterLow
+                    weight: value.filterList[index].qualityFilterLow
                 },
                 {
                     name: 'MEDIUM',
-                    weight: value['filterList' + filterIndex].qualityFilterMedium
+                    weight: value.filterList[index].qualityFilterMedium
                 },
                 {
                     name: 'HIGH',
-                    weight: value['filterList' + filterIndex].qualityFilterHigh
+                    weight: value.filterList[index].qualityFilterHigh
                 }
                 ]
             }; 
@@ -270,8 +266,6 @@ export class JobsCreateComponent implements OnInit {
       }
 
       addFilter(add:Boolean) {
-          this._filterCurrentIndex = this._filterCurrentIndex + 1;
-          this._filterIndices.push(this._filterCurrentIndex)
           this.filterList.push(
               {
                filterInputLow : 33,
@@ -280,19 +274,19 @@ export class JobsCreateComponent implements OnInit {
                weight: 0
               }
           );
-          this.filterServiceForm.controls['filterList' + this._filterCurrentIndex] = this.formBuilder.group({
+          this.filterServiceForm.controls['filterList'].push(this.formBuilder.group({
                            attributeTypes:['',Validators.compose([Validators.required])],
                            provider:['',Validators.compose([Validators.required])],
                            weight:['',Validators.compose([Validators.required])],
                            qualityFilterLow:['',Validators.compose([Validators.required])],
                            qualityFilterMedium:['',Validators.compose([Validators.required])],
                            qualityFilterHigh:['',Validators.compose([Validators.required])]
-                       });
+                       }));
       }
 
       deleteFilter(idx:Number) {
           this.filterList.splice(idx, 1);
-          this.filterServiceForm.controls['filterList' + this._filterIndices[idx]] = undefined;
+          this.filterServiceForm.controls['filterLists'].removeAt(idx);
           this._filterIndices.splice(idx, 1);
       }
 

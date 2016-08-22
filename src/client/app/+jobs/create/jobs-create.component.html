@@ -293,7 +293,7 @@
                                </div>
 
                                <div class="label">Quality filters</div>
-                               <table class="qualityFilter">
+                               <table class="qualityFilter" formArrayName="filterList">
                                    <tr>
                                        <th class = "provider">provider</th>
                                        <th class = "attribute">attribute</th>
@@ -316,7 +316,7 @@
                                        <td></td>
                                    </tr>
 
-                                   <tr *ngFor="let item of filterList; let idx = index" formGroupName="filterList{{idx}}"> 
+                                   <tr *ngFor="let item of filterList; let idx = index" formGroupName="{{idx}}"> 
                                        <td>
                                            <select class="providerSelect"  required 
                                                formControlName="provider">
