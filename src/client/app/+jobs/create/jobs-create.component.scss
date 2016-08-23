@@ -547,7 +547,16 @@ td.weightInputTd {
   line-height: 20px;
 }
 
-
+.qualityThreshold {
+      @include fontStyleFamily;
+      width:376px;
+      height:24px;
+      border:none;
+      outline:none;
+      background-color:#EBF0F2;
+      font-size:13px;
+      color:#00C9FF;
+}
 
 
 

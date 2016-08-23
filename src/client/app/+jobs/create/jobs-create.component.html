@@ -358,9 +358,9 @@
                             <div class="addMessage">add a new quality filter</div>
                        </div>
 
-                       <div class="label">Quality threshold</div>
+                       <div class="label">Quality threshold (in %)</div>
                            <span class="dot">•</span>
-                           <input  type="text" placeholder="Enter minimum quality requirement (in %)" class="form-control" formControlName="qualityThreshold">
+                           <input  type="number" min="0" max="100" placeholder="Enter minimum quality requirement (in %)" class="qualityThreshold" formControlName="qualityThreshold">
 
                      <div class="preset" >
                          <div class="presetLable">Save as preset</div>
