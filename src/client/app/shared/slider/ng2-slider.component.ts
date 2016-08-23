@@ -30,8 +30,8 @@ export enum RangeHandle {Start, End, Both}
 
 export class Ng2SliderComponent implements ISkinable{
 
-    @Input() min:any;
-    @Input() max:any;
+    @Input() min:any  = 0;
+    @Input() max:any  = 100;
     @Input() startValue:any;
     @Input() middleValue:any;
     @Input() midValue:any;
@@ -167,7 +167,6 @@ export class Ng2SliderComponent implements ISkinable{
      */
 
     valueChanged(el: any, handle:RangeHandle = RangeHandle.Both) {
-
         if (handle == RangeHandle.Both || handle == RangeHandle.Start) {
             // Affixing start value to the step grid
             this.startValue = this.initialStartValue + Math.round((this.startValue - this.initialStartValue) / this.stepValue) * this.stepValue ;
@@ -254,6 +253,23 @@ export class Ng2SliderComponent implements ISkinable{
 
     }
 
+    endValueChanged(){
+            if ((parseInt(this.startValue) + this.endValue) < 100 ) {
+                  this.midValue = 100 - (parseInt(this.startValue) + this.endValue);
+                  this.middleValue = parseInt(this.startValue) + this.midValue;
+            } else if ((parseInt(this.startValue) + this.endValue) > 100 ) {
+                  let diff:number = this.endValue - this.midValue;
+                  this.midValue = 0;
+                  this.startValue = 100 - this.endValue;
+                  this.middleValue = this.startValue;
+            }
+            // Force end handle to redrawing
+            this.handlers.End.redraw(this.range.calculateXFromValue(this.middleValue), 0);
+            this.handlers.Start.redraw(this.range.calculateXFromValue(this.startValue), 0);
+            this.CDR.markForCheck();
+            this.CDR.detectChanges();
+    }
+
     ngAfterViewInit() {
 
         /**
@@ -325,27 +341,11 @@ export class Ng2SliderComponent implements ISkinable{
 
     }
 
-    onOverlap() {
-
-    }
     rangeChangedTrigger() {
         //this.rangeChangedEvent.emit({start: this.startValue, end: this.middleValue});
         this.rangeChangedEvent.emit(this);
     }
 
-    setStartValue(v:any) {
-        this.startValue = v;
-        this.valueChanged(RangeHandle.Start);
-        this.CDR.detectChanges();
-        this.CDR.markForCheck();
-    }
-
-    setEndValue(v:any) {
-        this.middleValue = v;
-        this.valueChanged(RangeHandle.End);
-        this.CDR.detectChanges();
-        this.CDR.markForCheck();
-    }
 
     onStopSliding(event: IEventSlideAble) {
         this.rangeChangedTrigger();
@@ -356,15 +356,6 @@ export class Ng2SliderComponent implements ISkinable{
         var handle = RangeHandle.Both;
         if (event.elementId == this.id+'-left-handle') handle = RangeHandle.Start;
         if (event.elementId == this.id+'-right-handle') handle = RangeHandle.End;
-  //      //Check for overlap
-  //      if ( handle == 0 && 
-  //           ((event.relativePercentHorisontal + 1 ) >= parseInt(this.middleValue) || 
-  //           (event.relativePercentHorisontal + 2 ) >= parseInt(this.middleValue))) {
-  //           console.log(parseInt(this.middleValue));
-  //           this.startValue = parseInt(this.middleValue) - 1;
-  //           this.valueChanged(RangeHandle.Start);
-  //           return false;              
-  //      }
 
         //Update input values        
         this.refreshInputBoxByPercent(event.relativePercentHorisontal, handle);

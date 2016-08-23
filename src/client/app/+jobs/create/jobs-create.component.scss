@@ -302,8 +302,7 @@ input[type=radio] {
     display:none;
 }
 
-input[type=radio] + label
-{
+input[type=radio] + label {
     background:url("../../assets/icons/radio_off_normal.png") no-repeat;
     height:24px;
     width:24px;
