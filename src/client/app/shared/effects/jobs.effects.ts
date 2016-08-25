@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {Store, Action} from "@ngrx/store";
 import {StateUpdates, Effect, toPayload} from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
-import { S3 } from 'aws-sdk';
 import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/mapTo";
 import "rxjs/add/observable/bindCallback";

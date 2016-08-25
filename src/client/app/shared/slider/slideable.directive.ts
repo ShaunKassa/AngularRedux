@@ -38,7 +38,7 @@ export class SlideAbleDirective {
 
     @Input('slideDirection') direction:string;
 
-    @Input() set boundElement(elementId) {
+    @Input() set boundElement(elementId:any) {
         this.signatures = {
             top: elementId + ':top',
             bottom: elementId + ':bottom',
@@ -84,12 +84,12 @@ export class SlideAbleDirective {
     /**
      * @deprecated
      */
-    @Input() normalStyle: Object;
+    @Input() normalStyle: any;
 
     /**
      * @deprecated
      */
-    @Input() slidingStyle: Object;
+    @Input() slidingStyle: any;
     
     @Input() step: any = 1;
     @Input() parent: any = null;
@@ -116,15 +116,15 @@ export class SlideAbleDirective {
     constructor(private el:ElementRef, private renderer: Renderer, private _view: ViewContainerRef) {
     }
 
-    private zeroLeft;
-    private zeroTop;
+    private zeroLeft:any;
+    private zeroTop:any;
     
     // Dummies for callback functions
-    public checkXBeforeRedraw = null;
-    public checkYBeforeRedraw = null;
+    public checkXBeforeRedraw:any = null;
+    public checkYBeforeRedraw:any = null;
 
-    private lastX = null;
-    private lastY = null;
+    private lastX:any = null;
+    private lastY:any = null;
 
     private styledInstance: any;
     
@@ -149,10 +149,10 @@ export class SlideAbleDirective {
             // apply "styleable" directive with converted settings
             // in other case deprecated settings will be ignored
             this.styledInstance = new Ng2StyledDirective(this.el, <any>this._view);
-            var styleBlockArray = [];
+            var styleBlockArray:any[] = [];
 
             if (this.normalStyle) {
-                let styleBlock = '';
+                let styleBlock:any = '';
                 for (let idx in this.normalStyle) {
                     styleBlock += `${idx}: ${this.normalStyle[idx]}; `;
                 }
@@ -174,7 +174,7 @@ export class SlideAbleDirective {
             this.styledInstance = this._styledDirectives.first;
         }
 
-        var timer;
+        var timer:any;
         var scrollStartX = 0;
         var scrolling = false;
 
@@ -212,7 +212,7 @@ export class SlideAbleDirective {
 
     }
 
-    slideStart(e) {
+    slideStart(e:any) {
         
         // deny dragging and selecting
         document.ondragstart = function () {
@@ -225,11 +225,11 @@ export class SlideAbleDirective {
         // Calculate dynamic limits every time when sliding was started
         this.calcDynamicLimits();
 
-        function dragProcess(event) {
+        function dragProcess(event:any) {
             this.redraw(event.clientX, event.clientY);
         }
 
-        function dragProcessTouch(event) {
+        function dragProcessTouch(event:any) {
             var touches = event.changedTouches;
             console.log('Touch');
             for (var i = 0; i < touches.length; i++) {
@@ -294,7 +294,7 @@ export class SlideAbleDirective {
      * @param y
      * @returns {*}
      */
-    redraw(x, y) {
+    redraw(x:any, y:any) {
 
         // We can't calculate any values that depends from coordinates in ngOnInit, because may be not all page was rendered
         // That's why we calculate these values here
@@ -374,7 +374,7 @@ export class SlideAbleDirective {
         this.slidingEvent.emit(this.prepareEventData('sliding'));
     }
 
-    slideStop(event) {
+    slideStop(event:any) {
         this.stopSlidingEvent.emit(this.prepareEventData('stop'));
         document.onmousemove = null;
         document.ontouchmove = null;
@@ -398,7 +398,7 @@ export class SlideAbleDirective {
         }
     }
 
-    prepareEventData(type) :IEventSlideAble {
+    prepareEventData(type:any) :IEventSlideAble {
         let result = new EventSlideAble(type, this);
         result['boundingRect'] = this.el.nativeElement.getBoundingClientRect();
         result['relativePercentHorisontal'] = Math.round(100 * (result['boundingRect'].left + Math.round(result['boundingRect'].width / 2) - this.boundingRect.left) / (this.boundingRect.right - this.boundingRect.left));
@@ -410,14 +410,14 @@ export class SlideAbleDirective {
     // Calculating all margins of common sliding area
     calcMargins() {
         for (let idx in this.signatures) {
-            let el, side;
+            let el:any, side:any;
             [el, side] = this.splitSignature(this.signatures[idx]);
             if (!side) {
                 if (idx == 'top' || idx == 'bottom') side = 'center-y';
                 if (idx == 'left' || idx == 'right') side = 'center-x';
             }
             let result = this.getMargin(el, side);
-            this.boundingRect[idx] = result;
+            (<any>this.boundingRect)[idx] = result;
         }
     }
 
@@ -425,14 +425,14 @@ export class SlideAbleDirective {
     calcDynamicLimits() {
         for (let idx in this.dynamicLimits) {
             if (!this.dynamicLimits[idx]) continue;
-            let el, side;
+            let el:any, side:any;
             [el, side] = this.splitSignature(this.dynamicLimits[idx]);
             if (!side) {
                 if (idx == 'top' || idx == 'bottom') side = 'center-y';
                 if (idx == 'left' || idx == 'right') side = 'center-x';
             }
             let result = this.getMargin(el, side);
-            this.dynamicLimitRect[idx] = result;
+            (<any>this.dynamicLimitRect)[idx] = result;
         }
     }
 
@@ -440,7 +440,7 @@ export class SlideAbleDirective {
     // If element missed or not finded, get parent as element
     splitSignature(signature:string) {
         let tmp = signature.split(':', 2);
-        let el, side;
+        let el:any, side:any;
         side = tmp[1];
         if (tmp[0] == '') {
             el = this.el.nativeElement.parentElement;
@@ -456,7 +456,7 @@ export class SlideAbleDirective {
     // Getting coordinate of certain side (or center) of DOM-element
     getMargin(el:any, side:string) {
         let boundingRect = el.getBoundingClientRect();
-        let result;
+        let result:any;
         side = side.toLowerCase();
         switch (side) {
             case 'left':
@@ -473,6 +473,7 @@ export class SlideAbleDirective {
                 break;
             default:
                 result = null;
+                break;
         }
         return result;
     }

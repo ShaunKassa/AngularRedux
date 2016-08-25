@@ -61,7 +61,7 @@ export class JobsDetailviewComponent implements AfterViewInit {
         }
     }
 
-    private displayStat(job) {
+    private displayStat(job:any) {
         let str = job.statistics;
         if(str !== null) {
             job.statistics = str.replace(/(?:\r\n|\r|\n)/g, '<br/><br/>');;
@@ -78,7 +78,7 @@ export class JobsDetailviewComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         let id = parseInt(this._route.snapshot.params['id'], 10);
-        let targetEl = $(this._el.nativeElement).find('#' + id)[0];
+        let targetEl = (<any>$(this._el.nativeElement)).find('#' + id)[0];
         if(targetEl) {
             targetEl.scrollIntoView();
         }

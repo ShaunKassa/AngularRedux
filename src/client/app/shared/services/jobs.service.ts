@@ -72,7 +72,7 @@ export class JobsService {
           .map(res => res.json());
   }
 
-  saveFilters(filtersPayload): Observable<any> {
+  saveFilters(filtersPayload:any): Observable<any> {
     let body = JSON.stringify(filtersPayload);
     let headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Request-Method': this.filterService });
     let options = new RequestOptions({ headers: headers });

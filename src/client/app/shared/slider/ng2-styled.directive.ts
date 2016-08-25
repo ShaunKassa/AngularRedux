@@ -45,7 +45,7 @@ export class Ng2StyledDirective {
             this.setStylePath(this.stylePath);
         }
 
-        var block = [];
+        var block:any[] = [];
         if (this.skin != 'none') {
             if (!this.skin || !this._config[this.skin]) this.skin = 'default';
             if (this._config[this.skin] && typeof(this._config[this.skin].block) != 'undefined' && this._config[this.skin].block) {

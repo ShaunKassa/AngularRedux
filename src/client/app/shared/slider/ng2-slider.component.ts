@@ -60,7 +60,7 @@ export class Ng2SliderComponent implements ISkinable{
     @ContentChildren(Ng2StyledDirective) _styledDirectives:QueryList<Ng2StyledDirective>;
 
     private range: Range;
-    private id;
+    private id:any;
     private isRange: boolean = true;
 
     private _skins = skins;
@@ -83,7 +83,7 @@ export class Ng2SliderComponent implements ISkinable{
     private resultNormalHandlerStyle = {};
     private resultSlidingHandlerStyle = {};
     private resultRangeRibbonStyle:any = {};
-    private resultHandleStyle = [];
+    private resultHandleStyle:any[] = [];
 
     // Self-instance
     public instance: Ng2SliderComponent;
@@ -113,7 +113,7 @@ export class Ng2SliderComponent implements ISkinable{
         }
   }
 
-    refreshInputBox(boundingRect, handle:RangeHandle) {
+    refreshInputBox(boundingRect:any, handle:RangeHandle) {
         let value = this.range.calculateValueFromX(boundingRect.left + Math.round(boundingRect.width / 2))
         switch (handle) {
             case RangeHandle.Start:
@@ -132,9 +132,9 @@ export class Ng2SliderComponent implements ISkinable{
         return value;
     }
 
-    refreshInputBoxByPercent(percent, handle:RangeHandle) {
+    refreshInputBoxByPercent(percent:any, handle:RangeHandle) {
         let precision = this.calculatePrecision(this.stepValue)
-        let value = (+this.min + (this.max-this.min)*percent/100).toFixed(precision);
+        let value:any = (+this.min + (this.max-this.min)*percent/100).toFixed(precision);
         switch (handle) {
             case RangeHandle.Start:
                 this.startValue = value.toString();
@@ -365,13 +365,13 @@ export class Ng2SliderComponent implements ISkinable{
         // Example of using callback function before redraw
         event.instance.checkXBeforeRedraw = function(x:any, y:any) {
             return true;
-        }
-        this.handlers[name] = event.instance;
+        };
+        (<any>this.handlers)[name] = event.instance;
         // if (name == 'Start') this.valueChanged({}, RangeHandle.Start);
         // if (name == 'End') this.valueChanged({}, RangeHandle.End);
     }
 
-    convertStyles(styleArray: Object) {
+    convertStyles(styleArray: any) {
         var style = '';
         for (let idx in styleArray) {
             style += idx + ':' + styleArray[idx] + ';';
@@ -438,7 +438,7 @@ export class Range {
         return this.config.min + Math.round((this.config.max - this.config.min) * (x - this.boundingRect.left) / (this.boundingRect.right - this.boundingRect.left));
     }
 
-    calculateStepX(step) {
+    calculateStepX(step:any) {
         return step * (this.boundingRect.right - this.boundingRect.left) / (this.config.max - this.config.min);
     }
 
