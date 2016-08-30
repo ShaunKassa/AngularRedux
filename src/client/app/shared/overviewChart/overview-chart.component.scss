@@ -1,0 +1,39 @@
+$font-consolas:  Consolas;
+
+.chart {
+  align-items:  center;
+  display:  flex;
+  justify-content:  center;
+  height:  100px;
+  position:  relative;
+  width:  100px;
+
+  svg {
+    height:  100px;
+    left:  0;
+    position:  absolute;
+    transform:  rotate(-90deg);
+    top:  0;
+    width:  100px;
+  }
+
+  .percentage {
+    color:  #273142;
+    font:  {
+      family:  $font-consolas;
+      size:  24px;
+      style:  italic;
+    }
+    margin:  0;
+    padding:  0;
+
+    > span {
+      font:  {
+        family:  $font-consolas;
+        size:  13px;
+        style:  italic;
+      }
+    }
+  }
+}
+ 

@@ -9,7 +9,7 @@
 
              <div class="leftOptions">
                  <div class="title">Select a job type</div>
-                 <ul >
+                 <ul #items >
                      <li  *ngFor="let jobType of jobTypesList; let i=index" class="items" (click) = "SelectJob(jobType, $event)">
                          <span>0{{i+1}}</span>{{jobType}}
                      </li>

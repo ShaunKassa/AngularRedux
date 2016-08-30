@@ -1,13 +1,12 @@
 import '@ngrx/core/add/operator/select';
-import { Action, ActionReducer } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Action } from '@ngrx/store';
 import { JobsActions } from '../actions/index';
 
 export interface JobsState {
-    loaded: boolean,
-    loading: boolean,
-    jobs: Array<any>,
-    lastUpdated?: Date
+    loaded: boolean;
+    loading: boolean;
+    jobs: Array<any>;
+    lastUpdated?: Date;
 }
 
 const initialState: JobsState = {
@@ -21,7 +20,7 @@ export default (state: JobsState = initialState, action: Action) => {
             case JobsActions.REQUEST_JOBS:
                 return Object.assign({}, state, {
                     loading: true
-                })
+                });
             case JobsActions.RECEIVE_JOBS:
                 return Object.assign({}, state, {
                     loaded: true,
@@ -29,7 +28,7 @@ export default (state: JobsState = initialState, action: Action) => {
                     jobs: action.payload
                 });
             default:
-                return state
+                return state;
         }
 };
 

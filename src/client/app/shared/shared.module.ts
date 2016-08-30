@@ -32,7 +32,7 @@ export class SharedModule {
                 provide: APP_BASE_HREF,
                 useValue: '<%= APP_BASE %>'
             },
-            provideStore(reducer), 
+            provideStore(reducer),
             instrumentStore({
               monitor: useLogMonitor({
                   // Default log monitor options
@@ -41,8 +41,8 @@ export class SharedModule {
                   size: 0.3
               })
             }),
-            services, 
-            runEffects(effects), 
+            services,
+            runEffects(effects),
             actions ]
         };
     }

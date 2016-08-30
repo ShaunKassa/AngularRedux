@@ -1,9 +1,8 @@
 declare var AWS: any;
-import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { NgSwitch, NgSwitchCase } from '@angular/common';
 
-import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component'; 
+// import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component';
 import { JobsService } from '../../shared/services/jobs.service';
 
 @Component({
@@ -34,7 +33,7 @@ export class JobsCreateComponent implements OnInit {
                       'FOGGING','CARMASK','SEAMLINE','SINGLE_CAM_EXP','ALIGNMENT',
                       'DROPPACK','SENSORCAL','LIDARFAIL','SKYNOISE'
     ];
-    
+
     filterList: any[] = [
         {
             filterInputLow : 33,
@@ -45,19 +44,21 @@ export class JobsCreateComponent implements OnInit {
     ];
 
     selectedJobType = 'Default';
+    @ViewChild('items') itemsRef:ElementRef;
 
-     constructor(private formBuilder:FormBuilder, private _jobsService: JobsService, private renderer: Renderer, private _elementRef: ElementRef) { }
-     
-
-     ngOnInit() {
-               
-               this.depthGenerationForm = this.formBuilder.group({
-                      city: ['',Validators.compose([Validators.required])],
-                      publicationDate:['',Validators.compose([Validators.required])],
- 	    		      validationType:['validatePanoCount',Validators.compose([Validators.required])],
-                      submissionType:['',Validators.compose([Validators.required])],
-	    		      inputType:['drive',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required,
+     constructor(
+         private formBuilder:FormBuilder,
+         private _jobsService: JobsService,
+         private renderer: Renderer,
+         private _elementRef: ElementRef) { }
+         ngOnInit() {
+             this.depthGenerationForm = this.formBuilder.group({
+                   city: ['',Validators.compose([Validators.required])],
+                   publicationDate:['',Validators.compose([Validators.required])],
+ 	    		   validationType:['validatePanoCount',Validators.compose([Validators.required])],
+                   submissionType:['',Validators.compose([Validators.required])],
+	    		   inputType:['drive',Validators.compose([Validators.required])],
+                   input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.driveIdValidator])]
@@ -209,8 +210,9 @@ export class JobsCreateComponent implements OnInit {
                     weight: value.filterList[index].qualityFilterHigh
                 }
                 ]
-            }; 
+            };
         });
+
         let box = value.input.split(',');
         let filterPayload = {
             minLat: box[0],
@@ -259,6 +261,9 @@ export class JobsCreateComponent implements OnInit {
 
       SelectJob(jobType:any, $event:any) {
            this.selectedJobType = jobType;
+           for(var len =0; len < this.itemsRef.nativeElement.children.length; len++) {
+               this.itemsRef.nativeElement.children[len].style.backgroundColor = '#EBF0F2';
+           }
            this.renderer.setElementStyle($event.target, 'backgroundColor', '#FFFFFF');
       }
 

@@ -1,0 +1,39 @@
+$familyConsolas: Consolas;
+
+.chart {
+     position: relative;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 240px;
+     width: 240px;
+     margin-bottom: 16px;
+
+     svg {
+         position: absolute;
+         left: 0;
+         top: 0;
+         height: 240px;
+         width: 240px;
+         transform: rotate(-90deg);
+     }
+
+     .percentage {
+         color: #273142;
+         padding: 0;
+         margin: 0;
+         font: {
+             size: 55px;
+             style: italic;
+             family: $familyConsolas;
+         }
+
+         > span {
+             font: {
+                 size: 32px;
+                 style: italic;
+                 family: $familyConsolas;
+             }
+         }
+     }
+ }

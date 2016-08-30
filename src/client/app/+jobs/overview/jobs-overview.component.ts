@@ -3,11 +3,16 @@ import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
 
+
+import { OverviewChartComponent } from '../../shared/overviewChart/overview-chart.component';
+// import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component';
+
 @Component({
   moduleId: module.id,
   selector: 'jobs-overview',
   templateUrl: 'jobs-overview.component.html',
-  styleUrls: ['jobs-overview.component.css']
+  styleUrls: ['jobs-overview.component.css'],
+  directives: [OverviewChartComponent]
 })
 export class JobsOverviewComponent implements OnInit {
     jobGroups: any;
@@ -34,6 +39,10 @@ export class JobsOverviewComponent implements OnInit {
                 });
     }
 
+    ngOnInit() {
+        console.log('OnInit');
+    }
+
     private displayTimeStamp(job: any) {
         let time_1 = new Date(job.createDate);
         let result_1 = time_1.getTime();
@@ -58,8 +67,5 @@ export class JobsOverviewComponent implements OnInit {
         } else {
             job.percent = (Math.round((job.slice3 + job.slice4) * 100) / 100).toFixed(1);
         }
-    }
-    ngOnInit() {
-        console.log('OnInit');
     }
 }

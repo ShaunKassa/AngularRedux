@@ -1,36 +1,39 @@
-$text-color: #FFFFFF;
-.nav-container{
-     z-index:2;
-     background-color:#273142;
-     margin:0;
-     height:64px;
-     display:flex;
-     flex-direction:row;
-     position:fixed;
-     width:100%;
-     div{
-        font-family:'Nokia Pure Text Regular';
-        font-size:14px;
-        text-align:center;
-        vertical-align:middle;
-        line-height:64px;
-        color:$text-color;
-        height:64px;
-        width:64px;
-        margin:0;
-        padding:0;
-        
-     }
-     .navHere {
-                 background:url("../../assets/svg/HERE_Logo_64x64.svg") no-repeat;
-      }
-      .navViewer,.navPreset {
-                width:100px; 
-      }
-      .navViewer.router-link-active {
-                background-color:#010B1E; 
-      }
-      .navPreset.router-link-active {
-                background-color:#010B1E; 
-      }
+$text-color:  #fff;
+$color: #010b1e;
+$nav-background-color: #273142;
+
+.nav-container {
+  background-color: $nav-background-color;
+  display: flex;
+  flex-direction: row;
+  height: 64px;
+  margin: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+
+  div {
+    color: $text-color;
+    font-family: 'Nokia Pure Text Regular';
+    font-size: 14px;
+    height: 64px;
+    line-height: 64px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 64px;
+    }
+
+  .nav-here {
+    background: url('../../assets/svg/HERE_Logo_64x64.svg') no-repeat;
+  }
+
+  .nav-viewer {
+    width: 100px;
+
+    .router-link-active {
+      background-color: $color;
+    }
+  }
 }

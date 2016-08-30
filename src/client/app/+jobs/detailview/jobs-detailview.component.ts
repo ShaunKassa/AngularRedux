@@ -3,11 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
 
+import { DetailviewChartComponent } from '../../shared/detailviewChart/detailview-chart.component';
+
 @Component({
   moduleId: module.id,
   selector: 'jobs-detailview',
   templateUrl: 'jobs-detailview.component.html',
-  styleUrls: ['jobs-detailview.component.css']
+  styleUrls: ['jobs-detailview.component.css'],
+  directives: [DetailviewChartComponent]
 })
 export class JobsDetailviewComponent implements AfterViewInit {
     jobGroups: any;
@@ -34,6 +37,16 @@ export class JobsDetailviewComponent implements AfterViewInit {
                     return groups;
                 });
     }
+
+    ngAfterViewInit() {
+        let id ='[id="' +  parseInt(this._route.snapshot.params['id'], 10) + '"]';
+        // let targetEl = (<any>$(this._el.nativeElement)).find('#' + id)[0];
+        let targetEl = this._el.nativeElement.querySelector(id);
+        if(targetEl) {
+            targetEl.scrollIntoView();
+        }
+    }
+
 
     private displayTimeStamp(job: any) {
         let time_1 = new Date(job.createDate);
@@ -73,14 +86,6 @@ export class JobsDetailviewComponent implements AfterViewInit {
                     job.statistics.slice(endOfId) +
                     '</div>';
             }
-        }
-    }
-
-    ngAfterViewInit() {
-        let id = parseInt(this._route.snapshot.params['id'], 10);
-        let targetEl = (<any>$(this._el.nativeElement)).find('#' + id)[0];
-        if(targetEl) {
-            targetEl.scrollIntoView();
         }
     }
 
