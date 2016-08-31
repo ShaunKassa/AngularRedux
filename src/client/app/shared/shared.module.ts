@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/index';
 import { Ng2SliderComponent } from './slider/ng2-slider.component';
+import { OverviewChartComponent } from './overviewChart/overview-chart.component';
+import { DetailviewChartComponent } from './detailViewChart/detailview-chart.component';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
@@ -20,8 +22,9 @@ import services from './services/index';
 
 @NgModule({
     imports: [ CommonModule, HttpModule, FormsModule ],
-    declarations: [ NavbarComponent, Ng2SliderComponent ],
-    exports: [ NavbarComponent, Ng2SliderComponent, CommonModule, FormsModule, ReactiveFormsModule ],
+    declarations: [ NavbarComponent, Ng2SliderComponent, OverviewChartComponent, DetailviewChartComponent ],
+    exports: [ NavbarComponent, Ng2SliderComponent, OverviewChartComponent,
+    DetailviewChartComponent, CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

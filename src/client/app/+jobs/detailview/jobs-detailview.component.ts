@@ -4,14 +4,12 @@ import { Store } from '@ngrx/store';
 import { JobsActions } from '../../shared/actions/index';
 import { getJobTypesWithJobs } from '../../shared/reducers/index';
 
-import { DetailviewChartComponent } from '../../shared/detailviewChart/detailview-chart.component';
 
 @Component({
   moduleId: module.id,
   selector: 'jobs-detailview',
   templateUrl: 'jobs-detailview.component.html',
-  styleUrls: ['jobs-detailview.component.css'],
-  directives: [DetailviewChartComponent]
+  styleUrls: ['jobs-detailview.component.css']
 })
 export class JobsDetailviewComponent implements AfterViewInit {
     groups: any;

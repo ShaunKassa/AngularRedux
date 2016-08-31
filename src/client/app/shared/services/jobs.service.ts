@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class JobsService {
 
-   endpoint: string = 'http://52.10.1.113:3000/api/';
+   //endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
+   endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
    filterService: string = 'http://index-service.rcp-p.solo-experiments.com:80/api/rest/v1/filter/box';
 
   /**
@@ -33,20 +34,21 @@ export class JobsService {
   }
 
   fetchJobsForGroup(group: any, batch): Observable<any> {
-      var cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - 10);
+      let that = this;
       var initialLimit = 10;
 
       return this.http.get(this.endpoint + 'Jobs' +
                   '?filter[limit]=' + initialLimit +
                   '&filter[skip]=' + batch * initialLimit +
+                  '&filter[include]=childJobs' +
                   '&filter[order]=createDate DESC' +
                   '&filter[where][and][0][parentjobid]=null' +
-                  '&filter[where][and][1][jobtypeid]=' + group.id +
-                  '&filter[where][and][1][createDate][gt]=' + cutoffDate.toISOString())
-             .map(res => this.fetchChildrenForJobs(res.json()))
-             .mergeAll()
-             .toArray();
+                  '&filter[where][and][1][jobtypeid]=' + group.id)
+             .map(res => {
+                 let parentJobs = res.json();
+                 parentJobs.forEach(that.generatePercentages);
+                 return parentJobs;
+             });
   }
 
   fetchChildrenForJob(job: any): Observable<any> {
@@ -69,36 +71,36 @@ export class JobsService {
   }
 
   private generatePercentages(job: any) {
-      let totalCount = job.children.length;
-      job.slice = job.slice2 = job.slice3 = job.slice4 = 0;
+      let totalCount = job.childJobs.length;
+      job.slices = [0, 0, 0, 0];
       job.NotStartedCount = job.InProgressCount = job.FailedCount = job.SucceededCount = 0;
 
       if(totalCount === 0) {
           job.TotalCount = 1;
           if(job.status ==='NOT_STARTED') {
-              job.slice = 100;
+              job.slices[0] = 100;
               job.NotStartedCount = 1;
           } else if(job.status ==='IN_PROGRESS') {
-              job.slice2 = 100;
+              job.slices[1] = 100;
               job.InProgressCount = 1;
           } else if(job.status ==='FAILED') {
-              job.slice3 = 100;
+              job.slices[2] = 100;
               job.FailedCount = 1;
           } else if(job.status ==='SUCCEEDED') {
-              job.slice4 = 100;
+              job.slices[3] = 100;
               job.SucceededCount = 1;
           }
       } else {
           job.TotalCount = totalCount;
-          job.NotStartedCount = job.children.filter((c: any) => c.status === 'NOT_STARTED').length;
-          job.InProgressCount = job.children.filter((c: any) => c.status === 'IN_PROGRESS').length;
-          job.FailedCount = job.children.filter((c: any) => c.status === 'FAILED').length;
-          job.SucceededCount = job.children.filter((c: any) => c.status === 'SUCCEEDED').length;
+          job.NotStartedCount = job.childJobs.filter((c: any) => c.status === 'NOT_STARTED').length;
+          job.InProgressCount = job.childJobs.filter((c: any) => c.status === 'IN_PROGRESS').length;
+          job.FailedCount = job.childJobs.filter((c: any) => c.status === 'FAILED').length;
+          job.SucceededCount = job.childJobs.filter((c: any) => c.status === 'SUCCEEDED').length;
 
-          job.slice  = (job.NotStartedCount / totalCount) * 100;
-          job.slice2 = (job.InProgressCount / totalCount) * 100;
-          job.slice3 = (job.FailedCount / totalCount) * 100;
-          job.slice4 = (job.SucceededCount / totalCount) * 100;
+          job.slices[0] = (job.NotStartedCount / totalCount) * 100;
+          job.slices[1] = (job.InProgressCount / totalCount) * 100;
+          job.slices[2] = (job.FailedCount / totalCount) * 100;
+          job.slices[3] = (job.SucceededCount / totalCount) * 100;
       }
   }
 

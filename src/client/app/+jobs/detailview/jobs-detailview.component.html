@@ -5,15 +5,9 @@
         <div class="detailInstance"  *ngFor="let runningJob of group.jobs" id={{runningJob.id}}>
             <div class="detailLeft">
                 <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
-                <detailview-chart
-					[detail_width1] ="runningJob.detail_width1"	
-					[detail_width2] ="runningJob.detail_width2"	
-					[detail_width3] ="runningJob.detail_width3"	
-                    [slice2] ="runningJob.slice2"
-                    [slice3] ="runningJob.slice3"
-                    [slice4] ="runningJob.slice4"
-                    [percent] ="runningJob.percent"
-                ></detailview-chart>
+                  <detailview-chart
+                    [slices] ="runningJob.slices"
+                  ></detailview-chart>
                <div class="elapsedTime">{{runningJob.createdDate}}</div>
                 <div class="createdDate">started on: {{runningJob.startedDate}}</div>
             </div>
