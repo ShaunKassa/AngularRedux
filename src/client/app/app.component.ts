@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { StoreLogMonitorComponent } from '@ngrx/store-log-monitor';
 
 import { Config, NavbarComponent } from './shared/index';
-import { JobsActions, JobTypesActions } from './shared/actions/index';
+import { JobTypesActions } from './shared/actions/index';
 
 /**
  * This class represents the main application component. Within the @Routes annotation is the configuration of the

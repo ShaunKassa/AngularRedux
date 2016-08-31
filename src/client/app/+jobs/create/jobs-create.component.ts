@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+declare var AWS: any;
+import { Component, OnInit, Renderer, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { NgSwitch, NgSwitchCase } from '@angular/common';
 
-import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component'; 
+// import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component';
 import { JobsService } from '../../shared/services/jobs.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class JobsCreateComponent implements OnInit {
     postIngestForm:FormGroup;
     preIngestForm:FormGroup;
     filterServiceForm:FormGroup;
+    _filterIndices:any;
     jobTypesList = [
         'Depth Generation',
         'Coverage CSV Generation',
@@ -32,8 +33,8 @@ export class JobsCreateComponent implements OnInit {
                       'FOGGING','CARMASK','SEAMLINE','SINGLE_CAM_EXP','ALIGNMENT',
                       'DROPPACK','SENSORCAL','LIDARFAIL','SKYNOISE'
     ];
-    
-    filterList: Object[] = [
+
+    filterList: any[] = [
         {
             filterInputLow : 33,
             filterInputMedium : 33,
@@ -43,19 +44,21 @@ export class JobsCreateComponent implements OnInit {
     ];
 
     selectedJobType = 'Default';
+    @ViewChild('items') itemsRef:ElementRef;
 
-     constructor(private formBuilder:FormBuilder, private _jobsService: JobsService) { }
-     
-
-     ngOnInit() {
-               
-               this.depthGenerationForm = this.formBuilder.group({
-                      city: ['',Validators.compose([Validators.required])],
-                      publicationDate:['',Validators.compose([Validators.required])],
- 	    		      validationType:['validatePanoCount',Validators.compose([Validators.required])],
-                      submissionType:['',Validators.compose([Validators.required])],
-	    		      inputType:['drive',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required,
+     constructor(
+         private formBuilder:FormBuilder,
+         private _jobsService: JobsService,
+         private renderer: Renderer,
+         private _elementRef: ElementRef) { }
+         ngOnInit() {
+             this.depthGenerationForm = this.formBuilder.group({
+                   city: ['',Validators.compose([Validators.required])],
+                   publicationDate:['',Validators.compose([Validators.required])],
+ 	    		   validationType:['validatePanoCount',Validators.compose([Validators.required])],
+                   submissionType:['',Validators.compose([Validators.required])],
+	    		   inputType:['drive',Validators.compose([Validators.required])],
+                   input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.driveIdValidator])]
@@ -120,7 +123,7 @@ export class JobsCreateComponent implements OnInit {
 
 
 
-    onSubmit(value): void {
+    onSubmit(value:any): void {
  			   let address: string = '';
  			   let fileName: string = '';
  			   let text: string = '';
@@ -131,7 +134,6 @@ export class JobsCreateComponent implements OnInit {
                    return;
                }
                if(this.selectedJobType === 'Depth Generation') {
-                 value.jobTypes = this.jobTYPE;
                    address = (
                        'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
@@ -142,7 +144,6 @@ export class JobsCreateComponent implements OnInit {
               }
 
               if(this.selectedJobType === 'Coverage CSV Generation') {
-                 value.jobTypes = this.jobTYPE;
                  address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.env);
                  date = (value.pubDate).replace('/','_');
                  fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_mosquad.csv';
@@ -151,7 +152,6 @@ export class JobsCreateComponent implements OnInit {
              }
 
              if(this.selectedJobType=== 'PostIngest Depth Statistics') {
-                 value.jobTypes = this.jobTYPE;
                  address = ('home/selvaraj/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.env);
                  date = (value.pubDate).replace('/','_');
                  fileName = '/'+ date + '_mosquad.txt';
@@ -160,7 +160,6 @@ export class JobsCreateComponent implements OnInit {
              }
 
              if(this.selectedJobType === 'PreIngest') {
-                 value.jobTypes = this.jobTYPE;
                  address = 'home/selvaraj/depthAutomation/jobs/PreIngest/input/';
                  date = (value.pubDate).replace('/','_');
                  fileName = (value.city.toUpperCase())+'_' + date + '_mosquads.txt';
@@ -169,27 +168,27 @@ export class JobsCreateComponent implements OnInit {
              }
             var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
             var params = {Key: address, Body: text};
-            bucket.upload(params, function (err) {
+            bucket.upload(params, function (err:any) {
                 if(err) {
                    console.log(err);
                 } else {
                    console.log('Success');
                 }
            });
-           this.formValues.jobType = 'Default';
-           $('li.items').removeClass('highlight');
+           this.selectedJobType = 'Default';
+           (<any>$('li.items')).removeClass('highlight');
 
             return;
     }
 
-    buildFilterModel(value) {
-        this.filterList.forEach((fitler: any, index: number) => {
+    buildFilterModel(value:any) {
+        this.filterList.forEach((filter: any, index: number) => {
             value.filterList[index].qualityFilterHigh = filter.filterInputHigh;
             value.filterList[index].qualityFilterLow = filter.filterInputLow;
             value.filterList[index].qualityFilterMedium = filter.filterInputMedium;
             value.filterList[index].weight = filter.weight;
         });
-        let providers = [];
+        let providers:any[] = [];
         this.filterList.forEach((filter: any, index: number) => {
             providers[index] = {
                 provider: {
@@ -211,8 +210,9 @@ export class JobsCreateComponent implements OnInit {
                     weight: value.filterList[index].qualityFilterHigh
                 }
                 ]
-            }; 
+            };
         });
+
         let box = value.input.split(',');
         let filterPayload = {
             minLat: box[0],
@@ -259,10 +259,12 @@ export class JobsCreateComponent implements OnInit {
          */
     }
 
-      SelectJob(jobType, $event) {
+      SelectJob(jobType:any, $event:any) {
            this.selectedJobType = jobType;
-           $('li.items').removeClass('highlight');
-           $($event.target).addClass('highlight');
+           for(var len =0; len < this.itemsRef.nativeElement.children.length; len++) {
+               this.itemsRef.nativeElement.children[len].style.backgroundColor = '#EBF0F2';
+           }
+           this.renderer.setElementStyle($event.target, 'backgroundColor', '#FFFFFF');
       }
 
       addFilter(add:Boolean) {
@@ -274,7 +276,7 @@ export class JobsCreateComponent implements OnInit {
                weight: 0
               }
           );
-          this.filterServiceForm.controls['filterList'].push(this.formBuilder.group({
+          (<FormArray>this.filterServiceForm.controls['filterList']).push(this.formBuilder.group({
                            attributeTypes:['',Validators.compose([Validators.required])],
                            provider:['',Validators.compose([Validators.required])],
                            weight:['',Validators.compose([Validators.required])],
@@ -284,47 +286,52 @@ export class JobsCreateComponent implements OnInit {
                        }));
       }
 
-      deleteFilter(idx:Number) {
+      deleteFilter(idx:number) {
           this.filterList.splice(idx, 1);
-          this.filterServiceForm.controls['filterLists'].removeAt(idx);
+          (<FormArray>this.filterServiceForm.controls['filterLists']).removeAt(idx);
           this._filterIndices.splice(idx, 1);
       }
 
 
-      rangeValueChanged($event, idx) {
+      rangeValueChanged($event:any, idx:any) {
           this.filterList[idx].filterInputLow = $event.startValue;
           this.filterList[idx].filterInputMedium = $event.midValue;
           this.filterList[idx].filterInputHigh = $event.endValue;
       }
 
-      private emptyLineValidator(control: FormControl):{[s: string] } {
+      private emptyLineValidator(control: FormControl) {
                if(control.value.match(/\n\s*\n/) ) {
                    return {emptyLine: true};
                }
+               return;
       }
 
-      private whitespaceValidator(control: FormControl):{[s: string] } {
+      private whitespaceValidator(control: FormControl) {
                if(control.value.match(/^ +/m) || control.value.match(/[ \t]+$/m) ) {
                    return {whitespace: true};
                }
+               return;
       }
 
-      private driveIdValidator(control: FormControl):{[s: string] } {
+      private driveIdValidator(control: FormControl) {
                if(!control.value.match(/^(HT[\w\d]+_(\d)+,?.*\s*)*$/)) {
                    return {driveId: true};
                }
+               return;
       }
 
-      private mosquadIdValidator(control: FormControl):{[s: string] } {
+      private mosquadIdValidator(control: FormControl) {
                if(!control.value.match(/^([0-3]{14}\s*)*$/)) {
                    return {mosquadId: true};
                }
+               return;
       }
 
-      private postIngestValidator(control: FormControl):{[s: string] } {
+      private postIngestValidator(control: FormControl) {
                if(!control.value.match(/^([A-Za-z,\s]*"([0-3]{14}){1}((\n)?[0-3]{14})*")*$/)) {
                    return {postIngest: true};
                }
+               return;
       }
 
   }

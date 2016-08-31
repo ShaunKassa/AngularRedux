@@ -13,13 +13,13 @@ import { Action } from '@ngrx/store';
 @Injectable()
 export class JobTypesActions {
   static REQUEST_JOBTYPES  = '[JobTypes] Load job types';
+  static RECEIVE_JOBTYPES  = '[JobTypes] Load jobs types success';
   requestJobTypes(): Action {
     return {
       type: JobTypesActions.REQUEST_JOBTYPES
     };
   }
 
-  static RECEIVE_JOBTYPES  = '[JobTypes] Load jobs types success';
   receiveJobTypes(jobTypes: Array<any>): Action {
     return {
       type: JobTypesActions.RECEIVE_JOBTYPES,

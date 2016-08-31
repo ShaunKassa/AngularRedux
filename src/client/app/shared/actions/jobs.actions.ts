@@ -14,6 +14,12 @@ import { Action } from '@ngrx/store';
 export class JobsActions {
 
   static LOAD_GROUPJOBS = '[GroupJobs] Load group jobs';
+  static LOAD_GROUPJOBS_SUCCESS = '[GroupJobs] Load group jobs success';
+  static RECEIVE_JOBS  = '[Jobs] Load jobs success';
+  static SAVE_JOB = '[Job] Save a job';
+  static SAVE_JOB_FAILURE = '[Job] Save job failure';
+  static SAVE_JOB_SUCCESS = '[Job] Save job success';
+
   loadGroupJobs(group: any, batch = 0): Action {
       return {
           type: JobsActions.LOAD_GROUPJOBS,
@@ -24,34 +30,29 @@ export class JobsActions {
       };
   }
 
-  static LOAD_GROUPJOBS_SUCCESS = '[GroupJobs] Load group jobs success';
   loadGroupJobsSuccess(payload: any): Action {
       return {
           type: JobsActions.LOAD_GROUPJOBS_SUCCESS,
           payload: payload
       };
   }
-  
 
-  static SAVE_JOB = '[Job] Save a job';
   saveJob(job: any): Action {
       return {
           type: JobsActions.SAVE_JOB,
           payload: job
-      }
+      };
   }
 
-  static SAVE_JOB_SUCCESS = '[Job] Save job success';
   saveJobSuccess(): Action {
       return {
           type: JobsActions.SAVE_JOB_SUCCESS
-      }
+      };
   }
 
-  static SAVE_JOB_FAILURE = '[Job] Save job failure';
   saveJobFailure(): Action {
       return {
           type: JobsActions.SAVE_JOB_FAILURE
-      }
+      };
   }
 }

@@ -9,7 +9,7 @@
 
              <div class="leftOptions">
                  <div class="title">Select a job type</div>
-                 <ul >
+                 <ul #items >
                      <li  *ngFor="let jobType of jobTypesList; let i=index" class="items" (click) = "SelectJob(jobType, $event)">
                          <span>0{{i+1}}</span>{{jobType}}
                      </li>
@@ -208,29 +208,20 @@
 
                                                 <div class="areaLabel">Bounding Box</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" 
-                                                               value="Bounding Box"
-                                                               class="filterRadio" 
-                                                               name="areaOfInterest" 
-                                                               checked
-                                                               formControlName="areaOfInterest">
+                                                       <input  type="radio" value="Bounding Box" class="filterRadio" name="areaOfInterest"> 
                                                        <label for="areaOfInterest"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Tile Coordinates</div>
                                                 <div class="areaCheckbox">
                                                        <input  
-                                                            type="radio" 
-                                                            value="Tile Coordinates"
-                                                            class="filterRadio">
+                                                            type="radio" value="Tile Coordinates" name="areaOfInterest" class="filterRadio">
                                                        <label for="areaOfInterest"></label>
                                                 </div>
 
                                                 <div class="areaLabel">Mosquads</div>
                                                 <div class="areaCheckbox">
-                                                       <input  type="radio" 
-                                                               value="mosquads"
-                                                               class="filterRadio">
+                                                       <input  type="radio" value="mosquads" name="areaOfInterest" class="filterRadio">
                                                        <label for="areaOfInterest"></label>
                                                 </div>
                                     </div>
@@ -367,9 +358,9 @@
                             <div class="addMessage">add a new quality filter</div>
                        </div>
 
-                       <div class="label">Quality threshold</div>
+                       <div class="label">Quality threshold (in %)</div>
                            <span class="dot">•</span>
-                           <input  type="text" placeholder="Enter minimum quality requirement (in %)" class="form-control" formControlName="qualityThreshold">
+                           <input  type="number" min="0" max="100" placeholder="Enter minimum quality requirement (in %)" class="qualityThreshold" formControlName="qualityThreshold">
 
                      <div class="preset" >
                          <div class="presetLable">Save as preset</div>

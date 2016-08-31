@@ -1,0 +1,30 @@
+<div class="chart">
+     <svg viewbox="0 0 100 100">
+         <circle cx="120" cy="120" r="95" fill="transparent" 
+                 [attr.stroke-width]="50"  stroke="#dde5e9"/>
+         <circle cx="120" cy="120" r="95" 
+                 fill="transparent" 
+                 [attr.stroke-width]="slice2Value" 
+                 [attr.stroke-dashoffset]="detail_width1" 
+                 stroke="#273142" 
+                 opacity="0.5"
+                 stroke-dasharray="596.9"/>
+         <circle cx="120" cy="120" r="95" fill="transparent" 
+                 [attr.stroke-width]="slice3Value" 
+                 [attr.stroke-dashoffset]="detail_width2" 
+                 stroke="#ff670d" 
+                 stroke-dasharray="596.9"/>
+         <circle cx="120" cy="120" r="95" fill="transparent" 
+                 [attr.stroke-width]="slice4Value" 
+                 [attr.stroke-dashoffset]="detail_width3" 
+                 stroke="#273142" 
+                 stroke-dasharray="596.9"/>
+     </svg>
+     <p class="percentage" *ngIf ="percent < 100">
+      {{percent}}<span>%</span>
+     </p>
+     <p class="percentage" *ngIf ="percent == 100">
+     done 
+     </p>
+ </div>
+  

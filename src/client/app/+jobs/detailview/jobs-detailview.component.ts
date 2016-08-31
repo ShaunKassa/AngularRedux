@@ -1,20 +1,22 @@
 import { Component, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
 import { JobsActions } from '../../shared/actions/index';
 import { getJobTypesWithJobs } from '../../shared/reducers/index';
+
+import { DetailviewChartComponent } from '../../shared/detailviewChart/detailview-chart.component';
 
 @Component({
   moduleId: module.id,
   selector: 'jobs-detailview',
   templateUrl: 'jobs-detailview.component.html',
-  styleUrls: ['jobs-detailview.component.css']
+  styleUrls: ['jobs-detailview.component.css'],
+  directives: [DetailviewChartComponent]
 })
 export class JobsDetailviewComponent implements AfterViewInit {
     groups: any;
 
-    constructor(private _store: Store<any>, private jobsActions: JobsActions, 
+    constructor(private _store: Store<any>, private jobsActions: JobsActions,
         private _el: ElementRef, private _route: ActivatedRoute) {
         this.groups = _store.let(getJobTypesWithJobs());
     }
@@ -27,6 +29,16 @@ export class JobsDetailviewComponent implements AfterViewInit {
         this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
     }
 
+    ngAfterViewInit() {
+        let id ='[id="' +  parseInt(this._route.snapshot.params['id'], 10) + '"]';
+        let targetEl = this._el.nativeElement.querySelector(id);
+        if(targetEl) {
+            targetEl.scrollIntoView();
+        }
+    }
+
+
+    /*
     private displayTimeStamp(job: any) {
         let time_1 = new Date(job.createDate);
         let result_1 = time_1.getTime();
@@ -53,7 +65,7 @@ export class JobsDetailviewComponent implements AfterViewInit {
         }
     }
 
-    private displayStat(job) {
+    private displayStat(job:any) {
         let str = job.statistics;
         if(str !== null) {
             job.statistics = str.replace(/(?:\r\n|\r|\n)/g, '<br/><br/>');;
@@ -67,13 +79,6 @@ export class JobsDetailviewComponent implements AfterViewInit {
             }
         }
     }
-
-    ngAfterViewInit() {
-        let id = parseInt(this._route.snapshot.params['id'], 10);
-        let targetEl = $(this._el.nativeElement).find('#' + id)[0];
-        if(targetEl) {
-            targetEl.scrollIntoView();
-        }
-    }
+    */
 
 }

@@ -1,11 +1,11 @@
-import {Directive, Input, ElementRef, ViewContainerRef} from '@angular/core';
+import {Directive, Input, ElementRef, ViewContainerRef, AfterViewInit } from '@angular/core';
 
 export interface IConfigItem {
     path?: string;
     block?: Array<string>|string;
 }
 export interface IStyledConfig {
-    [index:string]: IConfigItem
+    [index:string]: IConfigItem;
 }
 
 export interface ISkinable {
@@ -15,7 +15,7 @@ export interface ISkinable {
 @Directive({
     selector: '[styled]'
 })
-export class Ng2StyledDirective {
+export class Ng2StyledDirective implements AfterViewInit {
 
     @Input() stylePath: string = null;
     @Input() styleBlock: Array<string> | string = null;
@@ -31,13 +31,13 @@ export class Ng2StyledDirective {
         var component = (<any>this._view)._element.component;
 
         // check for skin settings method in parent component
-        if (typeof(component) == 'object' && typeof(component.getStyledConfig) == 'function' && this.skin != 'none') {
+        if (typeof(component) === 'object' && typeof(component.getStyledConfig) === 'function' && this.skin !== 'none') {
             this._config = <IStyledConfig>component.getStyledConfig();
         }
 
-        if (this.skin != 'none') {
+        if (this.skin !== 'none') {
             if (!this.skin || !this._config[this.skin]) this.skin = 'default';
-            if (this._config[this.skin] && typeof(this._config[this.skin].path) != 'undefined' && this._config[this.skin].path) {
+            if (this._config[this.skin] && typeof(this._config[this.skin].path) !== 'undefined' && this._config[this.skin].path) {
                 this.setStylePath(this._config[this.skin].path);
             }
         }
@@ -45,14 +45,14 @@ export class Ng2StyledDirective {
             this.setStylePath(this.stylePath);
         }
 
-        var block = [];
-        if (this.skin != 'none') {
+        var block:any[] = [];
+        if (this.skin !== 'none') {
             if (!this.skin || !this._config[this.skin]) this.skin = 'default';
-            if (this._config[this.skin] && typeof(this._config[this.skin].block) != 'undefined' && this._config[this.skin].block) {
+            if (this._config[this.skin] && typeof(this._config[this.skin].block) !== 'undefined' && this._config[this.skin].block) {
                 let style = this._config[this.skin].block;
-                if (typeof(style) == 'object' && style instanceof Array) {
+                if (typeof(style) === 'object' && style instanceof Array) {
                     block = style;
-                } else if (typeof(style) == 'string') {
+                } else if (typeof(style) === 'string') {
                     block.push(style);
                 }
                 // this.setStyleBlock(this._config[this.skin].block);
@@ -60,9 +60,9 @@ export class Ng2StyledDirective {
         }
         if (this.styleBlock) {
             let style = this.styleBlock;
-            if (typeof(style) == 'object' && style instanceof Array) {
+            if (typeof(style) === 'object' && style instanceof Array) {
                 block = block.concat(style);
-            } else if (typeof(style) == 'string') {
+            } else if (typeof(style) === 'string') {
                 block.push(style);
             }
             // this.setStyleBlock(this.styleBlock);
@@ -74,10 +74,10 @@ export class Ng2StyledDirective {
     }
 
     setStyleBlock(style: any) {
-        if (typeof(style) == 'string') {
+        if (typeof(style) === 'string') {
             this.setStyleForElement(style);
         }
-        if (typeof(style) == 'object' && style instanceof Array) {
+        if (typeof(style) === 'object' && style instanceof Array) {
             this.setStyleForElement(style);
         }
     }
@@ -90,7 +90,7 @@ export class Ng2StyledDirective {
         }
         return false;
     }
-    
+
     setArrayStylesForElement(styles: Array<string>) {
         for (let style of styles) {
             this.setStyleForElement(style);
@@ -118,19 +118,18 @@ export class Ng2StyledDirective {
         }
 
         // ctreating css style block for current element
-        var stylesArray = (typeof(styles) == 'string') ? [styles] : styles;
+        var stylesArray = (typeof(styles) === 'string') ? [styles] : styles;
         var styleString = '';
         for (let style of stylesArray) {
             if (!style) continue;
-            if (styleString!='') styleString += `  \n`;
-            if (style[0] == '<') {
+            if (styleString !== '') styleString += `  \n`;
+            if (style[0] === '<') {
                 style = style.slice(1);
             } else {
                 style = ' ' + style;
             }
             styleString += `[${idAttr}]${style}`;
         }
-        
         // add style to <style> element
         if (styleString) styleEl.innerHTML += `  \n` + styleString;
         var head  = document.getElementsByTagName('head')[0];
@@ -139,8 +138,8 @@ export class Ng2StyledDirective {
 
     setStylePath(stylePath: string) {
         // checking stylePath for existing
-        for(var i = 0; i < document.styleSheets.length; i++){
-            if(document.styleSheets[i].href == stylePath){
+        for(var i = 0; i < document.styleSheets.length; i++) {
+            if(document.styleSheets[i].href === stylePath) {
                 return;
             }
         }

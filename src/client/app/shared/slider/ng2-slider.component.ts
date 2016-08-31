@@ -10,8 +10,10 @@ import {
     ContentChildren,
     QueryList,
     ViewContainerRef,
-    Renderer
-} from '@angular/core'
+    Renderer,
+    AfterViewInit,
+    OnInit
+} from '@angular/core';
 
 import {SlideAbleDirective, BoundingRectClass, IEventSlideAble} from './slideable.directive';
 import {Ng2StyledDirective, IStyledConfig, ISkinable} from './ng2-styled.directive';
@@ -28,10 +30,9 @@ export enum RangeHandle {Start, End, Both}
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class Ng2SliderComponent implements ISkinable{
-
-    @Input() min:any;
-    @Input() max:any;
+export class Ng2SliderComponent implements ISkinable, AfterViewInit, OnInit {
+    @Input() min:any  = 0;
+    @Input() max:any  = 100;
     @Input() startValue:any;
     @Input() middleValue:any;
     @Input() midValue:any;
@@ -49,7 +50,7 @@ export class Ng2SliderComponent implements ISkinable{
     @Input() skin: string;
     @Input() styleBlock: string;
 
-    @Output('onRangeChanged') rangeChangedEvent = new EventEmitter();
+    @Output() rangeChangedEvent = new EventEmitter();
 
     @ViewChild('ribbon') ribbon:ElementRef;
     @ViewChild('start') startRef:ElementRef;
@@ -59,8 +60,11 @@ export class Ng2SliderComponent implements ISkinable{
 
     @ContentChildren(Ng2StyledDirective) _styledDirectives:QueryList<Ng2StyledDirective>;
 
+    // Self-instance
+    public instance: Ng2SliderComponent;
+
     private range: Range;
-    private id;
+    private id:any;
     private isRange: boolean = true;
 
     private _skins = skins;
@@ -74,29 +78,29 @@ export class Ng2SliderComponent implements ISkinable{
     };
     private initialStartValue: any = null;
     private initialEndValue: any = null;
-
- 
-    private initNormalHandlerStyle = {}
+    private initNormalHandlerStyle = {};
     private initSlidingHandlerStyle = {};
-    private initRangeRibbonStyle = {}
+    private initRangeRibbonStyle = {};
 
     private resultNormalHandlerStyle = {};
     private resultSlidingHandlerStyle = {};
     private resultRangeRibbonStyle:any = {};
-    private resultHandleStyle = [];
+    private resultHandleStyle:any[] = [];
 
-    // Self-instance
-    public instance: Ng2SliderComponent;
 
     private stepX: any;
 
-    constructor(private CDR:ChangeDetectorRef, private _elementRef: ElementRef, private _view: ViewContainerRef, private renderer: Renderer) {
+    constructor(
+        private CDR:ChangeDetectorRef,
+        private _elementRef: ElementRef,
+        private _view: ViewContainerRef,
+        private renderer: Renderer) {
         // Create self instance as property for comfortable providing it to SlideAble directive
         this.instance = this;
     }
 
     ngOnInit() {
-        if (this.startValue != null && this.middleValue == null) this.isRange = false;
+        if (this.startValue !== null && this.middleValue === null) this.isRange = false;
 
         Object.assign(this.initSlidingHandlerStyle, this.initNormalHandlerStyle);
         Object.assign(this.resultNormalHandlerStyle, this.initNormalHandlerStyle, this.normalHandlerStyle);
@@ -113,8 +117,8 @@ export class Ng2SliderComponent implements ISkinable{
         }
   }
 
-    refreshInputBox(boundingRect, handle:RangeHandle) {
-        let value = this.range.calculateValueFromX(boundingRect.left + Math.round(boundingRect.width / 2))
+    refreshInputBox(boundingRect:any, handle:RangeHandle) {
+        let value = this.range.calculateValueFromX(boundingRect.left + Math.round(boundingRect.width / 2));
         switch (handle) {
             case RangeHandle.Start:
                 this.startValue = value.toString();
@@ -132,9 +136,9 @@ export class Ng2SliderComponent implements ISkinable{
         return value;
     }
 
-    refreshInputBoxByPercent(percent, handle:RangeHandle) {
-        let precision = this.calculatePrecision(this.stepValue)
-        let value = (+this.min + (this.max-this.min)*percent/100).toFixed(precision);
+    refreshInputBoxByPercent(percent:any, handle:RangeHandle) {
+        let precision = this.calculatePrecision(this.stepValue);
+        let value:any = (+this.min + (this.max-this.min)*percent/100).toFixed(precision);
         switch (handle) {
             case RangeHandle.Start:
                 this.startValue = value.toString();
@@ -149,7 +153,6 @@ export class Ng2SliderComponent implements ISkinable{
             default:
                 break;
         }
-        
         this.CDR.detectChanges();
         this.CDR.markForCheck();
 
@@ -167,19 +170,21 @@ export class Ng2SliderComponent implements ISkinable{
      */
 
     valueChanged(el: any, handle:RangeHandle = RangeHandle.Both) {
-
-        if (handle == RangeHandle.Both || handle == RangeHandle.Start) {
+        if (handle === RangeHandle.Both || handle === RangeHandle.Start) {
             // Affixing start value to the step grid
-            this.startValue = this.initialStartValue + Math.round((this.startValue - this.initialStartValue) / this.stepValue) * this.stepValue ;
+            this.startValue = this.initialStartValue +
+                Math.round((this.startValue - this.initialStartValue) / this.stepValue) * this.stepValue ;
 
             // Check for case when the start value is over the end value
             if (parseFloat(this.startValue) > parseFloat(this.middleValue)) {
-                this.startValue = this.initialStartValue + Math.floor((this.middleValue - this.initialStartValue) / this.stepValue) * this.stepValue ;
+                this.startValue = this.initialStartValue +
+                    Math.floor((this.middleValue - this.initialStartValue) / this.stepValue) * this.stepValue ;
             }
 
             // Check for case when the start value is under the minimal value
             if (parseFloat(this.startValue) < parseFloat(this.min)) {
-                this.startValue = this.initialStartValue + Math.ceil((this.min - this.initialStartValue) / this.stepValue) * this.stepValue ;
+                this.startValue = this.initialStartValue +
+                    Math.ceil((this.min - this.initialStartValue) / this.stepValue) * this.stepValue ;
             }
 
             // Force start handle to redrawing
@@ -188,58 +193,58 @@ export class Ng2SliderComponent implements ISkinable{
             }
         }
 
-        if (handle == RangeHandle.Both || handle == RangeHandle.End) {
+        if (handle === RangeHandle.Both || handle === RangeHandle.End) {
             // Affixing end value to the step grid
-              this.oldMiddleValue = this.middleValue;              
+              this.oldMiddleValue = this.middleValue;
               this.middleValue = (parseInt(this.startValue) + parseInt(this.midValue)).toString();
 
             if (parseFloat(this.oldMiddleValue) > parseFloat(this.middleValue)) {
-                    let diff:number = parseFloat(this.oldMiddleValue) - parseFloat(this.middleValue);          
-                    if (diff % 2 == 0) {
+                    let diff:number = parseFloat(this.oldMiddleValue) - parseFloat(this.middleValue);
+                    if (diff % 2 === 0) {
 							this.startValue = (parseInt(this.startValue) + (diff/2)).toString();
 							this.endValue = (parseInt(this.endValue) + (diff/2)).toString();
-                            this.middleValue = (parseInt(this.oldMiddleValue) - (diff/2)).toString(); 
+                            this.middleValue = (parseInt(this.oldMiddleValue) - (diff/2)).toString();
                     } else {
 							this.startValue = (parseInt(this.startValue) + Math.floor(diff/2) + 1).toString();
 							this.endValue = (parseInt(this.endValue) + Math.floor(diff/2)).toString();
-                            this.middleValue = (parseInt(this.oldMiddleValue) - Math.floor(diff/2)).toString(); 
-                    } 
+                            this.middleValue = (parseInt(this.oldMiddleValue) - Math.floor(diff/2)).toString();
+                    }
             } else {
-                    let diff:number = parseFloat(this.middleValue) - parseFloat(this.oldMiddleValue);          
+                    let diff:number = parseFloat(this.middleValue) - parseFloat(this.oldMiddleValue);
                     let extraDiff:number = 0;
-                    if (diff % 2 == 0) {
+                    if (diff % 2 === 0) {
    							if ((diff/2) > parseInt(this.startValue) && (diff/2) < parseInt(this.endValue)) {
                                     extraDiff = (diff/2) - parseInt(this.startValue);
 							        this.startValue = (parseInt(this.startValue) - ((diff/2) - extraDiff)).toString();
 							        this.endValue = (parseInt(this.endValue) - ((diff/2) + extraDiff)).toString();
-                                    this.middleValue = (parseInt(this.midValue)).toString(); 
+                                    this.middleValue = (parseInt(this.midValue)).toString();
                             } else if ( (diff/2) > parseInt(this.endValue) && (diff/2) < parseInt(this.startValue)) {
                                     extraDiff = (diff/2) - parseInt(this.endValue);
 							        this.startValue = (parseInt(this.startValue) - ((diff/2) + extraDiff)).toString();
 							        this.endValue = (parseInt(this.endValue) - ((diff/2) - extraDiff)).toString();
-                                    this.middleValue = "100"; 
+                                    this.middleValue = '100';
                             } else if ( (diff/2) <= parseInt(this.startValue) || (diff/2) <= parseInt(this.endValue) ) {
 							        this.startValue = (parseInt(this.startValue) - (diff/2)).toString();
 							        this.endValue = (parseInt(this.endValue) - (diff/2)).toString();
-                                    this.middleValue = (parseInt(this.oldMiddleValue) + (diff/2)).toString(); 
+                                    this.middleValue = (parseInt(this.oldMiddleValue) + (diff/2)).toString();
                             }
                     } else {
    							if (Math.floor(diff/2) > parseInt(this.startValue) && Math.floor(diff/2) < parseInt(this.endValue)) {
                                     extraDiff = Math.floor(diff/2) - parseInt(this.startValue);
 							        this.startValue = (parseInt(this.startValue) - (Math.floor(diff/2) - extraDiff)).toString();
 							        this.endValue = (parseInt(this.endValue) - (Math.floor(diff/2) + extraDiff + 1)).toString();
-                                    this.middleValue = (parseInt(this.midValue)).toString(); 
+                                    this.middleValue = (parseInt(this.midValue)).toString();
                             } else if ( Math.floor(diff/2) > parseInt(this.endValue) && Math.floor(diff/2) < parseInt(this.startValue)) {
                                     extraDiff = Math.floor(diff/2) - parseInt(this.endValue);
 							        this.startValue = (parseInt(this.startValue) - (Math.floor(diff/2) + extraDiff + 1)).toString();
 							        this.endValue = (parseInt(this.endValue) - (Math.floor(diff/2) - extraDiff)).toString();
-                                    this.middleValue = "100"; 
+                                    this.middleValue = '100';
                             } else if ( Math.floor(diff/2) <= parseInt(this.startValue) || Math.floor(diff/2) <= parseInt(this.endValue) ) {
 							        this.startValue = (parseInt(this.startValue) - (Math.floor(diff/2) + 1)).toString();
 							        this.endValue = (parseInt(this.endValue) - (Math.floor(diff/2))).toString();
-                                    this.middleValue = (parseInt(this.oldMiddleValue) + Math.floor(diff/2)).toString(); 
+                                    this.middleValue = (parseInt(this.oldMiddleValue) + Math.floor(diff/2)).toString();
                             }
-                    } 
+                    }
             }
 
             // Force end handle to redrawing
@@ -254,6 +259,23 @@ export class Ng2SliderComponent implements ISkinable{
 
     }
 
+    endValueChanged() {
+            if ((parseInt(this.startValue) + this.endValue) < 100 ) {
+                this.midValue = 100 - (parseInt(this.startValue) + this.endValue);
+                this.middleValue = parseInt(this.startValue) + this.midValue;
+            } else if ((parseInt(this.startValue) + this.endValue) > 100 ) {
+                  //let diff:number = this.endValue - this.midValue;
+                  this.midValue = 0;
+                  this.startValue = 100 - this.endValue;
+                  this.middleValue = this.startValue;
+            }
+            // Force end handle to redrawing
+            this.handlers.End.redraw(this.range.calculateXFromValue(this.middleValue), 0);
+            this.handlers.Start.redraw(this.range.calculateXFromValue(this.startValue), 0);
+            this.CDR.markForCheck();
+            this.CDR.detectChanges();
+    }
+
     ngAfterViewInit() {
 
         /**
@@ -264,13 +286,19 @@ export class Ng2SliderComponent implements ISkinable{
      //  if (!this.max) this.max = this._elementRef.nativeElement.attributes.getNamedItem('max').value;
         if (!this.startValue && this._elementRef.nativeElement.attributes.getNamedItem('value')) {
             this.startValue = this._elementRef.nativeElement.attributes.getNamedItem('value').value;
-            if (this.startValue != null && this.middleValue == null) this.isRange = false;
+            if (this.startValue !== null && this.middleValue === null) this.isRange = false;
         }
-        if (!this.startValue && this._elementRef.nativeElement.attributes.getNamedItem('startValue')) this.startValue = this._elementRef.nativeElement.attributes.getNamedItem('startValue').value;
+        if (!this.startValue && this._elementRef.nativeElement.attributes.getNamedItem('startValue')) {
+            this.startValue = this._elementRef.nativeElement.attributes.getNamedItem('startValue').value;
+        }
         if (!this.startValue) this.startValue = this.min;
-        if (!this.middleValue && this.isRange && this._elementRef.nativeElement.attributes.getNamedItem('middleValue')) this.middleValue = this._elementRef.nativeElement.attributes.getNamedItem('middleValue').value;
+        if (!this.middleValue && this.isRange && this._elementRef.nativeElement.attributes.getNamedItem('middleValue')) {
+            this.middleValue = this._elementRef.nativeElement.attributes.getNamedItem('middleValue').value;
+        }
         if (!this.middleValue && this.isRange) this.middleValue = this.max;
-        if (!this.stepValue && this._elementRef.nativeElement.attributes.getNamedItem('stepValue')) this.stepValue = this._elementRef.nativeElement.attributes.getNamedItem('stepValue').value;
+        if (!this.stepValue && this._elementRef.nativeElement.attributes.getNamedItem('stepValue')) {
+            this.stepValue = this._elementRef.nativeElement.attributes.getNamedItem('stepValue').value;
+        }
         if (!this.stepValue) this.stepValue = 1;
         this.initialStartValue = parseFloat(this.startValue);
         this.initialEndValue = parseFloat(this.middleValue);
@@ -280,7 +308,7 @@ export class Ng2SliderComponent implements ISkinable{
             this.id = Math.random().toString(36).slice(2, 10);
             this._elementRef.nativeElement.id = this.id;
         } else {
-            this.id = this._elementRef.nativeElement.id
+            this.id = this._elementRef.nativeElement.id;
         }
 
         //
@@ -295,9 +323,9 @@ export class Ng2SliderComponent implements ISkinable{
             styledInstance = this._styledDirectives.first;
         }
         if (this.resultHandleStyle.length || this.resultRangeRibbonStyle) {
-            if (typeof(styledInstance.styleBlock) == 'string') {
+            if (typeof(styledInstance.styleBlock) === 'string') {
                 styledInstance.styleBlock = [styledInstance.styleBlock];
-            } else if (styledInstance.styleBlock == null) {
+            } else if (styledInstance.styleBlock === null) {
                 styledInstance.styleBlock = [];
             }
             if (this.resultHandleStyle.length) {
@@ -318,34 +346,21 @@ export class Ng2SliderComponent implements ISkinable{
             max: this.max
         });
 
-        if (this.handlers.Start) this.valueChanged({}, RangeHandle.Start);
-        if (this.handlers.End) this.valueChanged({}, RangeHandle.End);
-
+        if (this.handlers.Start) {
+            this.valueChanged({}, RangeHandle.Start);
+        }
+        if (this.handlers.End) {
+            this.valueChanged({}, RangeHandle.End);
+         }
         this.stepX = this.range.calculateStepX(this.stepValue);
 
     }
 
-    onOverlap() {
-
-    }
     rangeChangedTrigger() {
         //this.rangeChangedEvent.emit({start: this.startValue, end: this.middleValue});
         this.rangeChangedEvent.emit(this);
     }
 
-    setStartValue(v:any) {
-        this.startValue = v;
-        this.valueChanged(RangeHandle.Start);
-        this.CDR.detectChanges();
-        this.CDR.markForCheck();
-    }
-
-    setEndValue(v:any) {
-        this.middleValue = v;
-        this.valueChanged(RangeHandle.End);
-        this.CDR.detectChanges();
-        this.CDR.markForCheck();
-    }
 
     onStopSliding(event: IEventSlideAble) {
         this.rangeChangedTrigger();
@@ -354,17 +369,8 @@ export class Ng2SliderComponent implements ISkinable{
     // Handling 'onsliding' event from SlideAbleDirective
     onSliding(event: IEventSlideAble) {
         var handle = RangeHandle.Both;
-        if (event.elementId == this.id+'-left-handle') handle = RangeHandle.Start;
-        if (event.elementId == this.id+'-right-handle') handle = RangeHandle.End;
-  //      //Check for overlap
-  //      if ( handle == 0 && 
-  //           ((event.relativePercentHorisontal + 1 ) >= parseInt(this.middleValue) || 
-  //           (event.relativePercentHorisontal + 2 ) >= parseInt(this.middleValue))) {
-  //           console.log(parseInt(this.middleValue));
-  //           this.startValue = parseInt(this.middleValue) - 1;
-  //           this.valueChanged(RangeHandle.Start);
-  //           return false;              
-  //      }
+        if (event.elementId === this.id+'-left-handle') handle = RangeHandle.Start;
+        if (event.elementId === this.id+'-right-handle') handle = RangeHandle.End;
 
         //Update input values        
         this.refreshInputBoxByPercent(event.relativePercentHorisontal, handle);
@@ -374,18 +380,18 @@ export class Ng2SliderComponent implements ISkinable{
         // Example of using callback function before redraw
         event.instance.checkXBeforeRedraw = function(x:any, y:any) {
             return true;
-        }
-        this.handlers[name] = event.instance;
+        };
+        (<any>this.handlers)[name] = event.instance;
         // if (name == 'Start') this.valueChanged({}, RangeHandle.Start);
         // if (name == 'End') this.valueChanged({}, RangeHandle.End);
     }
 
-    convertStyles(styleArray: Object) {
+    convertStyles(styleArray: any) {
         var style = '';
         for (let idx in styleArray) {
             style += idx + ':' + styleArray[idx] + ';';
         }
-        if (style!='') style = `{${style}}`;
+        if (style !== '') style = `{${style}}`;
         return style;
     }
 
@@ -417,8 +423,8 @@ export class Range {
     private boundingRect:BoundingRectClass;
 
     constructor(private config:{element:any, min:any, max:any}) {
-        if (typeof(this.config.min == 'string')) this.config.min = parseFloat(this.config.min);
-        if (typeof(this.config.max == 'string')) this.config.max = parseFloat(this.config.max);
+        if (typeof(this.config.min === 'string')) this.config.min = parseFloat(this.config.min);
+        if (typeof(this.config.max === 'string')) this.config.max = parseFloat(this.config.max);
         this.boundingRect = config.element.getBoundingClientRect();
     }
 
@@ -434,7 +440,9 @@ export class Range {
     }
 
     calculateXFromValue(value:number) {
-        return  this.boundingRect.left +  Math.round((this.boundingRect.right - this.boundingRect.left) * (value - this.config.min) / (this.config.max - this.config.min));
+        return  this.boundingRect.left +
+            Math.round((this.boundingRect.right - this.boundingRect.left) *
+                       (value - this.config.min) / (this.config.max - this.config.min));
     }
 
     // Calculate relative handle position (percent) from his position coordinate
@@ -444,10 +452,12 @@ export class Range {
 
     // Calculate value from handle position coordinate
     calculateValueFromX(x:number) {
-        return this.config.min + Math.round((this.config.max - this.config.min) * (x - this.boundingRect.left) / (this.boundingRect.right - this.boundingRect.left));
+        return this.config.min +
+            Math.round((this.config.max - this.config.min) * (x - this.boundingRect.left) /
+                       (this.boundingRect.right - this.boundingRect.left));
     }
 
-    calculateStepX(step) {
+    calculateStepX(step:any) {
         return step * (this.boundingRect.right - this.boundingRect.left) / (this.config.max - this.config.min);
     }
 

@@ -1,10 +1,10 @@
 import '@ngrx/core/add/operator/select';
-import { Action, ActionReducer } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
+import { Action } from '@ngrx/store';
 import { JobsActions } from '../actions/index';
 
 export interface JobsState {
-    groupJobs: {}
+    groupJobs: {};
 }
 
 const initialState: JobsState = {
@@ -46,15 +46,15 @@ export default (state: JobsState = initialState, action: Action) => {
                 };
             }
             default:
-                return state
+                return state;
         }
 };
 
 export function getJobsForGroups(groups: Array<any>) {
-    return (state$: Observable<JobsState>) => 
+    return (state$: Observable<JobsState>) =>
         state$
-        .select(s => 
-                groups.map(group => 
+        .select(s =>
+                groups.map(group =>
                     Object.assign({}, group, {
                         jobs: s.groupJobs[group.id] ? s.groupJobs[group.id].jobs : []
                     }))

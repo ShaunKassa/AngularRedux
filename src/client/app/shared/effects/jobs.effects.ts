@@ -1,24 +1,14 @@
-import {Injectable} from "@angular/core";
-import {Store, Action} from "@ngrx/store";
-import {StateUpdates, Effect, toPayload} from "@ngrx/effects";
-import { Observable } from "rxjs/Observable";
-import { S3 } from 'aws-sdk';
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/mapTo";
-import "rxjs/add/observable/bindCallback";
-import {Subject} from "rxjs/Subject";
-import {JobsService} from "../services/index";
+import {Injectable} from '@angular/core';
+import {StateUpdates, Effect, toPayload} from '@ngrx/effects';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/mapTo';
+import 'rxjs/add/observable/bindCallback';
+import {JobsService} from '../services/index';
 import {JobsActions} from '../actions/index';
-import { Config } from '../config/env.config';
 
 
 @Injectable()
-export class JobsEffects{
-    constructor(
-        private _updates$: StateUpdates<any>,
-        private _jobsService : JobsService,
-        private jobsActions: JobsActions
-    ){}
+export class JobsEffects {
 
     @Effect() saveJob$ = this._updates$
         .whenAction(JobsActions.SAVE_JOB)
@@ -44,4 +34,10 @@ export class JobsEffects{
                                 {group:group, jobs: jobs}
                                 ));
         });
+
+    constructor(
+        private _updates$: StateUpdates<any>,
+        private _jobsService : JobsService,
+        private jobsActions: JobsActions
+    ) {}
 }

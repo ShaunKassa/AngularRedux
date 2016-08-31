@@ -1,16 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/reduce';
-// import 'rxjs/add/operator/mergeMap';
-// import 'rxjs/add/operator/concatMap';
-// import 'rxjs/add/operator/concatAll';
-// import 'rxjs/add/operator/groupBy';
-// import 'rxjs/add/operator/toArray';
-// import 'rxjs/add/operator/publishReplay';
-// import 'rxjs/add/operator/retry';
-// import 'rxjs/add/operator/catch';
 
 /**
  * This class provides the JobsService service with methods to get list of jobs.
@@ -33,7 +23,7 @@ export class JobsService {
           .map(res => res.json());
   }
 
-  saveFilters(filtersPayload): Observable<any> {
+  saveFilters(filtersPayload:any): Observable<any> {
     let body = JSON.stringify(filtersPayload);
     let headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Request-Method': this.filterService });
     let options = new RequestOptions({ headers: headers });
@@ -51,7 +41,7 @@ export class JobsService {
                   '?filter[limit]=' + initialLimit +
                   '&filter[skip]=' + batch * initialLimit +
                   '&filter[order]=createDate DESC' +
-                  '&filter[where][and][0][parentjobid]=null' + 
+                  '&filter[where][and][0][parentjobid]=null' +
                   '&filter[where][and][1][jobtypeid]=' + group.id +
                   '&filter[where][and][1][createDate][gt]=' + cutoffDate.toISOString())
              .map(res => this.fetchChildrenForJobs(res.json()))
@@ -74,7 +64,7 @@ export class JobsService {
       let that = this;
       return Observable.from(jobs)
                 .mergeMap((job: any) => {
-                    return that.fetchChildrenForJob(job)
+                    return that.fetchChildrenForJob(job);
                 });
   }
 

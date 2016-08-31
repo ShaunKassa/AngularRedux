@@ -5,36 +5,16 @@
         <div class="detailInstance"  *ngFor="let runningJob of group.jobs" id={{runningJob.id}}>
             <div class="detailLeft">
                 <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
-                <div class="chart">
-                    <svg viewbox="0 0 100 100">
-                        <circle cx="120" cy="120" r="95" fill="transparent" 
-                                [attr.stroke-width]="50"  stroke="#dde5e9"/>
-                        <circle cx="120" cy="120" r="95" 
-                                fill="transparent" 
-                                [attr.stroke-width]="runningJob.slice2 ? 50: 0" 
-                                [attr.stroke-dashoffset]="runningJob.detail_width1" 
-                                stroke="#273142" 
-                                opacity="0.5"
-                                stroke-dasharray="596.9"/>
-                        <circle cx="120" cy="120" r="95" fill="transparent" 
-                                [attr.stroke-width]="runningJob.slice3 ? 50: 0" 
-                                [attr.stroke-dashoffset]="runningJob.detail_width2" 
-                                stroke="#ff670d" 
-                                stroke-dasharray="596.9"/>
-                        <circle cx="120" cy="120" r="95" fill="transparent" 
-                                [attr.stroke-width]="runningJob.slice4 ? 50: 0" 
-                                [attr.stroke-dashoffset]="runningJob.detail_width3" 
-                                stroke="#273142" 
-                                stroke-dasharray="596.9"/>
-                    </svg>
-                    <p class="percentage" *ngIf ="runningJob.percent < 100">
-                     {{runningJob.percent}}<span>%</span>
-                    </p>
-                    <p class="percentage" *ngIf ="runningJob.percent == 100">
-                    done 
-                    </p>
-                </div>
-                <div class="elapsedTime">{{runningJob.createdDate}}</div>
+                <detailview-chart
+					[detail_width1] ="runningJob.detail_width1"	
+					[detail_width2] ="runningJob.detail_width2"	
+					[detail_width3] ="runningJob.detail_width3"	
+                    [slice2] ="runningJob.slice2"
+                    [slice3] ="runningJob.slice3"
+                    [slice4] ="runningJob.slice4"
+                    [percent] ="runningJob.percent"
+                ></detailview-chart>
+               <div class="elapsedTime">{{runningJob.createdDate}}</div>
                 <div class="createdDate">started on: {{runningJob.startedDate}}</div>
             </div>
             <div class="detailRight">

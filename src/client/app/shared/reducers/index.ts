@@ -50,7 +50,6 @@ import { combineReducers } from '@ngrx/store';
 import jobsReducer, * as fromJobs from './jobs.reducers';
 import jobTypesReducer, * as fromJobTypes from './job_types.reducers';
 
-
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
@@ -104,7 +103,7 @@ export default compose(storeFreeze, storeLogger(), combineReducers)({
 }
 
 export function getJobsForGroups(groups: any) {
-    return compose(fromJobs.getJobsForGroups(groups), getJobsState())
+    return compose(fromJobs.getJobsForGroups(groups), getJobsState());
 }
 
 

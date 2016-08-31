@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Rx';
 import {JobsActions} from '../../shared/actions/index';
 import {getJobTypesWithJobs} from '../../shared/reducers/index';
+
+
+import { OverviewChartComponent } from '../../shared/overviewChart/overview-chart.component';
+// import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component';
 
 @Component({
   moduleId: module.id,
   selector: 'jobs-overview',
   templateUrl: 'jobs-overview.component.html',
-  styleUrls: ['jobs-overview.component.css']
+  styleUrls: ['jobs-overview.component.css'],
+  directives: [OverviewChartComponent]
 })
 export class JobsOverviewComponent {
     groups: any;
@@ -25,6 +29,7 @@ export class JobsOverviewComponent {
         this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
     }
 
+    /*
     private displayTimeStamp(job: any) {
         let time_1 = new Date(job.createDate);
         let result_1 = time_1.getTime();
@@ -50,4 +55,5 @@ export class JobsOverviewComponent {
             job.percent = (Math.round((job.slice3 + job.slice4) * 100) / 100).toFixed(1);
         }
     }
+    */
 }

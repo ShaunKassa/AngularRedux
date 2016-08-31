@@ -1,13 +1,12 @@
 import '@ngrx/core/add/operator/select';
-import { Action, ActionReducer } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Action } from '@ngrx/store';
 import { JobTypesActions } from '../actions/index';
 
 export interface JobTypesState {
-    loaded: boolean,
-    loading: boolean,
-    jobTypes: Array<any>,
-    lastUpdated?: Date
+    loaded: boolean;
+    loading: boolean;
+    jobTypes: Array<any>;
+    lastUpdated?: Date;
 }
 
 const initialState: JobTypesState = {
@@ -21,7 +20,7 @@ export default (state: JobTypesState = initialState, action: Action) => {
             case JobTypesActions.REQUEST_JOBTYPES:
                 return Object.assign({}, state, {
                     loading: true
-                })
+                });
             case JobTypesActions.RECEIVE_JOBTYPES:
                 return Object.assign({}, state, {
                     loaded: true,
@@ -29,6 +28,6 @@ export default (state: JobTypesState = initialState, action: Action) => {
                     jobTypes: action.payload
                 });
             default:
-                return state
+                return state;
         }
 };
