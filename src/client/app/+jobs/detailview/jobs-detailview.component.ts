@@ -1,7 +1,8 @@
 import { Component, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Rx';
+import { Store } from '@ngrx/store';
+import { JobsActions } from '../../shared/actions/index';
+import { getJobTypesWithJobs } from '../../shared/reducers/index';
 
 import { DetailviewChartComponent } from '../../shared/detailviewChart/detailview-chart.component';
 
@@ -13,34 +14,23 @@ import { DetailviewChartComponent } from '../../shared/detailviewChart/detailvie
   directives: [DetailviewChartComponent]
 })
 export class JobsDetailviewComponent implements AfterViewInit {
-    jobGroups: any;
+    groups: any;
 
-    constructor(private _store: Store<any>, private _route: ActivatedRoute, private _el: ElementRef) {
-        let that = this;
+    constructor(private _store: Store<any>, private jobsActions: JobsActions,
+        private _el: ElementRef, private _route: ActivatedRoute) {
+        this.groups = _store.let(getJobTypesWithJobs());
+    }
 
-        this.jobGroups = Observable.combineLatest(
-                _store.select('jobs'),
-                _store.select('jobTypes'),
-                (jobs_state: any, jobtypes_state: any) => {
-                    let groups = jobs_state.jobs,
-                        types = jobtypes_state.jobTypes;
-                    groups.forEach((group: any) => {
-                        group.jobs.forEach(that.generateDegrees);
-                        group.jobs.forEach(that.displayTimeStamp);
-                        group.jobs.forEach(that.displayStat);
-                    });
-                    groups.forEach((group: any) => {
-                        let gt = types.filter((t: any) => t.id === group.id)[0];
-                        group.name = gt ? gt.name : group.id;
-                    });
+    onExapandGroup(group: any) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+    }
 
-                    return groups;
-                });
+    onGetMore(group: any) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
     }
 
     ngAfterViewInit() {
         let id ='[id="' +  parseInt(this._route.snapshot.params['id'], 10) + '"]';
-        // let targetEl = (<any>$(this._el.nativeElement)).find('#' + id)[0];
         let targetEl = this._el.nativeElement.querySelector(id);
         if(targetEl) {
             targetEl.scrollIntoView();
@@ -48,6 +38,7 @@ export class JobsDetailviewComponent implements AfterViewInit {
     }
 
 
+    /*
     private displayTimeStamp(job: any) {
         let time_1 = new Date(job.createDate);
         let result_1 = time_1.getTime();
@@ -88,5 +79,6 @@ export class JobsDetailviewComponent implements AfterViewInit {
             }
         }
     }
+    */
 
 }

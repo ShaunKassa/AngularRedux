@@ -10,13 +10,6 @@ import {JobsActions} from '../actions/index';
 @Injectable()
 export class JobsEffects {
 
-    @Effect() fetchJobs$ = this._updates$
-        .whenAction(JobsActions.REQUEST_JOBS)
-        .switchMap(() => (
-                    this._jobsService
-                    .fetchJobs()
-                    .map((jobs) => this.jobsActions.receiveJobs(jobs))
-                    ));
     @Effect() saveJob$ = this._updates$
         .whenAction(JobsActions.SAVE_JOB)
         .map(toPayload)
@@ -29,6 +22,17 @@ export class JobsEffects {
             result.mapTo(this.jobsActions.saveJobSuccess(job));
             */
             return null;
+        });
+
+    @Effect() loadJobsForGroup$ = this._updates$
+        .whenAction(JobsActions.LOAD_GROUPJOBS)
+        .map(toPayload)
+        .concatMap(({group, batch}) => {
+            return this._jobsService
+                    .fetchJobsForGroup(group, batch)
+                    .map((jobs) => this.jobsActions.loadGroupJobsSuccess(
+                                {group:group, jobs: jobs}
+                                ));
         });
 
     constructor(

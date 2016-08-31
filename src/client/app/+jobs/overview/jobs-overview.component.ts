@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ElementRef, ViewChild} from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, Renderer} from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Rx';
+import {JobsActions} from '../../shared/actions/index';
+import {getJobTypesWithJobs} from '../../shared/reducers/index';
 
 
 import { OverviewChartComponent } from '../../shared/overviewChart/overview-chart.component';
@@ -14,46 +15,29 @@ import { OverviewChartComponent } from '../../shared/overviewChart/overview-char
   styleUrls: ['jobs-overview.component.css'],
   directives: [OverviewChartComponent]
 })
-export class JobsOverviewComponent implements OnInit {
-    jobGroups: any;
+export class JobsOverviewComponent {
+    groups: any;
     @Input() isOpen = true;
-    @ViewChild('groups') jobsGroupsRef:ElementRef;
+    @ViewChild('groups_container') jobsGroupsRef:ElementRef;
 
-    constructor(private _store: Store<any>, private _router: Router) {
-        let that = this;
-
-        this.jobGroups = Observable.combineLatest(
-                _store.select('jobs'),
-                _store.select('jobTypes'),
-                (jobs_state: any, jobtypes_state: any) => {
-                    let groups = jobs_state.jobs,
-                        types = jobtypes_state.jobTypes;
-                    groups.forEach((group: any) => {
-                        group.jobs.forEach(that.generateDegrees);
-                        group.jobs.forEach(that.displayTimeStamp);
-                    });
-                    groups.forEach((group: any) => {
-                        let gt = types.filter((t: any) => t.id === group.id)[0];
-                        group.name = gt ? gt.name : group.id;
-                    });
-
-                    return groups;
-                });
+    constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router, private renderer: Renderer) {
+        this.groups = _store.let(getJobTypesWithJobs());
     }
 
-    ngOnInit() {
-        console.log('OnInit');
+    onExapandGroup(group: any) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+        this.toggle(group.name);
     }
 
-    toggle(value:string) {
-        if( this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display === '' ||
-           this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display === 'flex') {
-            this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display = 'none';
-        } else {
-            this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display = 'flex';
-        }
+    onGetMore(group: any) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
     }
 
+    private toggle(value:string) {
+        this.renderer.setElementClass(this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0], 'show', true);
+    }
+
+    /*
     private displayTimeStamp(job: any) {
         let time_1 = new Date(job.createDate);
         let result_1 = time_1.getTime();
@@ -79,4 +63,5 @@ export class JobsOverviewComponent implements OnInit {
             job.percent = (Math.round((job.slice3 + job.slice4) * 100) / 100).toFixed(1);
         }
     }
+    */
 }

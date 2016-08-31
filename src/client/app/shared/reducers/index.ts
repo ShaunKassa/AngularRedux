@@ -50,7 +50,6 @@ import { combineReducers } from '@ngrx/store';
 import jobsReducer, * as fromJobs from './jobs.reducers';
 import jobTypesReducer, * as fromJobTypes from './job_types.reducers';
 
-
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
@@ -91,17 +90,41 @@ export default compose(storeFreeze, storeLogger(), combineReducers)({
  * }
  * ```
  */
+
+
+/*
+ *
+ *
+ * Selectors for jobs
+ */
  export function getJobsState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.jobs);
 }
 
+export function getJobsForGroups(groups: any) {
+    return compose(fromJobs.getJobsForGroups(groups), getJobsState());
+}
+
+
+/*
+ *
+ *
+ * Selectors for job tyeps
+ */
 export function getJobTypesState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.jobTypes);
 }
 
+
 /**
  * Some selector functions create joins across parts of state. This selector
  * composes the search result IDs to return an array of books in the store.
  */
+
+export function getJobTypesWithJobs() {
+    return (state$: Observable<AppState>) => state$
+        .let(getJobTypesState())
+        .switchMap(jobTypesState => state$.let(getJobsForGroups(jobTypesState.jobTypes)));
+}

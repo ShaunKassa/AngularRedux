@@ -1,16 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/concatMap';
-import 'rxjs/add/operator/concatAll';
-import 'rxjs/add/operator/groupBy';
-import 'rxjs/add/operator/toArray';
-import 'rxjs/add/operator/publishReplay';
-import 'rxjs/add/operator/retry';
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Rx';
 
 /**
  * This class provides the JobsService service with methods to get list of jobs.
@@ -28,45 +18,6 @@ export class JobsService {
    */
   constructor(private http: Http) {}
 
-
-  fetchJobs(): Observable<any> {
-      let that = this;
-      var cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - 10);
-      //
-      return this.http.get(this.endpoint +
-              'Jobs?filter[where][and][0][parentjobid]=null&filter[where][and][1][createDate][gt]=' + cutoffDate.toISOString())
-          .map(res => res.json())
-          .map((jobs) =>
-                  Observable.from(jobs)
-                  .concatMap((job: any) => {
-                      return this.http.get(this.endpoint + 'Jobs?filter[where][parentjobid]=' + job.id)
-                          .map(res => {
-                              job.children = res.json();
-                              that.generatePercentages(job);
-                              return job;
-                          });
-                  })
-              )
-          .concatAll()
-          .groupBy(job => {
-              return job.jobtypeid;
-          })
-      .flatMap(group => {
-          return group.toArray();
-      })
-      .map((group: Array<any>) => {
-          return {
-              id: group[0].jobtypeid,
-              jobs: group.sort((a, b) => {
-                  let d1 = new Date(a.createDate);
-                  let d2 = new Date(b.createDate);
-                  return d2.getTime() - d1.getTime();
-              })
-          };
-      }).toArray();
-  }
-
   fetchJobTypes(): Observable<any> {
       return this.http.get(this.endpoint + 'Jobtypes')
           .map(res => res.json());
@@ -79,6 +30,42 @@ export class JobsService {
 
     return this.http.post(this.filterService, body, options)
                     .catch(this.handleError);
+  }
+
+  fetchJobsForGroup(group: any, batch): Observable<any> {
+      var cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 10);
+      var initialLimit = 10;
+
+      return this.http.get(this.endpoint + 'Jobs' +
+                  '?filter[limit]=' + initialLimit +
+                  '&filter[skip]=' + batch * initialLimit +
+                  '&filter[order]=createDate DESC' +
+                  '&filter[where][and][0][parentjobid]=null' +
+                  '&filter[where][and][1][jobtypeid]=' + group.id +
+                  '&filter[where][and][1][createDate][gt]=' + cutoffDate.toISOString())
+             .map(res => this.fetchChildrenForJobs(res.json()))
+             .mergeAll()
+             .toArray();
+  }
+
+  fetchChildrenForJob(job: any): Observable<any> {
+      let that = this;
+
+      return this.http.get(this.endpoint + 'Jobs?filter[where][parentjobid]=' + job.id)
+              .map(res => {
+                  job.children = res.json();
+                  that.generatePercentages(job);
+                  return job;
+              });
+  }
+
+  fetchChildrenForJobs(jobs: any): Observable<any> {
+      let that = this;
+      return Observable.from(jobs)
+                .mergeMap((job: any) => {
+                    return that.fetchChildrenForJob(job);
+                });
   }
 
   private generatePercentages(job: any) {

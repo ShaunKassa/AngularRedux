@@ -1,34 +1,62 @@
 import '@ngrx/core/add/operator/select';
+import { Observable } from 'rxjs/Rx';
 import { Action } from '@ngrx/store';
 import { JobsActions } from '../actions/index';
 
 export interface JobsState {
-    loaded: boolean;
-    loading: boolean;
-    jobs: Array<any>;
-    lastUpdated?: Date;
+    groupJobs: {};
 }
 
 const initialState: JobsState = {
-    loaded: false,
-    loading: false,
-    jobs: []
+    groupJobs: {}
 };
 
 export default (state: JobsState = initialState, action: Action) => {
         switch(action.type) {
-            case JobsActions.REQUEST_JOBS:
-                return Object.assign({}, state, {
-                    loading: true
-                });
-            case JobsActions.RECEIVE_JOBS:
-                return Object.assign({}, state, {
-                    loaded: true,
-                    loading: false,
-                    jobs: action.payload
-                });
+            case JobsActions.LOAD_GROUPJOBS: {
+                const group: any = action.payload.group;
+
+                if(state.groupJobs[group.id]) {
+                    return state;
+                }
+
+                return {
+                    groupJobs: Object.assign({}, state.groupJobs, {
+                        [group.id]: {
+                            loading: true,
+                            jobs: []
+                        }
+                    })
+                };
+            }
+            case JobsActions.LOAD_GROUPJOBS_SUCCESS: {
+                let groupId = action.payload.group.id;
+
+                const jobs: any = action.payload.jobs;
+                const newJobs: any = jobs.filter(job => !state.groupJobs[groupId].jobs[job.id]);
+
+                return {
+                    groupJobs: Object.assign({}, state.groupJobs, {
+                        [groupId]: {
+                            loaded: true,
+                            loading: false,
+                            jobs: [...state.groupJobs[groupId].jobs, ...newJobs]
+                        }
+                    })
+                };
+            }
             default:
                 return state;
         }
 };
 
+export function getJobsForGroups(groups: Array<any>) {
+    return (state$: Observable<JobsState>) =>
+        state$
+        .select(s =>
+                groups.map(group =>
+                    Object.assign({}, group, {
+                        jobs: s.groupJobs[group.id] ? s.groupJobs[group.id].jobs : []
+                    }))
+            );
+}
