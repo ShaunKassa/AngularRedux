@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="detailView" *ngFor="#group of jobGroups | async; #i=index">
-        <div class="descrption" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
-        <div class="descrption" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
-        <div class="detailInstance"  *ngFor="#runningJob of group.jobs" id={{runningJob.id}}>
+    <div class="detailView" *ngFor="let group of groups | async; #i=index">
+        <div class="descrption" (click)="onExapandGroup(group)" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
+        <div class="descrption" (click)="onExapandGroup(group)" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
+        <div class="detailInstance"  *ngFor="let runningJob of group.jobs" id={{runningJob.id}}>
             <div class="detailLeft">
                 <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                 <div class="chart">
@@ -70,6 +70,9 @@
                     <div class="stat" [innerHTML] = 'runningJob.statistics'></div>
                 </div>
             </div>
+        </div>
+        <div>
+            <button (click)="onGetMore(group)">Load More...</button>
         </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
 import {JobsActions} from '../../shared/actions/index';
-import {AppState, getJobTypesWithJobs} from '../../shared/reducers/index';
+import {getJobTypesWithJobs} from '../../shared/reducers/index';
 
 @Component({
   moduleId: module.id,
@@ -11,9 +11,8 @@ import {AppState, getJobTypesWithJobs} from '../../shared/reducers/index';
   templateUrl: 'jobs-overview.component.html',
   styleUrls: ['jobs-overview.component.css']
 })
-export class JobsOverviewComponent implements OnInit {
+export class JobsOverviewComponent {
     groups: any;
-    groupJobs: any;
 
     constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router) {
         this.groups = _store.let(getJobTypesWithJobs());
@@ -50,8 +49,5 @@ export class JobsOverviewComponent implements OnInit {
         } else {
             job.percent = (Math.round((job.slice3 + job.slice4) * 100) / 100).toFixed(1);
         }
-    }
-    ngOnInit() {
-        console.log('OnInit');
     }
 }
