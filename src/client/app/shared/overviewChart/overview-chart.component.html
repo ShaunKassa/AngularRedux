@@ -1,29 +1,29 @@
 <div class="chart">
     <svg viewbox="0 0 100 100">
         <circle cx="50" cy="50" r="40" fill="transparent" 
-                [attr.stroke-width]="20"  stroke="#dde5e9"/>
+                [attr.stroke-width]="strokeWidth"  stroke="#dde5e9"/>
         <circle cx="50" cy="50" r="40" 
                 fill="transparent" 
-                [attr.stroke-width]="slice2Value" 
-                [attr.stroke-dashoffset]="width1" 
+                [attr.stroke-width]="strokeWidth" 
+                [attr.stroke-dashoffset]="widths[0]" 
                 stroke="#273142" 
                 opacity="0.5"
-                stroke-dasharray="251.3"/>
+                stroke-dasharray="circumference"/>
         <circle cx="50" cy="50" r="40" fill="transparent" 
-                [attr.stroke-width]="slice3Value" 
-                [attr.stroke-dashoffset]="width2" 
+                [attr.stroke-width]="strokeWidth" 
+                [attr.stroke-dashoffset]="widths[1]" 
                 stroke="#ff670d" 
-                stroke-dasharray="251.3"/>
+                stroke-dasharray="circumference"/>
         <circle cx="50" cy="50" r="40" fill="transparent" 
-                [attr.stroke-width]="slice4Value" 
-                [attr.stroke-dashoffset]="width3" 
+                [attr.stroke-width]="strokeWidth" 
+                [attr.stroke-dashoffset]="widths[2]" 
                 stroke="#273142" 
-                stroke-dasharray="251.3"/>
+                stroke-dasharray="circumference"/>
     </svg>
-    <p class="percentage" *ngIf ="percent < 100">
+    <p class="percentage" *ngIf ="percent != 'done'">
      {{percent}}<span>%</span>
     </p>
-    <p class="percentage" *ngIf ="percent == 100">
+    <p class="percentage" *ngIf ="percent == 'done'">
     done 
     </p>
 </div>

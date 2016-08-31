@@ -8,15 +8,7 @@
                 <div class="instance" *ngFor="let runningJob of group.jobs" 
                      routerLink="../detailview/{{runningJob.id}}"  >
                     <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
-                  <overview-chart
-					[width1] ="runningJob.width1"	
-					[width2] ="runningJob.width2"	
-					[width3] ="runningJob.width3"	
-                    [slice2] ="runningJob.slice2"
-                    [slice3] ="runningJob.slice3"
-                    [slice4] ="runningJob.slice4"
-                    [percent] ="runningJob.percent"
-                  ></overview-chart>
+                    <overview-chart [slices] ="runningJob.slices"></overview-chart>
                     <p class="timeElapsed">{{runningJob.createdDate}}</p>
                 </div>
                 <div>

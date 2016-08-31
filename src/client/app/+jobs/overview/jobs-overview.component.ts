@@ -5,15 +5,12 @@ import {JobsActions} from '../../shared/actions/index';
 import {getJobTypesWithJobs} from '../../shared/reducers/index';
 
 
-import { OverviewChartComponent } from '../../shared/overviewChart/overview-chart.component';
-// import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component';
 
 @Component({
   moduleId: module.id,
   selector: 'jobs-overview',
   templateUrl: 'jobs-overview.component.html',
-  styleUrls: ['jobs-overview.component.css'],
-  directives: [OverviewChartComponent]
+  styleUrls: ['jobs-overview.component.css']
 })
 export class JobsOverviewComponent {
     groups: any;

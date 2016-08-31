@@ -4,27 +4,27 @@
                  [attr.stroke-width]="50"  stroke="#dde5e9"/>
          <circle cx="120" cy="120" r="95" 
                  fill="transparent" 
-                 [attr.stroke-width]="slice2Value" 
-                 [attr.stroke-dashoffset]="detail_width1" 
+                 [attr.stroke-width]="strokeWidth" 
+                 [attr.stroke-dashoffset]="widths[0]" 
                  stroke="#273142" 
                  opacity="0.5"
-                 stroke-dasharray="596.9"/>
+                 stroke-dasharray="circumference"/>
          <circle cx="120" cy="120" r="95" fill="transparent" 
-                 [attr.stroke-width]="slice3Value" 
-                 [attr.stroke-dashoffset]="detail_width2" 
+                 [attr.stroke-width]="strokeWidth" 
+                 [attr.stroke-dashoffset]="widths[1]" 
                  stroke="#ff670d" 
-                 stroke-dasharray="596.9"/>
+                 stroke-dasharray="circumference"/>
          <circle cx="120" cy="120" r="95" fill="transparent" 
-                 [attr.stroke-width]="slice4Value" 
-                 [attr.stroke-dashoffset]="detail_width3" 
+                 [attr.stroke-width]="strokeWidth" 
+                 [attr.stroke-dashoffset]="widths[2]" 
                  stroke="#273142" 
-                 stroke-dasharray="596.9"/>
+                 stroke-dasharray="circumference"/>
      </svg>
-     <p class="percentage" *ngIf ="percent < 100">
-      {{percent}}<span>%</span>
-     </p>
-     <p class="percentage" *ngIf ="percent == 100">
-     done 
-     </p>
+    <p class="percentage" *ngIf ="percent != 'done'">
+     {{percent}}<span>%</span>
+    </p>
+    <p class="percentage" *ngIf ="percent == 'done'">
+    done 
+    </p>
  </div>
   

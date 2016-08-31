@@ -5,9 +5,6 @@ import {
     OnInit
 } from '@angular/core';
 
-
-
-
 @Component({
     selector: 'detailview-chart',
     moduleId: module.id,
@@ -17,34 +14,27 @@ import {
 })
 
 export class DetailviewChartComponent implements OnInit {
-    @Input() detail_width1:any;
-    @Input() detail_width2:any;
-    @Input() detail_width3:any;
-    @Input() slice2:any;
-    @Input() slice3:any;
-    @Input() slice4:any;
-    @Input() percent:any;
-    private slice2Value:any;
-    private slice3Value:any;
-    private slice4Value:any;
+    // Public Members
+    @Input() slices: Array<number>;
 
-   ngOnInit() {
-     if(this.slice2) {
-            this.slice2Value = 50;
-      } else {
-            this.slice2Value = 0;
-      }
+    percent: string;
+    widths: Array<number> = [];
+    circumference: number = 596.9;
+    strokeWidth: number = 50;
 
-     if(this.slice3) {
-            this.slice3Value = 50;
-      } else {
-            this.slice3Value = 0;
-      }
+    ngOnInit() {
+       this.generateArcWidths();
+    }
 
-     if(this.slice4) {
-            this.slice4Value = 50;
-      } else {
-            this.slice4Value = 0;
-      }
-   }
+    private generateArcWidths() {
+        this.widths[0] = (this.slices[0]) * this.circumference / 100;
+        this.widths[1] = ((this.slices[0] + this.slices[1])) * this.circumference / 100;
+        this.widths[2] = ((this.slices[0] + this.slices[1] + this.slices[2])) * this.circumference / 100;
+        let finishedPortion= this.slices[2] + this.slices[3];
+        if(finishedPortion >= 100) {
+            this.percent = 'done';
+        } else {
+            this.percent = (Math.round((this.slices[2] + this.slices[3]) * 100) / 100).toFixed(1);
+        }
+    }
 }
