@@ -1,9 +1,8 @@
-<div class="overview">
-    <div>
-        <div class ="mainContainer" *ngFor="let group of jobGroups | async; let i=index">
-            <div class="descrption" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
-            <div class="descrption" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
-            <div class="instances">
+<div class="overview" #groups>
+        <div class ="mainContainer" *ngFor="let group of jobGroups | async; let i=index" >
+            <div class="descrption" *ngIf="(i+1) < 10" (click)="toggle(group.name)"><span>0{{i+1}}</span>{{group.name}}</div>
+            <div class="descrption" *ngIf="(i+1) > 10" (click)="toggle(group.name)"><span>{{i+1}}</span>{{group.name}}</div>
+            <div class="instances" [ngClass]="group.name" >
                 <div class="instance" *ngFor="let runningJob of group.jobs" routerLink="../detailview/{{runningJob.id}}"  >
                     <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                   <overview-chart
@@ -19,5 +18,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

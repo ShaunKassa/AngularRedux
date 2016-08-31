@@ -19,7 +19,10 @@ $bec8d2: #bec8d2;
   top: 85px;
   width: 948px;
   z-index: 1;
-
+  .mainContainer {
+      display:flex;
+      flex-direction:column;
+  }
   .descrption {
     border-bottom:  1px solid $bec8d2;
     color: #273142;
@@ -47,7 +50,7 @@ $bec8d2: #bec8d2;
 }
 
 .instances {
-  display: flex;
+  display: none;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:  flex-start;

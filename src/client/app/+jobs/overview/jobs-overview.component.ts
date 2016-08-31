@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
@@ -16,6 +16,8 @@ import { OverviewChartComponent } from '../../shared/overviewChart/overview-char
 })
 export class JobsOverviewComponent implements OnInit {
     jobGroups: any;
+    @Input() isOpen = true;
+    @ViewChild('groups') jobsGroupsRef:ElementRef;
 
     constructor(private _store: Store<any>, private _router: Router) {
         let that = this;
@@ -41,6 +43,15 @@ export class JobsOverviewComponent implements OnInit {
 
     ngOnInit() {
         console.log('OnInit');
+    }
+
+    toggle(value:string) {
+        if( this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display === '' ||
+           this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display === 'flex') {
+            this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display = 'none';
+        } else {
+            this.jobsGroupsRef.nativeElement.getElementsByClassName(value)[0].style.display = 'flex';
+        }
     }
 
     private displayTimeStamp(job: any) {
