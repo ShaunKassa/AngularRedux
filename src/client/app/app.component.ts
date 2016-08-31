@@ -17,7 +17,6 @@ import { JobsActions, JobTypesActions } from './shared/actions/index';
 })
 export default class AppComponent {
   constructor(private _store: Store<any>) {
-    this._store.dispatch({type: JobsActions.REQUEST_JOBS});
     this._store.dispatch({type: JobTypesActions.REQUEST_JOBTYPES});
     console.log('Environment config', Config);
   }

@@ -12,20 +12,26 @@ import { Action } from '@ngrx/store';
  */
 @Injectable()
 export class JobsActions {
-  static REQUEST_JOBS  = '[Jobs] Load jobs';
-  requestJobs(): Action {
-    return {
-      type: JobsActions.REQUEST_JOBS
-    };
+
+  static LOAD_GROUPJOBS = '[GroupJobs] Load group jobs';
+  loadGroupJobs(group: any, batch = 0): Action {
+      return {
+          type: JobsActions.LOAD_GROUPJOBS,
+          payload: {
+              group: group,
+              batch: batch
+          }
+      };
   }
 
-  static RECEIVE_JOBS  = '[Jobs] Load jobs success';
-  receiveJobs(jobs: Array<any>): Action {
-    return {
-      type: JobsActions.RECEIVE_JOBS,
-      payload: jobs
-    };
+  static LOAD_GROUPJOBS_SUCCESS = '[GroupJobs] Load group jobs success';
+  loadGroupJobsSuccess(payload: any): Action {
+      return {
+          type: JobsActions.LOAD_GROUPJOBS_SUCCESS,
+          payload: payload
+      };
   }
+  
 
   static SAVE_JOB = '[Job] Save a job';
   saveJob(job: any): Action {

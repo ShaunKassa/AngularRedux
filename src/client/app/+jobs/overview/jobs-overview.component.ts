@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Rx';
+import {JobsActions} from '../../shared/actions/index';
+import {AppState, getJobTypesWithJobs} from '../../shared/reducers/index';
 
 @Component({
   moduleId: module.id,
@@ -10,28 +12,18 @@ import {Observable} from 'rxjs/Rx';
   styleUrls: ['jobs-overview.component.css']
 })
 export class JobsOverviewComponent implements OnInit {
-    jobGroups: any;
+    groups: any;
+    groupJobs: any;
 
-    constructor(private _store: Store<any>, private _router: Router) {
-        let that = this;
+    constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router) {
+        this.groups = _store.let(getJobTypesWithJobs());
+    }
 
-        this.jobGroups = Observable.combineLatest(
-                _store.select('jobs'),
-                _store.select('jobTypes'),
-                (jobs_state: any, jobtypes_state: any) => {
-                    let groups = jobs_state.jobs,
-                        types = jobtypes_state.jobTypes;
-                    groups.forEach((group: any) => {
-                        group.jobs.forEach(that.generateDegrees);
-                        group.jobs.forEach(that.displayTimeStamp);
-                    });
-                    groups.forEach((group: any) => {
-                        let gt = types.filter((t: any) => t.id === group.id)[0];
-                        group.name = gt ? gt.name : group.id;
-                    });
-
-                    return groups;
-                });
+    onExapandGroup(group: any) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+    }
+    onGetMore(group: any) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
     }
 
     private displayTimeStamp(job: any) {
