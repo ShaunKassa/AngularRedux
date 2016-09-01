@@ -37,7 +37,9 @@ export class JobsDetailviewComponent implements OnInit, AfterViewInit {
                 let id ='[id="' +  parseInt(jobId, 10) + '"]';
                 let targetEl = that._el.nativeElement.querySelector(id);
                 if(targetEl) {
-                    targetEl.scrollIntoView();
+                    setTimeout(() => {
+                        targetEl.scrollIntoView();
+                    }, 1);
                 }
             });
         });
