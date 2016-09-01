@@ -1,0 +1,38 @@
+
+$color-white: #fff;
+$progress-color1: #dde5e9;
+$progress-color2: #273142;
+$font-consolas:  Consolas;
+$bec8d2: #bec8d2;
+
+.panel {
+    display:flex;
+    flex-direction:column;
+}
+.panel-heading {
+    border-bottom:  1px solid $bec8d2;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    margin-top:24px;
+    .panel-title {
+        color: #273142;
+        font-family: $font-consolas;
+        font-style: italic;
+        font-size: 16px;
+        height: 24px;
+        line-height: 24px;
+        margin: 0;
+        text-align: left;
+        padding-left:10px;
+    } 
+    img {
+        width:24px;
+        height:24px;
+    } 
+}
+.panel-open {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

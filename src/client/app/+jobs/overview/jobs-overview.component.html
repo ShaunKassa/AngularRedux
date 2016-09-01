@@ -1,19 +1,18 @@
 <div class="overview" #groups_container>
-        <div class ="mainContainer" *ngFor="let group of groups | async;">
-            <div class="descrption" >
-                <div class="groupName">{{group.name}}</div>
-                <img src="../../../assets/icons/dropdown_open.png" (click)="onExapandGroup(group)"/>
-            </div>
-            <div class="instances" [ngClass]="group.name">
-                <div class="instance" *ngFor="let runningJob of group.jobs" 
-                     routerLink="../detailview/{{runningJob.id}}"  >
-                    <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
-                    <overview-chart [slices] ="runningJob.slices"></overview-chart>
-                    <p class="timeElapsed">{{runningJob.createdDate}}</p>
+        <aethic-accordion>
+            <aethic-accordion-group heading="{{group.name}}" (onExpandGroup)="onExapandGroup($event, group)" 
+                                    *ngFor="let group of groups | async; let i = index;">
+                <div class="instances" >
+                    <div class="instance" *ngFor="let runningJob of group.jobs | async" 
+                         routerLink="../detailview/{{runningJob.id}}"  >
+                        <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
+                        <overview-chart [slices] ="runningJob.slices"></overview-chart>
+                        <p class="timeElapsed">{{runningJob.createdDate}}</p>
+                    </div>
+                    <div>
+                        <button (click)="onGetMore(group)" class="loadMore">Load more</button>
+                    </div>
                 </div>
-                <div>
-                    <button (click)="onGetMore(group)" class="loadMore">Load more</button>
-                </div>
-            </div>
-        </div>
+            </aethic-accordion-group>
+        </aethic-accordion>
 </div>
