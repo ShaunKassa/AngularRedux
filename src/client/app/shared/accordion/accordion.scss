@@ -31,13 +31,13 @@ $bec8d2: #bec8d2;
         padding-left:10px;
     } 
     .img {
-        background-image: url("../../../assets/icons/dropdown_close.png");
+        background-image: url("../../../assets/icons/dropdown_open.png");
         width:24px;
         height:24px;
     } 
 }
 .panel-open {
     .img {
-        background-image: url("../../../assets/icons/dropdown_open.png");
+        background-image: url("../../../assets/icons/dropdown_close.png");
     }
 }
