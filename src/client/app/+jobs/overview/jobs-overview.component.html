@@ -4,7 +4,7 @@
                                     *ngFor="let group of groups | async; let i = index;">
                 <div class="instances" >
                     <div class="instance" *ngFor="let runningJob of group.jobs | async" 
-                         routerLink="../detailview/{{runningJob.id}}"  >
+                         routerLink="../detailview" [queryParams]="{jobId: runningJob.id, groupId: group.name}" >
                         <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                         <overview-chart [slices] ="runningJob.slices"></overview-chart>
                         <p class="timeElapsed">{{runningJob.createdDate}}</p>
