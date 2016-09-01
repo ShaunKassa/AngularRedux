@@ -1,5 +1,4 @@
 import '@ngrx/core/add/operator/select';
-import { Observable } from 'rxjs/Rx';
 import { Action } from '@ngrx/store';
 import { JobsActions } from '../actions/index';
 
@@ -49,14 +48,3 @@ export default (state: JobsState = initialState, action: Action) => {
                 return state;
         }
 };
-
-export function getJobsForGroups(groups: Array<any>) {
-    return (state$: Observable<JobsState>) =>
-        state$
-        .select(s =>
-                groups.map(group =>
-                    Object.assign({}, group, {
-                        jobs: s.groupJobs[group.id] ? s.groupJobs[group.id].jobs : []
-                    }))
-            );
-}

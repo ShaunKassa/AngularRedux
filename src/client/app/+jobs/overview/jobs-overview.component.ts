@@ -1,8 +1,8 @@
-import { Component, Input, ElementRef, ViewChild, Renderer} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {JobsActions} from '../../shared/actions/index';
-import { getJobTypesWithJobs } from '../../shared/reducers/index';
+import { getJobsForGroups } from '../../shared/reducers/index';
 
 
 
@@ -15,20 +15,22 @@ import { getJobTypesWithJobs } from '../../shared/reducers/index';
 export class JobsOverviewComponent {
     groups: any;
 
-    @Input() isOpen = true;
-    @ViewChild('groups_container') jobsGroupsRef:ElementRef;
+    private paginationState: { [groupName: string]: number; } = {};
 
-    constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router, private renderer: Renderer) {
-        //todo: move this to its own selector
-        this.groups = _store.let(getJobTypesWithJobs());
+    constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router) {
+        this.groups = _store.let(getJobsForGroups());
     }
 
-    onExapandGroup($event, group: any) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+    onExpandGroup($event, group: any) {
+        if(!this.paginationState[group.name]) {
+            this.paginationState[group.name] = 1;
+            this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+        }
     }
 
     onGetMore(group: any) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, this.paginationState[group.name]));
+        this.paginationState[group.name] = this.paginationState[group.name] + 1;
     }
 
 

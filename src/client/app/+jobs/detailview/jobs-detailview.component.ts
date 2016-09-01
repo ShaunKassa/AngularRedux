@@ -2,7 +2,7 @@ import { Component, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { JobsActions } from '../../shared/actions/index';
-import { getJobTypesWithJobs } from '../../shared/reducers/index';
+import { getJobsForGroups } from '../../shared/reducers/index';
 
 
 @Component({
@@ -14,17 +14,23 @@ import { getJobTypesWithJobs } from '../../shared/reducers/index';
 export class JobsDetailviewComponent implements AfterViewInit {
     groups: any;
 
+    private paginationState: { [groupName: string]: number; } = {};
+
     constructor(private _store: Store<any>, private jobsActions: JobsActions,
         private _el: ElementRef, private _route: ActivatedRoute) {
-        this.groups = _store.let(getJobTypesWithJobs());
+        this.groups = _store.let(getJobsForGroups());
     }
 
-    onExapandGroup(group: any) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+    onExpandGroup($event, group: any) {
+        if(!this.paginationState[group.name]) {
+            this.paginationState[group.name] = 1;
+            this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
+        }
     }
 
     onGetMore(group: any) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, group.jobs.length/10));
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, this.paginationState[group.name]));
+        this.paginationState[group.name] = this.paginationState[group.name] + 1;
     }
 
     ngAfterViewInit() {

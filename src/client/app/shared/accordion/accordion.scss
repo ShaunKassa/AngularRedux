@@ -6,8 +6,9 @@ $font-consolas:  Consolas;
 $bec8d2: #bec8d2;
 
 .panel {
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
+    // flex-wrap: wrap;
 }
 .panel-heading {
     border-bottom:  1px solid $bec8d2;
@@ -32,7 +33,5 @@ $bec8d2: #bec8d2;
     } 
 }
 .panel-open {
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+
 }

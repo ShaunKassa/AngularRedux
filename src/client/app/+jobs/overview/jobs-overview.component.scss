@@ -49,6 +49,7 @@ $bec8d2: #bec8d2;
 }
 
 .instances {
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:  flex-start;

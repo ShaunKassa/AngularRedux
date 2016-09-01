@@ -102,10 +102,6 @@ export default compose(storeFreeze, storeLogger(), combineReducers)({
     .select(s => s.jobs);
 }
 
-export function getJobsForGroups(groups: any) {
-    return compose(fromJobs.getJobsForGroups(groups), getJobsState());
-}
-
 
 /*
  *
@@ -123,8 +119,17 @@ export function getJobTypesState() {
  * composes the search result IDs to return an array of books in the store.
  */
 
-export function getJobTypesWithJobs() {
-    return (state$: Observable<AppState>) => state$
-        .let(getJobTypesState())
-        .switchMap(jobTypesState => state$.let(getJobsForGroups(jobTypesState.jobTypes)));
+export function getJobsForGroups() {
+    return (state$: Observable<AppState>) =>
+        state$
+        .select(s => s.jobTypes)
+        .select(jobTypesState$ =>
+                jobTypesState$.jobTypes.map(group =>
+                        Object.assign({}, group, {
+                            jobs: state$
+                                  .select(s => s.jobs)
+                                  .select(s => s.groupJobs[group.id] ? s.groupJobs[group.id].jobs : [])
+                        })
+                    )
+                );
 }

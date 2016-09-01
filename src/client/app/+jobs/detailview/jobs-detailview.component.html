@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="detailView" *ngFor="let group of groups | async; #i=index">
-        <div class="descrption" (click)="onExapandGroup(group)" *ngIf="(i+1) < 10"><span>0{{i+1}}</span>{{group.name}}</div>
-        <div class="descrption" (click)="onExapandGroup(group)" *ngIf="(i+1) > 10"><span>{{i+1}}</span>{{group.name}}</div>
-        <div class="detailInstance"  *ngFor="let runningJob of group.jobs" id={{runningJob.id}}>
+    <aethic-accordion>
+    <aethic-accordion-group class="detailView" heading="{{group.name}}" (onExpandGroup)="onExpandGroup($event, group)"
+                            *ngFor="let group of groups | async; let i = index">
+        <div class="detailInstance"  *ngFor="let runningJob of group.jobs | async" id={{runningJob.id}}>
             <div class="detailLeft">
                 <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                   <detailview-chart
@@ -48,5 +48,6 @@
         <div>
             <button (click)="onGetMore(group)">Load More...</button>
         </div>
-    </div>
+    </aethic-accordion-group>
+    </aethic-accordion>
 </div>
