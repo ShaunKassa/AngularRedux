@@ -21,15 +21,16 @@ export class JobsOverviewComponent {
     }
 
     onExpandGroup($event, group: any) {
-        if(!this.paginationState[group.name]) {
-            this.paginationState[group.name] = 1;
-            this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
-        }
+        let that = this;
+        group.loadedBatches.subscribe(batch => {
+            if(batch === 0) {
+                that._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
+            }
+        });
     }
 
-    onGetMore(group: any) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, this.paginationState[group.name]));
-        this.paginationState[group.name] = this.paginationState[group.name] + 1;
+    onGetMore(group: any, batch: number) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
     }
 
 

@@ -23,6 +23,7 @@ export default (state: JobsState = initialState, action: Action) => {
                     groupJobs: Object.assign({}, state.groupJobs, {
                         [group.id]: {
                             loading: true,
+                            loadedBatches: 0,
                             jobs: []
                         }
                     })
@@ -37,7 +38,7 @@ export default (state: JobsState = initialState, action: Action) => {
                 return {
                     groupJobs: Object.assign({}, state.groupJobs, {
                         [groupId]: {
-                            loaded: true,
+                            loadedBatches: state.groupJobs[groupId].loadedBatches + 1,
                             loading: false,
                             jobs: [...state.groupJobs[groupId].jobs, ...newJobs]
                         }

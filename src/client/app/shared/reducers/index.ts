@@ -124,12 +124,17 @@ export function getJobsForGroups() {
         state$
         .select(s => s.jobTypes)
         .select(jobTypesState$ =>
-                jobTypesState$.jobTypes.map(group =>
-                        Object.assign({}, group, {
-                            jobs: state$
-                                  .select(s => s.jobs)
-                                  .select(s => s.groupJobs[group.id] ? s.groupJobs[group.id].jobs : [])
-                        })
-                    )
+                jobTypesState$.jobTypes.map(group => {
+                    let jobsState$ = state$.select(s => s.jobs);
+                    return  Object.assign({}, group, {
+                                loadedBatches: jobsState$.select(s => s.groupJobs[group.id] ?
+                                                                      s.groupJobs[group.id].loadedBatches :
+                                                                      0),
+                                loading: jobsState$.select(s => s.groupJobs[group.id] ?
+                                                                s.groupJobs[group.id].loading :
+                                                                false),
+                                jobs: jobsState$.select(s => s.groupJobs[group.id] ? s.groupJobs[group.id].jobs : [])
+                            });
+                })
                 );
 }

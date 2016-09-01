@@ -29,6 +29,19 @@ export class JobsDetailviewComponent implements OnInit, AfterViewInit {
          this.jobId = this._route.queryParams.map(params => params['jobId']);
     }
 
+    onExpandGroup($event, group: any) {
+        let that = this;
+        group.loadedBatches.subscribe(batch => {
+            if(batch === 0) {
+                that._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
+            }
+        });
+    }
+
+    onGetMore(group: any, batch: number) {
+        this._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
+    }
+
     ngAfterViewInit() {
         let that = this;
         that.groupId.subscribe(groupId => {
