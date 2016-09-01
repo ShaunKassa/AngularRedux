@@ -9,9 +9,12 @@
                         <overview-chart [slices] ="runningJob.slices"></overview-chart>
                         <p class="timeElapsed">{{runningJob.createdDate}}</p>
                     </div>
-                    <div>
-                        <button (click)="onGetMore(group)" [hidden]="!paginationState[group.name]" class="loadMore">Load more</button>
-                    </div>
+                </div>
+                <div>
+                    <input type="hidden" #batch [ngModel]="group.loadedBatches | async">
+                    <button (click)="onGetMore(group, batch.value)" 
+                            [hidden]="batch.value === 0" 
+                            class="loadMore">Load more</button>
                 </div>
             </aethic-accordion-group>
         </aethic-accordion>

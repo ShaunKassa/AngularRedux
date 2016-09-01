@@ -1,7 +1,10 @@
 <div class="container">
     <aethic-accordion>
-        <aethic-accordion-group class="detailView" heading="{{group.name}}" [groupId]="group.name"
-                            *ngFor="let group of groups | async; let i = index">
+        <aethic-accordion-group class="detailView" 
+                                [heading]="group.name" 
+                                [groupId]="group.name"
+                                (onExpandGroup)="onExpandGroup($event, group)"
+                                *ngFor="let group of groups | async; let i = index">
         <div class="detailInstance"  *ngFor="let runningJob of group.jobs | async" id={{runningJob.id}}>
             <div class="detailLeft">
                 <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
@@ -44,6 +47,12 @@
                     <div class="stat" [innerHTML] = 'runningJob.statistics'></div>
                 </div>
             </div>
+        </div>
+        <div>
+            <input type="hidden" #batch [ngModel]="group.loadedBatches | async">
+            <button (click)="onGetMore(group, batch.value)" 
+                    [hidden]="batch.value === 0" 
+                    class="loadMore">Load more</button>
         </div>
     </aethic-accordion-group>
     </aethic-accordion>
