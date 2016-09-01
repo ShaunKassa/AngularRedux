@@ -1,7 +1,9 @@
-import { Component, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
 import { JobsActions } from '../../shared/actions/index';
+import { AccordionComponent } from '../../shared/accordion/accordion';
 import { getJobsForGroups } from '../../shared/reducers/index';
 
 
@@ -11,20 +13,34 @@ import { getJobsForGroups } from '../../shared/reducers/index';
   templateUrl: 'jobs-detailview.component.html',
   styleUrls: ['jobs-detailview.component.css']
 })
-export class JobsDetailviewComponent implements AfterViewInit {
+export class JobsDetailviewComponent implements OnInit, AfterViewInit {
+    @ViewChild(AccordionComponent) accordion: AccordionComponent;
     groups: any;
+    groupId: Observable<string>;
+    jobId: Observable<string>;
 
     constructor(private _store: Store<any>, private jobsActions: JobsActions,
         private _el: ElementRef, private _route: ActivatedRoute) {
         this.groups = _store.let(getJobsForGroups());
     }
 
+    ngOnInit() {
+         this.groupId = this._route.queryParams.map(params => params['groupId']);
+         this.jobId = this._route.queryParams.map(params => params['jobId']);
+    }
+
     ngAfterViewInit() {
-        let id ='[id="' +  parseInt(this._route.snapshot.params['id'], 10) + '"]';
-        let targetEl = this._el.nativeElement.querySelector(id);
-        if(targetEl) {
-            targetEl.scrollIntoView();
-        }
+        let that = this;
+        that.groupId.subscribe(groupId => {
+            that.accordion.openGroup(groupId);
+            that.jobId.subscribe(jobId => {
+                let id ='[id="' +  parseInt(jobId, 10) + '"]';
+                let targetEl = that._el.nativeElement.querySelector(id);
+                if(targetEl) {
+                    targetEl.scrollIntoView();
+                }
+            });
+        });
     }
 
 

@@ -13,6 +13,14 @@ export class AccordionComponent {
     this.groups.push(group);
   }
 
+  openGroup(groupId: string): void {
+      this.groups.forEach((group: AccordionGroupComponent) => {
+          if(group.groupId === groupId) {
+              group.isOpen = true;
+          }
+      });
+  }
+
   closeOthers(openGroup: AccordionGroupComponent): void {
     this.groups.forEach((group: AccordionGroupComponent) => {
       if (group !== openGroup) {
@@ -36,7 +44,7 @@ export class AccordionComponent {
                 <div class="panel" [ngClass]="{'panel-open': isOpen}">
                   <div class="panel-heading" (click)="toggleOpen($event)">
                     <div class="panel-title">{{heading}}</div>
-                    <img src="../../../assets/icons/dropdown_open.png"/>
+                    <div class="img"></div>
                   </div>
                   <div [hidden]="!isOpen">
                     <ng-content></ng-content>
@@ -47,11 +55,11 @@ export class AccordionComponent {
   styleUrls: ['accordion.css']
 })
 export class AccordionGroupComponent implements OnDestroy {
+  @Input() groupId: string;
   @Input() heading: string;
   @Output() onExpandGroup = new EventEmitter();
 
   private _isOpen:boolean = false;
-
 
   @Input()
   set isOpen(value: boolean) {
