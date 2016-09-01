@@ -1,6 +1,6 @@
 <div class="container">
     <aethic-accordion>
-    <aethic-accordion-group class="detailView" heading="{{group.name}}" (onExpandGroup)="onExpandGroup($event, group)"
+    <aethic-accordion-group class="detailView" heading="{{group.name}}"
                             *ngFor="let group of groups | async; let i = index">
         <div class="detailInstance"  *ngFor="let runningJob of group.jobs | async" id={{runningJob.id}}>
             <div class="detailLeft">
@@ -44,9 +44,6 @@
                     <div class="stat" [innerHTML] = 'runningJob.statistics'></div>
                 </div>
             </div>
-        </div>
-        <div>
-            <button (click)="onGetMore(group)">Load More...</button>
         </div>
     </aethic-accordion-group>
     </aethic-accordion>

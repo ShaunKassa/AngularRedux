@@ -10,7 +10,7 @@
                         <p class="timeElapsed">{{runningJob.createdDate}}</p>
                     </div>
                     <div>
-                        <button (click)="onGetMore(group)" class="loadMore">Load more</button>
+                        <button (click)="onGetMore(group)" [hidden]="!paginationState[group.name]" class="loadMore">Load more</button>
                     </div>
                 </div>
             </aethic-accordion-group>

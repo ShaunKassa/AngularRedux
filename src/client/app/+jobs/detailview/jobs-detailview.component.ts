@@ -14,23 +14,9 @@ import { getJobsForGroups } from '../../shared/reducers/index';
 export class JobsDetailviewComponent implements AfterViewInit {
     groups: any;
 
-    private paginationState: { [groupName: string]: number; } = {};
-
     constructor(private _store: Store<any>, private jobsActions: JobsActions,
         private _el: ElementRef, private _route: ActivatedRoute) {
         this.groups = _store.let(getJobsForGroups());
-    }
-
-    onExpandGroup($event, group: any) {
-        if(!this.paginationState[group.name]) {
-            this.paginationState[group.name] = 1;
-            this._store.dispatch(this.jobsActions.loadGroupJobs(group, 0));
-        }
-    }
-
-    onGetMore(group: any) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, this.paginationState[group.name]));
-        this.paginationState[group.name] = this.paginationState[group.name] + 1;
     }
 
     ngAfterViewInit() {
