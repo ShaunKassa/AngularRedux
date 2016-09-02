@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class JobsService {
 
-   //endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
-   endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
+   endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
+   //endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
    filterService: string = 'http://index-service.rcp-p.solo-experiments.com:80/api/rest/v1/filter/box';
 
   /**
@@ -58,6 +58,8 @@ export class JobsService {
               .map(res => {
                   job.children = res.json();
                   that.generatePercentages(job);
+                  that.generateTimeStamp(job);
+                  that.generateStat(job);
                   return job;
               });
   }
@@ -101,6 +103,36 @@ export class JobsService {
           job.slices[1] = (job.InProgressCount / totalCount) * 100;
           job.slices[2] = (job.FailedCount / totalCount) * 100;
           job.slices[3] = (job.SucceededCount / totalCount) * 100;
+      }
+  }
+
+  private generateTimeStamp(job: any) {
+      let time_1 = new Date(job.createDate);
+      let result_1 = time_1.getTime();
+      let currentTime = new Date();
+      let currentTimeMill = currentTime.toISOString();
+      let time_2 = new Date(currentTimeMill);
+      let result_2 = time_2.getTime();
+
+      let elapsedTime = result_2 - result_1;
+      let seconds = (elapsedTime/1000)%60;
+      let minutes = (elapsedTime/(1000*60))%60;
+      let hours  = (elapsedTime/(1000*60*60))%24;
+      job.createdDate = Math.round(hours) + ':' + Math.round(minutes) + ':' + Math.round(seconds);
+  }
+
+  private generateStat(job:any) {
+      let str = job.statistics;
+      if(str !== null) {
+          job.statistics = str.replace(/(?:\r\n|\r|\n)/g, '<br/><br/>');;
+          let startOfId = job.statistics.lastIndexOf('jobId');
+          let endOfId = job.statistics.indexOf('<br/>');
+          if(startOfId >  0  && endOfId > startOfId) {
+              job.statistics = '<div class="jobId"><div class="name">' + 'Statistics for jobId'+ '</div>'+
+                  '<div class="Id">' + job.id +'</div></div><div>'+
+                  job.statistics.slice(endOfId) +
+                  '</div>';
+          }
       }
   }
 

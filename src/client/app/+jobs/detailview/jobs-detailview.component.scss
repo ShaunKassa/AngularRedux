@@ -2,11 +2,10 @@ $mainBackground : #EBF0F2;
 $familyConsolas: Consolas;
 $colorWhite: #FFFFFF; 
 .container {
-    overflow-y:scroll;
-    position:fixed;
-    top:105px;
+    overflow: auto;
+    margin-top:105px;
+    margin-bottom: 20px;
     width:100%;
-    height:100%;
         .loadMore {
             width:110px;
             height:24px;

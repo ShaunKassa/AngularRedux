@@ -5,20 +5,10 @@ $font-consolas:  Consolas;
 $bec8d2: #bec8d2;
 
 .overview {
-  background-color: $color-white;
-  margin:  {
-    left: auto;
-    right: auto;
-    top: 54px;
-  }
-  padding: {
-    left: 38px;
-    right: 38px;
-  }
-  position: relative;
-  top: 85px;
-  width: 948px;
-  z-index: 1;
+  overflow: auto;
+  margin-top:105px;
+  margin-bottom: 20px;
+  width:100%;
   .mainContainer {
       display:flex;
       flex-direction:column;
@@ -52,9 +42,12 @@ $bec8d2: #bec8d2;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content:  flex-start;
-  margin: 24px 24px;
-  margin-bottom: 0px;
+  justify-content:  center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  width: 948px;
   
   .instance { 
     position:  relative;
