@@ -24,19 +24,19 @@
                     <div class="toBeProcessed">
                         <div class="name">waiting to process</div>
                         <div class="number">{{runningJob.NotStartedCount}}</div>
-                        <div class="percent">{{runningJob.slice}}%</div>
+                        <div class="percent">{{runningJob.slices[0]}}%</div>
                     </div>
                     <div class="currentlyProccessingJobs">
                         <div class="name">currently processing</div>
                         <div class="number">{{runningJob.InProgressCount}}</div>
-                        <div class="percent">{{runningJob.slice2}}%</div>
+                        <div class="percent">{{runningJob.slices[1]}}%</div>
                     </div>
                     <div class="jobResults">
                         <div class="name">finished processing</div>
                         <div class="success">successful: {{runningJob.SucceededCount}}</div>
                         <div class="fail">failed:&nbsp;<span>{{runningJob.FailedCount}}</span></div>
                         <div class="percent">
-                            {{runningJob.slice3 + runningJob.slice4}}%
+                            {{runningJob.slices[2] + runningJob.slices[3]}}%
                         </div>
                     </div>
                     <!-- <div class="createDate" *ngIf ="runningJob.percent == 100">03/01/2016 - 10:11:21 AM</div> -->

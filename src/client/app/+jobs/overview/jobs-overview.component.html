@@ -7,7 +7,7 @@
                          routerLink="../detailview" [queryParams]="{jobId: runningJob.id, groupId: group.name}" >
                         <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
                         <overview-chart [slices] ="runningJob.slices"></overview-chart>
-                        <p class="timeElapsed">{{runningJob.createdDate}}</p>
+                    <p class="timeElapsed">{{runningJob.createdDate}}</p>
                     </div>
                 </div>
                 <div>

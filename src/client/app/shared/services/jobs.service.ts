@@ -47,6 +47,7 @@ export class JobsService {
              .map(res => {
                  let parentJobs = res.json();
                  parentJobs.forEach(that.generatePercentages);
+                 parentJobs.forEach(that.generateTimeStamp);
                  return parentJobs;
              });
   }
@@ -119,6 +120,7 @@ export class JobsService {
       let minutes = (elapsedTime/(1000*60))%60;
       let hours  = (elapsedTime/(1000*60*60))%24;
       job.createdDate = Math.round(hours) + ':' + Math.round(minutes) + ':' + Math.round(seconds);
+      job.startedDate = job.createDate.substring(5,7) +'/'+job.createDate.substring(8,10) + '/' + job.createDate.substring(0,4);
   }
 
   private generateStat(job:any) {

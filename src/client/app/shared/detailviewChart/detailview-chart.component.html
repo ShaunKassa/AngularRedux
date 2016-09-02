@@ -4,18 +4,18 @@
                  [attr.stroke-width]="50"  stroke="#dde5e9"/>
          <circle cx="120" cy="120" r="95" 
                  fill="transparent" 
-                 [attr.stroke-width]="strokeWidth" 
+                 [attr.stroke-width]="slices[1] ? 50 : 0" 
                  [attr.stroke-dashoffset]="widths[0]" 
                  stroke="#273142" 
                  opacity="0.5"
                  stroke-dasharray="circumference"/>
          <circle cx="120" cy="120" r="95" fill="transparent" 
-                 [attr.stroke-width]="strokeWidth" 
+                 [attr.stroke-width]="slices[2] ? 50 : 0" 
                  [attr.stroke-dashoffset]="widths[1]" 
                  stroke="#ff670d" 
                  stroke-dasharray="circumference"/>
          <circle cx="120" cy="120" r="95" fill="transparent" 
-                 [attr.stroke-width]="strokeWidth" 
+                 [attr.stroke-width]="slices[3] ? 50 : 0" 
                  [attr.stroke-dashoffset]="widths[2]" 
                  stroke="#273142" 
                  stroke-dasharray="circumference"/>
