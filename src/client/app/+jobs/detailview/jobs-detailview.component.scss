@@ -7,6 +7,20 @@ $colorWhite: #FFFFFF;
     top:105px;
     width:100%;
     height:100%;
+        .loadMore {
+            width:110px;
+            height:24px;
+            border-radius:2px;
+            background-color:#00C9FF;
+            font-family:'Nokia Pure Text Regular';
+            font-size:13px;
+            color:#FFFFFF;
+            border:none;
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:32px;
+        }
 }
 .detailView { 
     margin-bottom:72px;
@@ -41,7 +55,7 @@ $colorWhite: #FFFFFF;
         background-color:$mainBackground;
         width:958px;
         margin:  {
-            bottom:32px;
+            top:32px;
             left:auto;
             right:auto;
         }
