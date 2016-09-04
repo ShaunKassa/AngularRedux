@@ -30,7 +30,7 @@ export class DetailviewChartComponent implements OnInit {
         this.widths[0] = (this.slices[0]) * this.circumference / 100;
         this.widths[1] = ((this.slices[0] + this.slices[1])) * this.circumference / 100;
         this.widths[2] = ((this.slices[0] + this.slices[1] + this.slices[2])) * this.circumference / 100;
-        let finishedPortion= this.slices[2] + this.slices[3];
+        let finishedPortion = this.slices[2] + this.slices[3];
         if(finishedPortion >= 100) {
             this.percent = 'done';
         } else {

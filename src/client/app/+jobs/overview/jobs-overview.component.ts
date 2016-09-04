@@ -14,7 +14,6 @@ import { getJobsForGroups } from '../../shared/reducers/index';
 })
 export class JobsOverviewComponent {
     groups: any;
-    paginationState: { [groupName: string]: number; } = {};
 
     constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router) {
         this.groups = _store.let(getJobsForGroups());
