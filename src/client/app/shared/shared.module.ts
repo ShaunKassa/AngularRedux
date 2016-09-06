@@ -9,7 +9,7 @@ import { Ng2SliderComponent } from './slider/ng2-slider.component';
 import { SlideAbleDirective } from './slider/slideable.directive';
 import { Ng2StyledDirective } from './slider/ng2-styled.directive';
 import { OverviewChartComponent } from './overviewChart/overview-chart.component';
-import { DetailviewChartComponent } from './detailViewChart/detailview-chart.component';
+import { DetailviewChartComponent } from './detailviewChart/detailview-chart.component';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
