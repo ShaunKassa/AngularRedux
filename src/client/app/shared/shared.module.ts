@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/index';
 import { AccordionComponent, AccordionGroupComponent } from './accordion/accordion';
 import { Ng2SliderComponent } from './slider/ng2-slider.component';
+import { SlideAbleDirective } from './slider/slideable.directive';
+import { Ng2StyledDirective } from './slider/ng2-styled.directive';
 import { OverviewChartComponent } from './overviewChart/overview-chart.component';
 import { DetailviewChartComponent } from './detailViewChart/detailview-chart.component';
 
@@ -28,6 +30,8 @@ import services from './services/index';
         AccordionComponent,
         AccordionGroupComponent,
         Ng2SliderComponent,
+        SlideAbleDirective,
+        Ng2StyledDirective,
         OverviewChartComponent,
         DetailviewChartComponent ],
     exports: [
