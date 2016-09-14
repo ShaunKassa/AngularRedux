@@ -26,83 +26,40 @@
                         <div class= "rightContent"> 
 
                            <div class="label" >City</div>
-                           <span class="dot">•</span>
  						   <input  type="text" placeholder="Enter city name" formControlName="city">
 
                            <div class="label">Publication Date</div>
-                           <span class="dot">•</span>
                            <input  type="date" class="date" formControlName="publicationDate">
 
                            <div class="label">Validation Type</div>
-                           <span class="dot">•</span><select  class="select" formControlName="validationType">
+                           <select  class="select" formControlName="validationType">
                              <option>validatePanoCount</option>
                            </select>
 
                            <div class="label">Submission Type</div>
-                           <span class="dot">•</span><select class="select" formControlName="submissionType">
+                           <select class="select" formControlName="submissionType">
                              <option value="" selected disabled>Select</option>
                              <option >full</option>
                              <option >noaissubmit</option>
                            </select>
 
                            <div class="label">Input Type</div>
-                           <span class="dot">•</span><select class="select" formControlName="inputType">
-                             <option selected>drive</option>
-                           </select>
+                             <div class="inputTypes">
+                                 <div class="inputOption">Mosquads</div>
+                             </div>
+
 
                            <div id="input" class="label">Input</div>
                            <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
-                           <div *ngIf="depthGenerationForm.controls['input'].hasError('emptyLine')" class="alert alert-danger">Please remove empty lines.</div>
-                           <div *ngIf="depthGenerationForm.controls['input'].hasError('whitespace')"class="alert alert-danger">Please remove all whitespaces. </div>
-                           <div *ngIf="depthGenerationForm.controls['input'].hasError('driveId')" class="alert alert-danger">Please follow driveId format. </div>
+                           <div *ngIf="depthGenerationForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                           <div *ngIf="depthGenerationForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                           <div *ngIf="depthGenerationForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
                         </div> 
                         <button type="submit" [disabled]="!depthGenerationForm.valid">Submit</button>
 
                  </div>
              </form>
 <!-- End of Depth Generation Template -->
-
-
-<!-- Start of CSV Template -->
-                <form [formGroup] ="coverageCsvForm" (ngSubmit)="onSubmit(coverageCsvForm.value)">
-                     <div class="rightOptions" *ngSwitchCase="'Coverage CSV Generation'" >
-                       <div class="title">Fill in the blanks</div>
-                        <div class= "rightContent"> 
-
-                           <div class="label">City</div>
-                           <span class="dot">•</span>
-						   <input  type="text" placeholder="Enter city name" class="form-control" formControlName="city">
-
-                           <div class="label">Publication Date</div>
-                           <span class="dot">•</span>
-						   <input  type="date"  formControlName="publicationDate" >
-
-                           <div  class="label">Environment</div>
-                           <span class="dot">•</span>
-						   <select  class="select" formControlName="environment" >
-                             <option value="" selected disabled>Select</option>
-                             <option >dev</option>
-                             <option >stage</option>
-                             <option >stable</option>
-                           </select>
-
-                           <div class="label">Input Type</div>
-                           <span class="dot">•</span>
-                           <select class="select" formControlName="inputType" >
-                             <option selected>mosquads</option>
-                           </select>
-
-                           <div id="input" class="label">Input</div>
-                           <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
-                           <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
-                           <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
-                           <div *ngIf="coverageCsvForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
-                        </div>
-                        <button type="submit" [disabled]="!coverageCsvForm.valid">Submit</button>
-                     </div>
-               </form>
-<!-- End of CSV Template -->
-
 
 
 <!-- Start of PostIngest Template -->
@@ -114,11 +71,9 @@
                         <div class= "rightContent"> 
 
                            <div class="label">Publication Date</div>
-                           <span class="dot">•</span>
                            <input  type="date" formControlName="publicationDate">
 
                            <div  class="label">Environment</div>
-                           <span class="dot">•</span>
                            <select class="select" formControlName="environment">
                              <option value="" selected disabled>Select</option>
                              <option >dev</option>
@@ -126,20 +81,103 @@
                              <option >stable</option>
                            </select>
 
-                           <div id="input" class="label">Input</div>
-                           <textarea placeholder="Enter input here" formControlName="input">  </textarea>            
-                           <div *ngIf="postIngestForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
-                           <div *ngIf="postIngestForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
-                           <div *ngIf="postIngestForm.controls['input'].hasError('postIngest')" class="alert alert-danger" >Please follow post_IngestId format. </div>
+                           <div class="label">Input Type</div>
+                           <div class="inputTypes">
+                               <div class="inputOption">Job output</div>
+                               <div class="inputLabel">
+                                 <input  type="radio" value="output" id="postInput01"  name="inputType" formControlName="inputType"> 
+                                 <label for="postInput01"></label>
+                               </div>
+
+                               <div class="inputOption">Mosquads</div>
+                               <div class="inputLabel">
+                                 <input  type="radio" value="mosquads" id="postInput02" name="inputType" formControlName="inputType">
+                                 <label for="postInput02"></label>
+                               </div>
+                           </div>
+                           <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'output'">
+                               <select class="select">
+                                   <option value="" selected disabled>Select</option>
+                               </select>
+                           </div>
+                           <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
+                              <mosquads-inputs></mosquads-inputs>
+                              <!--<div class="inputs">
+                                 <div class="errorCheck">
+                                     <ul>
+                                         <li>1</li>
+                                     </ul>
+                                 </div>
+                                 <div>
+                                     <textarea  placeholder="Enter mosquads here" formControlName="input" (keyup)="highlightError($event)">  </textarea>            
+                                 </div>
+                              </div>
+                              <div *ngIf="postIngestForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                              <div *ngIf="postIngestForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                              <div *ngIf="postIngestForm.controls['input'].hasError('postIngest')" class="alert alert-danger" >Please follow post_IngestId format. </div>-->
+                           </div>
                         </div>
                         <button type="submit" [disabled]="!postIngestForm.valid">Submit</button>
                      </div>
                </form>
 <!-- End of PostIngest Template -->
 
+<!-- Start of CSV Template -->
+                <form [formGroup] ="coverageCsvForm" (ngSubmit)="onSubmit(coverageCsvForm.value)">
+                     <div class="rightOptions" *ngSwitchCase="'Coverage CSV Generation'" >
+                       <div class="title">Fill in the blanks</div>
+                        <div class= "rightContent"> 
+
+                           <div class="label">City</div>
+						   <input  type="text" placeholder="Enter city name" class="form-control" formControlName="city">
+
+                           <div class="label">Publication Date</div>
+						   <input  type="date"  formControlName="publicationDate" >
+
+                           <div  class="label">Environment</div>
+						   <select  class="select" formControlName="environment" >
+                             <option value="" selected disabled>Select</option>
+                             <option >dev</option>
+                             <option >stage</option>
+                             <option >stable</option>
+                           </select>
+
+                           <div class="label">Input Type</div>
+                             <div class="inputTypes">
+
+                                 <div class="inputOption">Job output</div>
+                                 <div class="inputLabel">
+                                        <input  type="radio" value="output" id="csvInput01" name="inputType" formControlName="inputType"> 
+                                        <label for="csvInput01"></label>
+                                 </div>
+
+                                 <div class="inputOption">Mosquads</div>
+                                 <div class="inputLabel">
+                                        <input  type="radio" value="mosquads" id="csvInput02" name="inputType" formControlName="inputType">
+                                        <label for="csvInput02"></label>
+                                 </div>
+                            </div>
+                           <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'output'" >
+                                <select class="select">
+                                  <option value="" selected disabled>Select</option>
+                                </select>
+                            </div>
+                           <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
+                               <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
+                               <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
+                               <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
+                               <div *ngIf="coverageCsvForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
+                            </div>
+                        </div>
+                        <button type="submit" [disabled]="!coverageCsvForm.valid">Submit</button>
+                     </div>
+               </form>
+<!-- End of CSV Template -->
 
 
-<!-- Start of PreIngest Template -->
+
+
+<!-- Start of PreIngest Template 
                 <form [formGroup] ="preIngestForm" (ngSubmit)="onSubmit(preIngestForm.value)">
                       <div class="rightOptions" *ngSwitchCase="'PreIngest'" >
 
@@ -177,50 +215,46 @@
                         <button type="submit" [disabled]="!preIngestForm.valid">Submit</button>
                      </div>
                </form>
-<!-- End of PreIngest Template -->
+ End of PreIngest Template -->
 
 
 
-<!-- Start of CSV generation Template -->
+<!-- Start of Filter Service Template -->
                 <form [formGroup] ="filterServiceForm" (ngSubmit)="onSubmit(filterServiceForm.value)">
-                      <div class="rightOptions" *ngSwitchCase="'CSV Generation'" >
+                      <div class="rightOptions" *ngSwitchCase="'Filter Service'" >
 
                         <div class="title">Fill in the blanks</div>
 
                         <div class= "rightContent"> 
                                <div class="label">Preset</div>
-                               <span class="dot">•</span>
                                <select class="select" formControlName="preset">
                                  <option value="" selected disabled>none</option>
                                </select>
 
                                <div class="label">Instance label</div>
-                               <span class="dot">•</span>
                                <input  type="text" placeholder="Enter label" class="form-control" formControlName="instanceLabel">
 
                                <div class="label">Publication Date</div>
-                               <span class="dot">•</span>
                                <input  type="date" formControlName="publicationDate">
 
                                <div class="label">Area of interest</div>
-                                    <div class="areaCheckboxs">
-                                          <div class="dot">•</div>
+                                    <div class="inputTypes">
 
-                                                <div class="areaLabel">Bounding Box</div>
-                                                <div class="areaCheckbox">
+                                                <div class="inputOption">Bounding Box</div>
+                                                <div class="inputLabel">
                                                        <input  type="radio" value="Bounding Box" class="filterRadio" name="areaOfInterest"> 
                                                        <label for="areaOfInterest"></label>
                                                 </div>
 
-                                                <div class="areaLabel">Tile Coordinates</div>
-                                                <div class="areaCheckbox">
+                                                <div class="inputOption">Tile Coordinates</div>
+                                                <div class="inputLabel">
                                                        <input  
                                                             type="radio" value="Tile Coordinates" name="areaOfInterest" class="filterRadio">
                                                        <label for="areaOfInterest"></label>
                                                 </div>
 
-                                                <div class="areaLabel">Mosquads</div>
-                                                <div class="areaCheckbox">
+                                                <div class="inputOption">Mosquads</div>
+                                                <div class="inputLabel">
                                                        <input  type="radio" value="mosquads" name="areaOfInterest" class="filterRadio">
                                                        <label for="areaOfInterest"></label>
                                                 </div>
@@ -236,7 +270,6 @@
 
                                <div class="label">Drive type</div>
                                    <div class="driveCheckboxs" > 
-                                         <div class="dot">•</div>
 
                                          <div class="driveLabel">First Gen</div>
                                             <div class="driveCheckbox"> 
@@ -272,13 +305,11 @@
                                <div class="driveDates">
                                    <div class = "startDate">
                                          <div class="label">Drive Start date</div>
-                                         <span class="dot">•</span>
                                          <input  type="date" formControlName="driveStartDate">
                                    </div>
 
                                    <div class = "endDate">
                                          <div class="label">Drive End date</div>
-                                         <span class="dot">•</span>
                                          <input type="date" formControlName="driveEndDate">
                                    </div>
                                </div>
@@ -359,7 +390,6 @@
                        </div>
 
                        <div class="label">Quality threshold (in %)</div>
-                           <span class="dot">•</span>
                            <input  type="number" min="0" max="100" placeholder="Enter minimum quality requirement (in %)" class="qualityThreshold" formControlName="qualityThreshold">
 
                      <div class="preset" >
@@ -371,13 +401,12 @@
                     </div>
 
                      
-                    <span class="dot">•</span>
                     <input  type="text" placeholder="Enter preset label" class="form-control" formControlName="presetLabel">
                     </div>
                     <button type="submit" >Submit</button>
                 </div>
             </form>
-<!-- End of CSV Generation Template -->
+<!-- End of Filter Service Template -->
 
 
 

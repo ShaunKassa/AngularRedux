@@ -8,6 +8,7 @@ import { AccordionComponent, AccordionGroupComponent } from './accordion/accordi
 import { Ng2SliderComponent } from './slider/ng2-slider.component';
 import { OverviewChartComponent } from './overviewChart/overview-chart.component';
 import { DetailviewChartComponent } from './detailViewChart/detailview-chart.component';
+import { MosquadsInputComponent } from './mosquadInput/mosquads-input.component';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
@@ -29,10 +30,11 @@ import services from './services/index';
         AccordionGroupComponent,
         Ng2SliderComponent,
         OverviewChartComponent,
-        DetailviewChartComponent ],
+        DetailviewChartComponent,
+        MosquadsInputComponent ],
     exports: [
         NavbarComponent, Ng2SliderComponent, AccordionComponent, AccordionGroupComponent,
-        OverviewChartComponent, DetailviewChartComponent,
+        OverviewChartComponent, DetailviewChartComponent, MosquadsInputComponent,
         CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {

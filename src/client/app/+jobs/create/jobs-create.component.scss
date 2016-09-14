@@ -169,6 +169,7 @@
                       background-color:#EBF0F2;
                       font-size:13px;
                       color:#00C9FF;
+                      margin-left:15px;
                   }
                   input[type=date] {
                       @include fontStyleFamily;
@@ -178,12 +179,6 @@
                       background-color:#EBF0F2;
                       font-size:13px;
                       color:#BEC8D2;
-                  }
-                  .dot {
-                      display:block-inline;
-                      width:16px;
-                      color:#BEC8D2;
-                      margin-right:2px;
                       margin-left:15px;
                   }
                   span {
@@ -209,11 +204,12 @@
                       border:none;
                       background-color:#EBF0F2;
                       color:#BEC8D2;
+                      margin-left:10px;
                   }
                   textarea {
                       @include fontStyleFamily;
                       width:376px;
-                      height:94px;
+                      height:180px;
                       font-size:13px;
                       font-size:13px;
                       background-color:#DDE5E9;
@@ -251,14 +247,10 @@ button:disabled {
     opacity:0.3;
 }
 
-.areaCheckboxs {
+.inputTypes {
     @include flexRow;
-    .dot {
-        height:24px;
-        vertical-align:middle;
-        line-height:24px;
-    }
-    .areaLabel {
+    margin-left:13px;
+    .inputOption {
         @include fontStyleFamily;
         color:#BEC8D2;
         margin-right:10px;
@@ -266,8 +258,9 @@ button:disabled {
         height:24px;
         vertical-align:middle;
         line-height:24px;
+        margin-left:6px;
     }
-    .areaCheckbox {
+    .inputLabel {
         width:24px;
         height:24px;
     }
@@ -278,10 +271,7 @@ button:disabled {
     @include flexRow;
     @include fontStyleFamily;
     height:24px;
-       .dot {
-           vertical-align:middle;
-           line-height:24px;
-       }
+    margin-left:13px;
        .driveLabel {
            color:#BEC8D2;
            margin-right:10px;
@@ -298,11 +288,11 @@ button:disabled {
     margin-top:24px;
 }
 
-input[type=radio] {
+input[type="radio"] {
     display:none;
 }
 
-input[type=radio] + label {
+input[type="radio"] + label {
     background:url("../../assets/icons/radio_off_normal.png") no-repeat;
     height:24px;
     width:24px;
@@ -313,7 +303,7 @@ input[type=radio] + label {
     }
 }
 
-input[type=radio]:checked + label  {
+input[type="radio"]:checked + label  {
     background:url("../../assets/icons/radio_on_normal.png") no-repeat;
     height:24px;
     width:24px;
@@ -560,4 +550,13 @@ td.weightInputTd {
 
 
 
-
+.inputArea {
+     margin-top:24px;
+     .inputs {
+         display:flex;
+         flex-direction:row;
+         .errorCheck {
+             width:15px;
+         }
+     }
+}

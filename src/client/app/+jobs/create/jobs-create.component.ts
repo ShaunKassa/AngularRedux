@@ -2,7 +2,6 @@ declare var AWS: any;
 import { Component, OnInit, Renderer, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 
-// import { Ng2SliderComponent } from '../../shared/slider/ng2-slider.component';
 import { JobsService } from '../../shared/services/jobs.service';
 
 @Component({
@@ -22,11 +21,11 @@ export class JobsCreateComponent implements OnInit {
     _filterIndices:any;
     jobTypesList = [
         'Depth Generation',
-        'Coverage CSV Generation',
         'PostIngest Depth Statistics',
-        'PreIngest',
-        'CSV Generation'
+        'Coverage CSV Generation',
+        'Filter Service'
     ];
+
 
     attributeTypes = ['ORIENT','XYALIGN','ZJUMP','INTERVAL','DRIFT',
                       'LOWERED','ACCURACY','LENSOB','UNDEREXP','OVEREXP',
@@ -57,11 +56,20 @@ export class JobsCreateComponent implements OnInit {
                    publicationDate:['',Validators.compose([Validators.required])],
  	    		   validationType:['validatePanoCount',Validators.compose([Validators.required])],
                    submissionType:['',Validators.compose([Validators.required])],
-	    		   inputType:['drive',Validators.compose([Validators.required])],
                    input:['',Validators.compose([Validators.required,
+                                                  this.emptyLineValidator,
+                                                  this.whitespaceValidator,
+                                                  this.mosquadIdValidator])]
+               });
+
+              this.postIngestForm = this.formBuilder.group({
+                      publicationDate:['',Validators.compose([Validators.required])],
+	    			  environment:['',Validators.compose([Validators.required])],
+	    			  inputType:['',Validators.compose([Validators.required])],
+                      input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
-                                                    this.driveIdValidator])]
+                                                    this.postIngestValidator])]
                });
 
 
@@ -69,32 +77,23 @@ export class JobsCreateComponent implements OnInit {
                       city: ['',Validators.compose([Validators.required])],
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
-	    		      inputType:['mosquads',Validators.compose([Validators.required])],
+	    			  inputType:['',Validators.compose([Validators.required])],
                       input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.mosquadIdValidator])]
                });
 
-               this.postIngestForm = this.formBuilder.group({
-                      publicationDate:['',Validators.compose([Validators.required])],
-	    			  environment:['',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required,
-                                                    this.emptyLineValidator,
-                                                    this.whitespaceValidator,
-                                                    this.postIngestValidator])]
-               });
-
-               this.preIngestForm = this.formBuilder.group({
-                      city: ['',Validators.compose([Validators.required])],
-                      publicationDate:['',Validators.compose([Validators.required])],
-	    			  environment:['dev',Validators.compose([Validators.required])],
-	    		      inputType:['mosquads',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required,
-                                                    this.emptyLineValidator,
-                                                    this.whitespaceValidator,
-                                                    this.mosquadIdValidator])]
-               });
+       //        this.preIngestForm = this.formBuilder.group({
+       //               city: ['',Validators.compose([Validators.required])],
+       //               publicationDate:['',Validators.compose([Validators.required])],
+	   // 			  environment:['dev',Validators.compose([Validators.required])],
+	   // 		      inputType:['mosquads',Validators.compose([Validators.required])],
+       //               input:['',Validators.compose([Validators.required,
+       //                                             this.emptyLineValidator,
+       //                                             this.whitespaceValidator,
+       //                                             this.mosquadIdValidator])]
+       //        });
 
                this.filterServiceForm = this.formBuilder.group({
                        filterList: new FormArray([this.formBuilder.group({
@@ -299,6 +298,19 @@ export class JobsCreateComponent implements OnInit {
           this.filterList[idx].filterInputHigh = $event.endValue;
       }
 
+      highlightError(input:any) {
+          let lines = input.target.value.split('\n');
+          let textValue = '';
+          for (let i=0; i < lines.length; i++) {
+             if (!(/^([0-3]{14}\s*)*$/.test(lines[i]))) {
+                 textValue.concat('<span class="red">' + lines[i] + '<br></span>');
+             } else {
+                 textValue.concat(lines[i] + '<br>');
+             }
+          }
+          console.log(textValue);
+      }
+
       private emptyLineValidator(control: FormControl) {
                if(control.value.match(/\n\s*\n/) ) {
                    return {emptyLine: true};
@@ -313,12 +325,12 @@ export class JobsCreateComponent implements OnInit {
                return;
       }
 
-      private driveIdValidator(control: FormControl) {
-               if(!control.value.match(/^(HT[\w\d]+_(\d)+,?.*\s*)*$/)) {
-                   return {driveId: true};
-               }
-               return;
-      }
+     //  private driveIdValidator(control: FormControl) {
+     //           if(!control.value.match(/^(HT[\w\d]+_(\d)+,?.*\s*)*$/)) {
+     //               return {driveId: true};
+     //           }
+     //           return;
+     //  }
 
       private mosquadIdValidator(control: FormControl) {
                if(!control.value.match(/^([0-3]{14}\s*)*$/)) {
