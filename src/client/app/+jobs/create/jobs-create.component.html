@@ -163,10 +163,11 @@
                                 </select>
                             </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
-                               <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
+                               <mosquads-inputs></mosquads-inputs>
+                               <!--  <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
-                               <div *ngIf="coverageCsvForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
+                               <div *ngIf="coverageCsvForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>-->
                             </div>
                         </div>
                         <button type="submit" [disabled]="!coverageCsvForm.valid">Submit</button>

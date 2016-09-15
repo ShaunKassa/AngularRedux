@@ -1,7 +1,7 @@
 import {
   Component,
   ElementRef,
-  Renderer
+  ViewChild
 } from '@angular/core';
 
 @Component({
@@ -12,19 +12,24 @@ import {
 })
 
 export class MosquadsInputComponent {
+    @ViewChild('textArea') textAreaRef:ElementRef;
+    @ViewChild('highlights') highlightsRef:ElementRef;
+    @ViewChild('backdrop') backdropRef:ElementRef;
     constructor(
-        private _elementRef: ElementRef,
-        private renderer: Renderer
+        private _elementRef: ElementRef
     ) {}
 
    valueChanged(value: any) {
       let text = value.target.value.replace(/\n$/g, '\n\n')
                  .replace(/^((?![0-3]{14}).)*$/gm, '<mark>$&</mark>');
-      alert(text);
+      this.highlightsRef.nativeElement.innerHTML = text;
+      return;
    }
-   onScroll(value: any) {
-      let scrollTop = value.target.scrollTop();
-      console.log(scrollTop);
+
+   onScroll(scrollValue: any) {
+       let scrollMatch = this.textAreaRef.nativeElement.scrollTop;
+       this.backdropRef.nativeElement.scrollTop = scrollMatch;
+       return;
    }
 
 }
