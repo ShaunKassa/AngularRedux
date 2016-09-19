@@ -50,10 +50,13 @@
 
 
                            <div id="input" class="label">Input</div>
+                           <mosquads-inputs></mosquads-inputs>
+                           <!--
                            <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
                            <div *ngIf="depthGenerationForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
                            <div *ngIf="depthGenerationForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
                            <div *ngIf="depthGenerationForm.controls['input'].hasError('mosquadId')" class="alert alert-danger" >Please follow mosquadId format. </div>
+                           -->
                         </div> 
                         <button type="submit" [disabled]="!depthGenerationForm.valid">Submit</button>
 
