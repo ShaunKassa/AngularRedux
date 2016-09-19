@@ -11,6 +11,8 @@ export class JobsService {
    endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
    //endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
    filterService: string = 'http://index-service.rcp-p.solo-experiments.com:80/api/rest/v1/filter/box';
+   postJobUrl: string = 'http://52.38.44.101:3000/api/jobs/new/';
+   fetchJobInputs: string = 'http://52.38.44.101:3000/api/jobinputs';
 
   /**
    * Creates a new JobsService with the injected Http.
@@ -32,6 +34,17 @@ export class JobsService {
     return this.http.post(this.filterService, body, options)
                     .catch(this.handleError);
   }
+
+  postJobs(path: any, id?: any): Observable<any> {
+      let body = JSON.stringify({ 's3path': path, 'prejob_id': id});
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+
+      return this.http.post(this.postJobUrl, body, options)
+                    .catch(this.handleError);
+
+  }
+
 
   fetchJobsForGroup(group: any, batch): Observable<any> {
       let that = this;
