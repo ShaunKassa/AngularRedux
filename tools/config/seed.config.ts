@@ -272,7 +272,7 @@ export class SeedConfig {
     { src: 'zone.js/dist/zone.js', inject: 'libs' },
     { src: 'core-js/client/shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
+    { src: 'rxjs/bundles/Rx.umd.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
   ];
 
   /**
@@ -322,7 +322,8 @@ export class SeedConfig {
       '@angular/http': `node_modules/@angular/http/bundles/http.umd.js`,
       '@angular/platform-browser': `node_modules/@angular/platform-browser/bundles/platform-browser.umd.js`,
       '@angular/platform-browser-dynamic': `node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js`,
-      '@angular/router': `node_modules/@angular/router/index.js`,
+      '@angular/router': `node_modules/@angular/router/bundles/router.umd.js`,
+
       '@ngrx/core': `node_modules/@ngrx/core/index.js`,
       '@ngrx/store': `node_modules/@ngrx/store/index.js`,
       '@ngrx/effects': `node_modules/@ngrx/effects/index.js`,

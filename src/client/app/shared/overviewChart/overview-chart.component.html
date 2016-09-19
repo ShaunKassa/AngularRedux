@@ -4,21 +4,21 @@
                 [attr.stroke-width]="strokeWidth"  stroke="#dde5e9"/>
         <circle cx="50" cy="50" r="40" 
                 fill="transparent" 
-                [attr.stroke-width]="strokeWidth" 
+                [attr.stroke-width]="slices[1] ? strokeWidth: 0" 
                 [attr.stroke-dashoffset]="widths[0]" 
                 stroke="#273142" 
                 opacity="0.5"
-                stroke-dasharray="circumference"/>
+                [attr.stroke-dasharray]="circumference"/>
         <circle cx="50" cy="50" r="40" fill="transparent" 
-                [attr.stroke-width]="strokeWidth" 
+                [attr.stroke-width]="slices[2] ? strokeWidth: 0" 
                 [attr.stroke-dashoffset]="widths[1]" 
                 stroke="#ff670d" 
-                stroke-dasharray="circumference"/>
+                [attr.stroke-dasharray]="circumference"/>
         <circle cx="50" cy="50" r="40" fill="transparent" 
-                [attr.stroke-width]="strokeWidth" 
+                [attr.stroke-width]="slices[3] ? strokeWidth: 0" 
                 [attr.stroke-dashoffset]="widths[2]" 
                 stroke="#273142" 
-                stroke-dasharray="circumference"/>
+                [attr.stroke-dasharray]="circumference"/>
     </svg>
     <p class="percentage" *ngIf ="percent != 'done'">
      {{percent}}<span>%</span>
