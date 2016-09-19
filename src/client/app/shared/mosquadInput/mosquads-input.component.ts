@@ -21,7 +21,9 @@ export class MosquadsInputComponent {
 
    valueChanged(value: any) {
       let text = value.target.value.replace(/\n$/g, '\n\n')
-                 .replace(/^((?![0-3]{14}).)*$/gm, '<mark>$&</mark>');
+                 .replace(/^((?![0-3]{14}).)*$/gm, '<mark>$&</mark>')
+                 .replace(/ /gm, '<mark>$&</mark>');
+      console.log(text);
       this.highlightsRef.nativeElement.innerHTML = text;
       return;
    }
