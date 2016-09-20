@@ -1,8 +1,10 @@
 declare var AWS: any;
+import { Store } from '@ngrx/store';
 import { Component, OnInit, Renderer, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 
 import { JobsService } from '../../shared/services/jobs.service';
+import { getJobInputsState } from '../../shared/reducers/index';
 
 @Component({
   moduleId: module.id,
@@ -25,6 +27,7 @@ export class JobsCreateComponent implements OnInit {
         'Coverage CSV Generation',
         'Filter Service'
     ];
+    inputs: any;
 
 
     attributeTypes = ['ORIENT','XYALIGN','ZJUMP','INTERVAL','DRIFT',
@@ -46,10 +49,14 @@ export class JobsCreateComponent implements OnInit {
     @ViewChild('items') itemsRef:ElementRef;
 
      constructor(
+         private _store: Store<any>,
          private formBuilder:FormBuilder,
          private _jobsService: JobsService,
          private renderer: Renderer,
-         private _elementRef: ElementRef) { }
+         private _elementRef: ElementRef) {
+        this.inputs = _store.let(getJobInputsState())
+            .map(jobInputState => jobInputState.jobInputs);
+     }
          ngOnInit() {
              this.depthGenerationForm = this.formBuilder.group({
                    city: ['',Validators.compose([Validators.required])],
@@ -66,6 +73,7 @@ export class JobsCreateComponent implements OnInit {
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    			  inputType:['',Validators.compose([Validators.required])],
+	    			  jobInput:['',Validators.compose([Validators.required])],
                       input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
@@ -78,22 +86,13 @@ export class JobsCreateComponent implements OnInit {
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    			  inputType:['',Validators.compose([Validators.required])],
+	    			  jobInput:['',Validators.compose([Validators.required])],
                       input:['',Validators.compose([Validators.required,
                                                     this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.mosquadIdValidator])]
                });
 
-       //        this.preIngestForm = this.formBuilder.group({
-       //               city: ['',Validators.compose([Validators.required])],
-       //               publicationDate:['',Validators.compose([Validators.required])],
-	   // 			  environment:['dev',Validators.compose([Validators.required])],
-	   // 		      inputType:['mosquads',Validators.compose([Validators.required])],
-       //               input:['',Validators.compose([Validators.required,
-       //                                             this.emptyLineValidator,
-       //                                             this.whitespaceValidator,
-       //                                             this.mosquadIdValidator])]
-       //        });
 
                this.filterServiceForm = this.formBuilder.group({
                        filterList: new FormArray([this.formBuilder.group({
@@ -123,6 +122,7 @@ export class JobsCreateComponent implements OnInit {
 
 
     onSubmit(value:any): void {
+               let that = this;
  			   let address: string = '';
  			   let fileName: string = '';
  			   let text: string = '';
@@ -158,13 +158,6 @@ export class JobsCreateComponent implements OnInit {
                  text = value.postIngestInput;
              }
 
-             if(this.selectedJobType === 'PreIngest') {
-                 address = 'home/selvaraj/depthAutomation/jobs/PreIngest/input/';
-                 date = (value.pubDate).replace('/','_');
-                 fileName = (value.city.toUpperCase())+'_' + date + '_mosquads.txt';
-                 address = address + fileName;
-                 text = value.mosquadInput;
-             }
             var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
             var params = {Key: address, Body: text};
             bucket.upload(params, function (err:any) {
@@ -172,6 +165,7 @@ export class JobsCreateComponent implements OnInit {
                    console.log(err);
                 } else {
                    console.log('Success');
+                   that._jobsService.createJob(address, value.jobInput);
                 }
            });
            this.selectedJobType = 'Default';

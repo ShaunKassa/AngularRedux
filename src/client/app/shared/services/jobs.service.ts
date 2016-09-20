@@ -8,11 +8,9 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class JobsService {
 
-   endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
-   //endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
+   // endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
+   endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
    filterService: string = 'http://index-service.rcp-p.solo-experiments.com:80/api/rest/v1/filter/box';
-   postJobUrl: string = 'http://52.38.44.101:3000/api/jobs/new/';
-   fetchJobInputs: string = 'http://52.38.44.101:3000/api/jobinputs';
 
   /**
    * Creates a new JobsService with the injected Http.
@@ -26,6 +24,11 @@ export class JobsService {
           .map(res => res.json());
   }
 
+  fetchJobInputs(): Observable<any> {
+      return this.http.get(this.endpoint + 'jobinputs')
+          .map(res => res.json());
+  }
+
   saveFilters(filtersPayload:any): Observable<any> {
     let body = JSON.stringify(filtersPayload);
     let headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Request-Method': this.filterService });
@@ -35,12 +38,13 @@ export class JobsService {
                     .catch(this.handleError);
   }
 
-  postJobs(path: any, id?: any): Observable<any> {
+  createJob(path: any, id?: any): Observable<any> {
+      let postJobUrl: string = this.endpoint + 'jobs/new/';
       let body = JSON.stringify({ 's3path': path, 'prejob_id': id});
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(this.postJobUrl, body, options)
+      return this.http.post(postJobUrl, body, options)
                     .catch(this.handleError);
 
   }
@@ -85,6 +89,7 @@ export class JobsService {
                     return that.fetchChildrenForJob(job);
                 });
   }
+
 
   private generatePercentages(job: any) {
       let totalCount = job.childJobs.length;

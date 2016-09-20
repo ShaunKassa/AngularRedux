@@ -1,12 +1,15 @@
 import { JobsEffects } from './jobs.effects';
 import { JobTypesEffects } from './job_types.effects';
+import { JobInputsEffects } from './job_inputs.effects';
 
 export {
     JobsEffects,
-    JobTypesEffects
+    JobTypesEffects,
+    JobInputsEffects
 };
 
 export default [
     JobsEffects,
-    JobTypesEffects
+    JobTypesEffects,
+    JobInputsEffects
 ];

@@ -99,8 +99,9 @@
                                </div>
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'output'">
-                               <select class="select">
+                               <select class="select" formControlName="jobInput">
                                    <option value="" selected disabled>Select</option>
+                                   <option *ngFor="let input of inputs | async" value="input.jobid">{{input.type}}</option>
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
@@ -160,11 +161,12 @@
                                         <label for="csvInput02"></label>
                                  </div>
                             </div>
-                           <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'output'" >
-                                <select class="select">
-                                  <option value="" selected disabled>Select</option>
-                                </select>
-                            </div>
+                           <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'output'">
+                               <select class="select" formControlName="jobInput">
+                                   <option value="" selected disabled>Select</option>
+                                   <option *ngFor="let input of inputs | async" value="input.jobid">{{input.type}}</option>
+                               </select>
+                           </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
                                <mosquads-inputs></mosquads-inputs>
                                <!--  <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
