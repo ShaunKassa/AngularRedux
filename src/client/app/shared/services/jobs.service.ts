@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 /**
@@ -45,8 +45,12 @@ export class JobsService {
       let options = new RequestOptions({ headers: headers });
 
       return this.http.post(postJobUrl, body, options)
-                    .catch(this.handleError);
-
+                .map((res: Response) => {
+                    let json = res.json();
+                    console.log(json);
+                    return json;
+                })
+                .catch(this.handleError);
   }
 
 

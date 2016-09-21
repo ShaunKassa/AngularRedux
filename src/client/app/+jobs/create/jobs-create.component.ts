@@ -24,8 +24,8 @@ export class JobsCreateComponent implements OnInit {
     jobTypesList = [
         'Depth Generation',
         'PostIngest Depth Statistics',
-        'Coverage CSV Generation',
-        'Filter Service'
+        'Coverage CSV Generation'
+        // 'Filter Service'
     ];
     inputs: any;
 
@@ -57,13 +57,18 @@ export class JobsCreateComponent implements OnInit {
         this.inputs = _store.let(getJobInputsState())
             .map(jobInputState => jobInputState.jobInputs);
      }
-         ngOnInit() {
+     ngOnInit() {
+         this.createForms();
+     }
+
+
+    createForms() {
              this.depthGenerationForm = this.formBuilder.group({
                    city: ['',Validators.compose([Validators.required])],
                    publicationDate:['',Validators.compose([Validators.required])],
  	    		   validationType:['validatePanoCount',Validators.compose([Validators.required])],
                    submissionType:['',Validators.compose([Validators.required])],
-                   input:['',Validators.compose([Validators.required,
+                   mosquadInput:['',Validators.compose([Validators.required,
                                                   this.emptyLineValidator,
                                                   this.whitespaceValidator,
                                                   this.mosquadIdValidator])]
@@ -73,12 +78,11 @@ export class JobsCreateComponent implements OnInit {
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    			  inputType:['',Validators.compose([Validators.required])],
-	    			  jobInput:['',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required,
-                                                    this.emptyLineValidator,
+	    			  jobInput:[''],
+                      mosquadInput:['',Validators.compose([this.emptyLineValidator,
                                                     this.whitespaceValidator,
-                                                    this.postIngestValidator])]
-               });
+                                                    this.mosquadIdValidator])]
+               }, {validator: this.validateMosquadInputs()});
 
 
                this.coverageCsvForm= this.formBuilder.group({
@@ -86,12 +90,11 @@ export class JobsCreateComponent implements OnInit {
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    			  inputType:['',Validators.compose([Validators.required])],
-	    			  jobInput:['',Validators.compose([Validators.required])],
-                      input:['',Validators.compose([Validators.required,
-                                                    this.emptyLineValidator,
+	    			  jobInput:[''],
+                      mosquadInput:['',Validators.compose([this.emptyLineValidator,
                                                     this.whitespaceValidator,
                                                     this.mosquadIdValidator])]
-               });
+               }, {validator: this.validateMosquadInputs()});
 
 
                this.filterServiceForm = this.formBuilder.group({
@@ -117,8 +120,8 @@ export class JobsCreateComponent implements OnInit {
                        saveAsPreset:['',Validators.compose([])],
                        presetLabel:['',Validators.compose([Validators.required])]
                });
-     }
 
+    }
 
 
     onSubmit(value:any): void {
@@ -136,42 +139,58 @@ export class JobsCreateComponent implements OnInit {
                    address = (
                        'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
-                   date = (value.pubDate).replace('/','_');
+                   date = (value.publicationDate).replace('/','_');
                    fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_drives.txt';
                    address = address + fileName;
-                   text = value.driveInput;
+                   text = value.mosquadInput;
               }
 
               if(this.selectedJobType === 'Coverage CSV Generation') {
-                 address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.env);
-                 date = (value.pubDate).replace('/','_');
+                 address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.environment);
+                 date = (value.publicationDate).replace('/','_');
                  fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_mosquad.csv';
                  address = address + fileName;
-                 text = value.mosquadInput;
+                 if(value.inputType === 'mosquads') {
+                    text = value.mosquadInput;
+                 } else {
+                     text = value.jobInput;
+                 }
              }
 
              if(this.selectedJobType=== 'PostIngest Depth Statistics') {
-                 address = ('home/selvaraj/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.env);
-                 date = (value.pubDate).replace('/','_');
+                 address = ('home/selvaraj/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.environment);
+                 date = (value.publicationDate).replace('/','_');
                  fileName = '/'+ date + '_mosquad.txt';
                  address = address + fileName;
-                 text = value.postIngestInput;
+                 if(value.inputType === 'mosquads') {
+                    text = value.mosquadInput;
+                 } else {
+                     text = value.jobInput;
+                 }
              }
 
-            var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
-            var params = {Key: address, Body: text};
-            bucket.upload(params, function (err:any) {
-                if(err) {
-                   console.log(err);
-                } else {
-                   console.log('Success');
-                   that._jobsService.createJob(address, value.jobInput);
-                }
-           });
-           this.selectedJobType = 'Default';
-           (<any>$('li.items')).removeClass('highlight');
 
-            return;
+            if(value.inputType === 'output') {
+                that._jobsService.createJob(address, value.jobInput)
+                    .subscribe(x => {
+                        console.log(x);
+                        this.createForms();
+                    });
+            } else {
+                var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
+                var params = {Key: address, Body: text};
+                bucket.upload(params, function (err:any) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        this.createForms();
+                        console.log('Success');
+                    }
+                });
+            }
+           this.selectedJobType = 'Default';
+           this.SelectJob('Default', null);
+           return;
     }
 
     buildFilterModel(value:any) {
@@ -257,7 +276,9 @@ export class JobsCreateComponent implements OnInit {
            for(var len =0; len < this.itemsRef.nativeElement.children.length; len++) {
                this.itemsRef.nativeElement.children[len].style.backgroundColor = '#EBF0F2';
            }
-           this.renderer.setElementStyle($event.target, 'backgroundColor', '#FFFFFF');
+           if($event) {
+                this.renderer.setElementStyle($event.target, 'backgroundColor', '#FFFFFF');
+           }
       }
 
       addFilter(add:Boolean) {
@@ -333,11 +354,16 @@ export class JobsCreateComponent implements OnInit {
                return;
       }
 
-      private postIngestValidator(control: FormControl) {
-               if(!control.value.match(/^([A-Za-z,\s]*"([0-3]{14}){1}((\n)?[0-3]{14})*")*$/)) {
-                   return {postIngest: true};
-               }
-               return;
+      private validateMosquadInputs() {
+          return (group: FormGroup) => {
+              let mosquadInput = group.controls['mosquadInput'],
+                  jobInput = group.controls['jobInput'];
+              if(mosquadInput.value === '' && jobInput.value === '') {
+                  return {
+                      mosquadInputRequired: true
+                  };
+              } else return;
+          };
       }
 
   }

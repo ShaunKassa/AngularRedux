@@ -50,7 +50,7 @@
 
 
                            <div id="input" class="label">Input</div>
-                           <mosquads-inputs></mosquads-inputs>
+                           <mosquads-inputs formControlName="mosquadInput"></mosquads-inputs>
                            <!--
                            <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
                            <div *ngIf="depthGenerationForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
@@ -100,12 +100,12 @@
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'output'">
                                <select class="select" formControlName="jobInput">
-                                   <option value="" selected disabled>Select</option>
-                                   <option *ngFor="let input of inputs | async" value="input.jobid">{{input.type}}</option>
+                                   <option value="" selected>Select</option>
+                                   <option *ngFor="let input of inputs | async" [value]="input.jobid">{{input.type}}</option>
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
-                              <mosquads-inputs formControlName="input"></mosquads-inputs>
+                              <mosquads-inputs formControlName="mosquadInput"></mosquads-inputs>
                               <!--<div class="inputs">
                                  <div class="errorCheck">
                                      <ul>
@@ -163,12 +163,12 @@
                             </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'output'">
                                <select class="select" formControlName="jobInput">
-                                   <option value="" selected disabled>Select</option>
-                                   <option *ngFor="let input of inputs | async" value="input.jobid">{{input.type}}</option>
+                                   <option value="" selected>Select</option>
+                                   <option *ngFor="let input of inputs | async" [value]="input.jobid">{{input.type}}</option>
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
-                               <mosquads-inputs formControlName="input"></mosquads-inputs>
+                               <mosquads-inputs formControlName="mosquadInput"></mosquads-inputs>
                                <!--  <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
