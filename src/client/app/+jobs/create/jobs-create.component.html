@@ -105,7 +105,7 @@
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
-                              <mosquads-inputs></mosquads-inputs>
+                              <mosquads-inputs formControlName="input"></mosquads-inputs>
                               <!--<div class="inputs">
                                  <div class="errorCheck">
                                      <ul>
@@ -168,7 +168,7 @@
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
-                               <mosquads-inputs></mosquads-inputs>
+                               <mosquads-inputs formControlName="input"></mosquads-inputs>
                                <!--  <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
