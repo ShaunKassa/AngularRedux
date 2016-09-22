@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class JobsService {
 
-   endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
-   // endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
+   // endpoint: string = 'http://52.10.1.113:3000/api/';  // production endpoint
+   endpoint: string = 'http://52.38.44.101:3000/api/'; // dev endpoint
    filterService: string = 'http://index-service.rcp-p.solo-experiments.com:80/api/rest/v1/filter/box';
 
   /**
