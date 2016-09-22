@@ -30,7 +30,7 @@ export class JobsCreateComponent implements OnInit {
     inputs: any;
     regExMap = {
         'mosquads':'^((?![0-3]{14}).)*$',
-        'drives':'^(HT[\w\d]+_(\d)+,?.*\s*)*$'
+        'drives':'^((?!HT[\\w\\d]+_(\\d)+,?.*\\s*).)*$'
     };
 
 
@@ -143,15 +143,15 @@ export class JobsCreateComponent implements OnInit {
                    address = (
                        'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
-                   date = (value.publicationDate).replace('/','_');
-                   fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_' + value.input + '.txt';
+                   date = (value.publicationDate).replace('-','_');
+                   fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_' + value.inputType + '.txt';
                    address = address + fileName;
-                   text = value.mosquadInput;
+                   text = value.input;
               }
 
               if(this.selectedJobType === 'Coverage CSV Generation') {
                  address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.environment);
-                 date = (value.publicationDate).replace('/','_');
+                 date = (value.publicationDate).replace(/-/g,'_');
                  fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_mosquad.csv';
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
@@ -178,7 +178,7 @@ export class JobsCreateComponent implements OnInit {
                 that._jobsService.createJob(address, value.jobInput)
                     .subscribe(x => {
                         console.log(x);
-                        this.createForms();
+                        that.createForms();
                     });
             } else {
                 var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
@@ -187,7 +187,7 @@ export class JobsCreateComponent implements OnInit {
                     if(err) {
                         console.log(err);
                     } else {
-                        this.createForms();
+                        that.createForms();
                         console.log('Success');
                     }
                 });
