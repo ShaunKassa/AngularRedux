@@ -44,13 +44,15 @@
                            </select>
 
                            <div class="label">Input Type</div>
-                             <div class="inputTypes">
-                                 <div class="inputOption">mosquads</div>
-                             </div>
+                           <select class="select" formControlName="inputType">
+                             <option value="" selected disabled>Select</option>
+                             <option >mosquads</option>
+                             <option >drives</option>
+                           </select>
 
 
                            <div id="input" class="label">Input</div>
-                           <mosquads-inputs formControlName="mosquadInput"></mosquads-inputs>
+                           <mosquads-inputs formControlName="input" [regEx]="regExMap[depthGenerationForm.controls.inputType.value]"></mosquads-inputs>
                            <!--
                            <textarea  placeholder="Enter drive here" formControlName="input">  </textarea>            
                            <div *ngIf="depthGenerationForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
@@ -68,7 +70,6 @@
 <!-- Start of PostIngest Template -->
                 <form [formGroup] ="postIngestForm" (ngSubmit)="onSubmit(postIngestForm.value)">
                      <div class="rightOptions" *ngSwitchCase="'PostIngest Depth Statistics'" >
-
                            <div class="title">Fill in the blanks</div>
 
                         <div class= "rightContent"> 
@@ -105,7 +106,7 @@
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
-                              <mosquads-inputs formControlName="mosquadInput"></mosquads-inputs>
+                              <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[postIngestForm.controls.inputType.value]"></mosquads-inputs>
                               <!--<div class="inputs">
                                  <div class="errorCheck">
                                      <ul>
@@ -168,7 +169,7 @@
                                </select>
                            </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
-                               <mosquads-inputs formControlName="mosquadInput"></mosquads-inputs>
+                               <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[coverageCsvForm.controls.inputType.value]"></mosquads-inputs>
                                <!--  <textarea  placeholder="Enter mosquads here" formControlName="input">  </textarea>            
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
                                <div *ngIf="coverageCsvForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>

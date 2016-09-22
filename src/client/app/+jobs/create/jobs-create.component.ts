@@ -28,6 +28,10 @@ export class JobsCreateComponent implements OnInit {
         // 'Filter Service'
     ];
     inputs: any;
+    regExMap = {
+        'mosquads':'^((?![0-3]{14}).)*$',
+        'drives':'^(HT[\w\d]+_(\d)+,?.*\s*)*$'
+    };
 
 
     attributeTypes = ['ORIENT','XYALIGN','ZJUMP','INTERVAL','DRIFT',
@@ -68,11 +72,11 @@ export class JobsCreateComponent implements OnInit {
                    publicationDate:['',Validators.compose([Validators.required])],
  	    		   validationType:['validatePanoCount',Validators.compose([Validators.required])],
                    submissionType:['',Validators.compose([Validators.required])],
-                   mosquadInput:['',Validators.compose([Validators.required,
+                   inputType:['',Validators.compose([Validators.required])],
+                   input:['',Validators.compose([Validators.required,
                                                   this.emptyLineValidator,
-                                                  this.whitespaceValidator,
-                                                  this.mosquadIdValidator])]
-               });
+                                                  this.whitespaceValidator])]
+               }, {validator: this.validateDepthInputs()});
 
               this.postIngestForm = this.formBuilder.group({
                       publicationDate:['',Validators.compose([Validators.required])],
@@ -140,7 +144,7 @@ export class JobsCreateComponent implements OnInit {
                        'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
                    date = (value.publicationDate).replace('/','_');
-                   fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_drives.txt';
+                   fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_' + value.input + '.txt';
                    address = address + fileName;
                    text = value.mosquadInput;
               }
@@ -365,5 +369,18 @@ export class JobsCreateComponent implements OnInit {
               } else return;
           };
       }
+
+      private validateDepthInputs() {
+          return (group: FormGroup) => {
+              let input = group.controls['input'],
+                  inputType = group.controls['inputType'];
+              if(inputType.value === 'mosquads' && !input.value.match(/^([0-3]{14}\s*)*$/)) {
+                  return {mosquadId: true};
+              } else if(inputType.value === 'drives' && !input.value.match(/^(HT[\w\d]+_(\d)+,?.*\s*)*$/)) {
+                  return {driveId: true};
+              } else return;
+          };
+      }
+
 
   }

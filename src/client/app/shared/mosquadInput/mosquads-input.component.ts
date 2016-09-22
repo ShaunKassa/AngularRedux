@@ -3,6 +3,7 @@ import {
   Renderer,
   ElementRef,
   forwardRef,
+  Input,
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -25,6 +26,7 @@ export class MosquadsInputComponent implements ControlValueAccessor {
     @ViewChild('textArea') textAreaRef:ElementRef;
     @ViewChild('highlights') highlightsRef:ElementRef;
     @ViewChild('backdrop') backdropRef:ElementRef;
+    @Input() regEx: any;
     constructor(
         private renderer: Renderer,
         private elementRef: ElementRef
@@ -48,11 +50,12 @@ export class MosquadsInputComponent implements ControlValueAccessor {
     }
 
     valueChanged(value: any) {
-        let text = value.target.value.replace(/\n$/g, '\n\n')
-        .replace(/^((?![0-3]{14}).)*$/gm, '<mark>$&</mark>')
-        .replace(/ /gm, '<mark>$&</mark>');
-        this.highlightsRef.nativeElement.innerHTML = text;
-        this.propagateChange(value.target.value);
+              this.regEx = new RegExp(this.regEx, 'gm');
+              let text = value.target.value.replace(/\n$/g, '\n\n')
+              .replace(this.regEx, '<mark>$&</mark>')
+              .replace(/ /gm, '<mark>$&</mark>');
+              this.highlightsRef.nativeElement.innerHTML = text;
+              this.propagateChange(value.target.value);
     }
 
     onScroll(scrollValue: any) {
