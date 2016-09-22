@@ -370,7 +370,7 @@ export class JobsCreateComponent implements OnInit {
           };
       }
 
-      private validateDepthInputs() {
+      private validateDepthInputs(): (group: FormGroup) => any {
           return (group: FormGroup) => {
               let input = group.controls['input'],
                   inputType = group.controls['inputType'];

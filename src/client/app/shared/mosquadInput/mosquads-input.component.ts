@@ -26,11 +26,20 @@ export class MosquadsInputComponent implements ControlValueAccessor {
     @ViewChild('textArea') textAreaRef:ElementRef;
     @ViewChild('highlights') highlightsRef:ElementRef;
     @ViewChild('backdrop') backdropRef:ElementRef;
-    @Input() regEx: any;
+    _regEx: any;
     constructor(
         private renderer: Renderer,
         private elementRef: ElementRef
-    ) {
+    ) {}
+
+    get regEx(): any {
+        return this._regEx;
+    }
+
+    @Input('regEx')
+    set regEx(value: any) {
+        this._regEx = value;
+        this.updateState();
     }
 
     propagateChange = (_: any) => {
@@ -49,13 +58,18 @@ export class MosquadsInputComponent implements ControlValueAccessor {
         return;
     }
 
+    updateState() {
+        let value = this.textAreaRef.nativeElement.value;
+        let regEx = new RegExp(this._regEx, 'gm');
+        let text = value.replace(/\n$/g, '\n\n')
+        .replace(regEx, '<mark>$&</mark>')
+        .replace(/ /gm, '<mark>$&</mark>');
+        this.highlightsRef.nativeElement.innerHTML = text;
+    }
+
     valueChanged(value: any) {
-              this.regEx = new RegExp(this.regEx, 'gm');
-              let text = value.target.value.replace(/\n$/g, '\n\n')
-              .replace(this.regEx, '<mark>$&</mark>')
-              .replace(/ /gm, '<mark>$&</mark>');
-              this.highlightsRef.nativeElement.innerHTML = text;
-              this.propagateChange(value.target.value);
+        this.updateState();
+        this.propagateChange(value.target.value);
     }
 
     onScroll(scrollValue: any) {
