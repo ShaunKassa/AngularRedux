@@ -174,23 +174,25 @@ export class JobsCreateComponent implements OnInit {
              }
 
 
-            if(value.inputType === 'output') {
-                that._jobsService.createJob(address, value.jobInput)
-                    .subscribe(x => {
-                        console.log(x);
-                        that.createForms();
-                    });
-            } else {
+            if(value.inputType === 'mosquads') {
                 var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
                 var params = {Key: address, Body: text};
                 bucket.upload(params, function (err:any) {
                     if(err) {
                         console.log(err);
                     } else {
-                        that.createForms();
                         console.log('Success');
+                        that._jobsService.createJob(address, value.jobInput)
+                            .subscribe(x => {
+                                that.createForms();
+                            });
                     }
                 });
+            } else {
+                that._jobsService.createJob(address, value.jobInput)
+                    .subscribe(x => {
+                        that.createForms();
+                    });
             }
            this.selectedJobType = 'Default';
            this.SelectJob('Default', null);
