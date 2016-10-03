@@ -29,6 +29,12 @@ export class JobsService {
           .map(res => res.json());
   }
 
+  searchJobInputs(searchInput: String): Observable<any> {
+      return this.http.get(this.endpoint + 'jobinputs' +
+              '?filter[where][type][like]=%' + searchInput + '%')
+          .map(res => res.json());
+  }
+
   saveFilters(filtersPayload:any): Observable<any> {
     let body = JSON.stringify(filtersPayload);
     let headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Request-Method': this.filterService });
@@ -69,6 +75,7 @@ export class JobsService {
                  let parentJobs = res.json();
                  parentJobs.forEach(that.generatePercentages);
                  parentJobs.forEach(that.generateTimeStamp);
+                 parentJobs.forEach(that.generateStat);
                  return parentJobs;
              });
   }
