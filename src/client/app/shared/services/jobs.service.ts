@@ -154,6 +154,11 @@ export class JobsService {
 
   private generateStat(job:any) {
       let str = job.statistics;
+      let urlRegex = /(https?:\/\/[^\s]+)/g;
+      if(str !== null && str.match(urlRegex) !== null) {
+          str = str.replace(urlRegex, '<a href="$1">$1</a>');
+      }
+
       if(str !== null) {
           job.statistics = str.replace(/(?:\r\n|\r|\n)/g, '<br/><br/>');;
           let startOfId = job.statistics.lastIndexOf('jobId');
