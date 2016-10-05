@@ -16,5 +16,6 @@ export default class AppComponent {
   constructor(private _store: Store<any>) {
     this._store.dispatch({type: JobTypesActions.REQUEST_JOBTYPES});
     this._store.dispatch({type: JobInputsActions.REQUEST_JOBINPUTS});
+    this._store.dispatch({type: JobInputsActions.SEARCH_JOBINPUTS, payload: 'Post'});
   }
 }

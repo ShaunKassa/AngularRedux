@@ -330,11 +330,13 @@ export class SeedConfig {
       '@ngrx/store-devtools': `node_modules/@ngrx/store-devtools/index.js`,
       '@ngrx/store-log-monitor': `node_modules/@ngrx/store-log-monitor/index.js`,
       'rxjs/*': `node_modules/rxjs/*`,
+      'ng2-completer': `node_modules/ng2-completer/bundles/ng2-completer.js`,
       'app/*': `/app/*`,
       '*': `node_modules/*`
     },
     packages: {
-      rxjs: { defaultExtension: 'js' }
+      rxjs: { defaultExtension: 'js' },
+      'ng2-completer': { defaultExtension: 'js', main: 'ng2-completer.js', format: 'cjs' }
     }
   };
 
@@ -412,6 +414,11 @@ export class SeedConfig {
       '@ngrx/store-log-monitor': {
         main: 'index.js',
         defaultExtension: 'js'
+      },
+      'ng2-completer': {
+        main: 'ng2-completer.js',
+        defaultExtension: 'js',
+        format: 'cjs'
       },
       'rxjs': {
         defaultExtension: 'js'

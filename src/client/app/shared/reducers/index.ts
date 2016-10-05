@@ -50,6 +50,7 @@ import { combineReducers } from '@ngrx/store';
 import jobsReducer, * as fromJobs from './jobs.reducers';
 import jobTypesReducer, * as fromJobTypes from './job_types.reducers';
 import jobInputsReducer, * as fromJobInputs from './job_inputs.reducers';
+import jobInputsSearchReducer, * as fromJobInputsSearch from './search_job_inputs.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -59,6 +60,7 @@ export interface AppState {
   jobs: fromJobs.JobsState;
   jobTypes: fromJobTypes.JobTypesState;
   jobInputs: fromJobInputs.JobInputsState;
+  jobInputsSearch: fromJobInputsSearch.JobInputsSearchState;
 }
 
 
@@ -72,7 +74,8 @@ export interface AppState {
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   jobs: jobsReducer,
   jobTypes: jobTypesReducer,
-  jobInputs: jobInputsReducer
+  jobInputs: jobInputsReducer,
+  jobInputsSearch: jobInputsSearchReducer
 });
 
 
@@ -126,6 +129,15 @@ export function getJobInputsState() {
     .select(s => s.jobInputs);
 }
 
+/*
+ *
+ *
+ * Selectors for search job inputs
+ */
+export function getJobInputsSearchState() {
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.jobInputsSearch);
+}
 
 /**
  * Some selector functions create joins across parts of state. This selector

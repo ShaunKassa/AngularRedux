@@ -14,6 +14,8 @@ import { Action } from '@ngrx/store';
 export class JobInputsActions {
   static REQUEST_JOBINPUTS  = '[JobInputs] Load job inputs';
   static RECEIVE_JOBINPUTS  = '[JobInputs] Load jobs inputs success';
+  static SEARCH_JOBINPUTS   = '[JobInputs] Search job inputs';
+  static SEARCH_COMPLETE_JOBINPUTS   = '[JobInputs] Search job inputs complete';
   requestJobInputs(): Action {
     return {
       type: JobInputsActions.REQUEST_JOBINPUTS
@@ -23,6 +25,20 @@ export class JobInputsActions {
   receiveJobInputs(jobInputs: Array<any>): Action {
     return {
       type: JobInputsActions.RECEIVE_JOBINPUTS,
+      payload: jobInputs
+    };
+  }
+
+  searchJobInputs(query: String): Action {
+    return {
+      type: JobInputsActions.SEARCH_JOBINPUTS,
+      payload: query
+    };
+  }
+
+  searchCompleteJobInputs(jobInputs: Array<any>): Action {
+    return {
+      type: JobInputsActions.SEARCH_COMPLETE_JOBINPUTS,
       payload: jobInputs
     };
   }
