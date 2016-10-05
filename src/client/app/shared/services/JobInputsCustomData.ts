@@ -16,6 +16,7 @@ export class JobInputsCustomData extends Subject<CompleterItem[]> implements Com
             .map(jobInputsSearchState => jobInputsSearchState.jobInputs)
             .map(inputs => {
                 let matches: CompleterItem[] = inputs.map((input: any) => {
+                //todo: use regex to extract the name part here for input.type
                     return {
                         title: input.type,
                         originalObject: null
