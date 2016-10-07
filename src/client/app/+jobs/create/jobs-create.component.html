@@ -27,6 +27,7 @@
 
                            <div class="label" >City</div>
  						   <input  type="text" placeholder="Enter city name" formControlName="city">
+                           <span *ngIf="depthGenerationForm.controls['city'].hasError('underscoreValid')" style="color:red">No underscores allowed.</span>
 
                            <div class="label">Publication Date</div>
                            <input  type="date" class="date" formControlName="publicationDate">
@@ -100,18 +101,18 @@
                                </div>
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'output'">
-                               <!--
                                <select class="select" formControlName="jobInput">
                                    <option value="" selected>Select</option>
                                    <option *ngFor="let input of inputs | async" [value]="input.jobid">{{input.type}}</option>
                                </select>
-                               -->
+                               <!--
                                <ng2-completer formControlName="jobInput"
                                               [dataService]="inputData"
                                               [minSearchLength]="3"
                                               [placeholder]="'search job inputs by name'"
                                               [textSearching]="'Please wait...'">
                                </ng2-completer>
+                               -->
                            </div> 
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
                               <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[postIngestForm.controls.inputType.value]"></mosquads-inputs>
@@ -143,6 +144,7 @@
 
                            <div class="label">City</div>
 						   <input  type="text" placeholder="Enter city name" class="form-control" formControlName="city">
+                           <span *ngIf="coverageCsvForm.controls['city'].hasError('underscoreValid')" style="color:red">No underscores allowed.</span>
 
                            <div class="label">Publication Date</div>
 						   <input  type="date"  formControlName="publicationDate" >
@@ -171,18 +173,18 @@
                                  </div>
                             </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'output'">
-                               <!--
                                <select class="select" formControlName="jobInput">
                                    <option value="" selected>Select</option>
                                    <option *ngFor="let input of inputs | async" [value]="input.jobid">{{input.type}}</option>
                                </select>
-                               -->
+                               <!--
                                <ng2-completer formControlName="jobInput"
                                               [dataService]="inputData"
                                               [minSearchLength]="3"
                                               [placeholder]="'search job inputs by name'"
                                               [textSearching]="'Please wait...'">
                                </ng2-completer>
+                               -->
                            </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
                                <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[coverageCsvForm.controls.inputType.value]"></mosquads-inputs>

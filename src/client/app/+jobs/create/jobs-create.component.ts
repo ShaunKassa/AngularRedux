@@ -70,7 +70,7 @@ export class JobsCreateComponent implements OnInit {
 
     createForms() {
              this.depthGenerationForm = this.formBuilder.group({
-                   city: ['',Validators.compose([Validators.required])],
+                   city: ['',Validators.compose([Validators.required, this.underscoreValidator])],
                    publicationDate:['',Validators.compose([Validators.required])],
  	    		   validationType:['validatePanoCount',Validators.compose([Validators.required])],
                    submissionType:['',Validators.compose([Validators.required])],
@@ -92,7 +92,7 @@ export class JobsCreateComponent implements OnInit {
 
 
                this.coverageCsvForm= this.formBuilder.group({
-                      city: ['',Validators.compose([Validators.required])],
+                      city: ['',Validators.compose([Validators.required, this.underscoreValidator])],
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    			  inputType:['',Validators.compose([Validators.required])],
@@ -136,6 +136,7 @@ export class JobsCreateComponent implements OnInit {
  			   let fileName: string = '';
  			   let text: string = '';
                let date: string = '';
+               let guid: any = this.createGuid();
 
                if(this.selectedJobType === 'CSV Generation') {
                    this.buildFilterModel(value);
@@ -145,9 +146,9 @@ export class JobsCreateComponent implements OnInit {
                    address = (
                        'home/selvaraj/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
-                   date = (value.publicationDate).replace('-','_');
-                   fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_' + value.inputType + '.txt';
+                   fileName = '/'+(value.city)+'_'+ value.publicationDate + '_' + value.inputType +'_' + guid + '.txt';
                    address = address + fileName;
+                   console.log(address);
                    text = value.input;
               }
 
@@ -176,7 +177,7 @@ export class JobsCreateComponent implements OnInit {
              }
 
 
-            if(value.inputType === 'mosquads') {
+            if(value.inputType === 'mosquads' || value.inputType === 'drives') {
                 var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
                 var params = {Key: address, Body: text};
                 bucket.upload(params, function (err:any) {
@@ -190,7 +191,7 @@ export class JobsCreateComponent implements OnInit {
                             });
                     }
                 });
-            } else {
+            } else { // for output
                 that._jobsService.createJob(address, value.jobInput)
                     .subscribe(x => {
                         that.createForms();
@@ -334,6 +335,13 @@ export class JobsCreateComponent implements OnInit {
           console.log(textValue);
       }
 
+      createGuid() {
+          return 'xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+              return v.toString(16);
+          });
+      }
+
       private emptyLineValidator(control: FormControl) {
                if(control.value.match(/\n\s*\n/) ) {
                    return {emptyLine: true};
@@ -361,6 +369,14 @@ export class JobsCreateComponent implements OnInit {
                }
                return;
       }
+
+      private underscoreValidator(control: FormControl) {
+               if(control.value.includes('_')) {
+                   return {underscoreValid: true};
+               }
+               return;
+      }
+
 
       private validateMosquadInputs() {
           return (group: FormGroup) => {
