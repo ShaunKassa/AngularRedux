@@ -154,8 +154,7 @@ export class JobsCreateComponent implements OnInit {
 
               if(this.selectedJobType === 'Coverage CSV Generation') {
                  address = ('home/selvaraj/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.environment);
-                 date = (value.publicationDate).replace(/-/g,'_');
-                 fileName = '/'+(value.city.toUpperCase())+'_'+ date + '_mosquad.csv';
+                 fileName = '/'+(value.city)+'_'+ value.publicationDate + '_mosquad_' + guid + '.csv';
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
                     text = value.mosquadInput;
