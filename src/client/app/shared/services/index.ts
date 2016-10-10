@@ -1,12 +1,9 @@
 import { JobsService } from './jobs.service';
-import { JobInputsCustomData } from './JobInputsCustomData';
 
 export {
-    JobsService,
-    JobInputsCustomData
+    JobsService
 };
 
 export default [
-    JobsService,
-    JobInputsCustomData
+    JobsService
 ];

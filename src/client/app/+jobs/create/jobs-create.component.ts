@@ -2,7 +2,7 @@ declare var AWS: any;
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Renderer, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { JobsService, JobInputsCustomData } from '../../shared/services/index';
+import { JobsService } from '../../shared/services/index';
 import { getJobInputsState } from '../../shared/reducers/index';
 
 @Component({
@@ -27,7 +27,6 @@ export class JobsCreateComponent implements OnInit {
         // 'Filter Service'
     ];
     inputs: any;
-    inputData: any;
     regExMap = {
         'mosquads':'^((?![0-3]{14}).)*$',
         'drives':'^((?!HT[\\w\\d]+_(\\d)+,?.*\\s*).)*$'
@@ -54,14 +53,12 @@ export class JobsCreateComponent implements OnInit {
 
      constructor(
          private _store: Store<any>,
-         private _inputData: JobInputsCustomData,
          private formBuilder:FormBuilder,
          private _jobsService: JobsService,
          private renderer: Renderer,
          private _elementRef: ElementRef) {
         this.inputs = _store.let(getJobInputsState())
             .map(jobInputState => jobInputState.jobInputs);
-        this.inputData = _inputData;
      }
      ngOnInit() {
          this.createForms();

@@ -11,7 +11,6 @@ import { Ng2StyledDirective } from './slider/ng2-styled.directive';
 import { OverviewChartComponent } from './overviewChart/overview-chart.component';
 import { DetailviewChartComponent } from './detailviewChart/detailview-chart.component';
 import { MosquadsInputComponent } from './mosquadInput/mosquads-input.component';
-import { Ng2CompleterModule } from 'ng2-completer';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
@@ -26,7 +25,7 @@ import actions from './actions/index';
 import services from './services/index';
 
 @NgModule({
-    imports: [ CommonModule, HttpModule, FormsModule, Ng2CompleterModule ],
+    imports: [ CommonModule, HttpModule, FormsModule ],
     declarations: [
         NavbarComponent,
         AccordionComponent,
@@ -40,7 +39,7 @@ import services from './services/index';
     exports: [
         NavbarComponent, Ng2SliderComponent, AccordionComponent, AccordionGroupComponent,
         OverviewChartComponent, DetailviewChartComponent, MosquadsInputComponent,
-        CommonModule, FormsModule, ReactiveFormsModule, Ng2CompleterModule ],
+        CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {
