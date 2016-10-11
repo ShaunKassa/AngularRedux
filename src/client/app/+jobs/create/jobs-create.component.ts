@@ -141,7 +141,7 @@ export class JobsCreateComponent implements OnInit {
                }
                if(this.selectedJobType === 'Depth Generation') {
                    address = (
-                       'aethicupload/depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
+                       'depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
                    fileName = '/'+(value.city)+'_'+ value.publicationDate + '_' + value.inputType +'_' + guid + '.txt';
                    address = address + fileName;
@@ -150,7 +150,7 @@ export class JobsCreateComponent implements OnInit {
               }
 
               if(this.selectedJobType === 'Coverage CSV Generation') {
-                 address = ('aethicupload/depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.environment);
+                 address = ('depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.environment);
                  fileName = '/'+(value.city)+'_'+ value.publicationDate + '_mosquad_' + guid + '.csv';
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
@@ -161,7 +161,7 @@ export class JobsCreateComponent implements OnInit {
              }
 
              if(this.selectedJobType=== 'PostIngest Depth Statistics') {
-                 address = ('aethicupload/depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.environment);
+                 address = ('depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.environment);
                  date = (value.publicationDate).replace('/','_');
                  fileName = '/'+ date + '_mosquad.txt';
                  address = address + fileName;
