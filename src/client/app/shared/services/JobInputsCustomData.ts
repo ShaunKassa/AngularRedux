@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CompleterData, CompleterItem } from 'ng2-completer';
+import { CompleterData, CompleterItem } from '../ng2-completer';
 import { Store } from '@ngrx/store';
 import { JobInputsActions } from '../actions/index';
 import { getJobInputsSearchState } from '../reducers/index';

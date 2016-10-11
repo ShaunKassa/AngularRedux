@@ -11,7 +11,7 @@ import { Ng2StyledDirective } from './slider/ng2-styled.directive';
 import { OverviewChartComponent } from './overviewChart/overview-chart.component';
 import { DetailviewChartComponent } from './detailviewChart/detailview-chart.component';
 import { MosquadsInputComponent } from './mosquadInput/mosquads-input.component';
-import { Ng2CompleterModule } from 'ng2-completer';
+import { Ng2CompleterModule } from './ng2-completer/src/index';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
