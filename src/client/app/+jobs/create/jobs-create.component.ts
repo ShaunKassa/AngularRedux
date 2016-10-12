@@ -78,6 +78,7 @@ export class JobsCreateComponent implements OnInit {
                }, {validator: this.validateDepthInputs()});
 
               this.postIngestForm = this.formBuilder.group({
+                      city: ['',Validators.compose([Validators.required, this.underscoreValidator])],
                       publicationDate:['',Validators.compose([Validators.required])],
 	    			  environment:['',Validators.compose([Validators.required])],
 	    			  inputType:['',Validators.compose([Validators.required])],
@@ -132,7 +133,6 @@ export class JobsCreateComponent implements OnInit {
  			   let address: string = '';
  			   let fileName: string = '';
  			   let text: string = '';
-               let date: string = '';
                let guid: any = this.createGuid();
 
                if(this.selectedJobType === 'CSV Generation') {
@@ -143,7 +143,7 @@ export class JobsCreateComponent implements OnInit {
                    address = (
                        'depthAutomation/jobs/DepthGenerationForCity/input/validatePanoCount/').concat(value.submissionType)
                        ;
-                   fileName = '/'+(value.city)+'_'+ value.publicationDate + '_' + value.inputType +'_' + guid + '.txt';
+                   fileName = '/' + (value.city) + '_' + value.publicationDate + '_' + value.inputType +'_' + guid + '.txt';
                    address = address + fileName;
                    console.log(address);
                    text = value.input;
@@ -151,7 +151,7 @@ export class JobsCreateComponent implements OnInit {
 
               if(this.selectedJobType === 'Coverage CSV Generation') {
                  address = ('depthAutomation/jobs/CoverageCSVGeneration/input/').concat(value.environment);
-                 fileName = '/'+(value.city)+'_'+ value.publicationDate + '_mosquad_' + guid + '.csv';
+                 fileName = '/' + (value.city) + '_' + value.publicationDate + '_mosquad_' + guid + '.csv';
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
                     text = value.mosquadInput;
@@ -162,8 +162,7 @@ export class JobsCreateComponent implements OnInit {
 
              if(this.selectedJobType=== 'PostIngest Depth Statistics') {
                  address = ('depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.environment);
-                 date = (value.publicationDate).replace('/','_');
-                 fileName = '/'+ date + '_mosquad_' + guid +  '.txt';
+                 fileName = '/' + (value.city) + '_' + value.publicationDate + '_mosquad_' + guid + '.txt';
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
                     text = value.mosquadInput;

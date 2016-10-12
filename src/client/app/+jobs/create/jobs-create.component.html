@@ -75,6 +75,10 @@
 
                         <div class= "rightContent"> 
 
+                           <div class="label" >City</div>
+ 						   <input  type="text" placeholder="Enter city name" formControlName="city">
+                           <span *ngIf="postIngestForm.controls['city'].hasError('underscoreValid')" style="color:red">No underscores allowed.</span>
+
                            <div class="label">Publication Date</div>
                            <input  type="date" formControlName="publicationDate">
 
