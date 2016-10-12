@@ -163,7 +163,7 @@ export class JobsCreateComponent implements OnInit {
              if(this.selectedJobType=== 'PostIngest Depth Statistics') {
                  address = ('depthAutomation/jobs/PostIngestDepthStatistics/input/').concat(value.environment);
                  date = (value.publicationDate).replace('/','_');
-                 fileName = '/'+ date + '_' + guid +  '_mosquad.txt';
+                 fileName = '/'+ date + '_mosquad_' + guid +  '.txt';
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
                     text = value.mosquadInput;
