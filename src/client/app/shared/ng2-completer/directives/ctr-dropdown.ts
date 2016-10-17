@@ -1,7 +1,7 @@
-import { Directive, ElementRef, Host, OnDestroy, OnInit } from "@angular/core";
+import { Directive, ElementRef, Host, OnDestroy, OnInit } from '@angular/core';
 
-import { CompleterItem } from "../components/ng2-completer/completer-item";
-import { CtrCompleter, CompleterDropdown } from "./ctr-completer";
+import { CompleterItem } from '../completer-item';
+import { CompleterDirective, CompleterDropdown } from './ctr-completer';
 
 
 export interface CtrRowElement {
@@ -15,21 +15,21 @@ export class CtrRowItem {
 }
 
 @Directive({
-    selector: "[ctrDropdown]",
+    selector: '[ctrDropdown]',
 })
-export class CtrDropdown implements CompleterDropdown, OnDestroy, OnInit {
+export class DropdownDirective implements CompleterDropdown, OnDestroy, OnInit {
 
     private rows: CtrRowItem[] = [];
     private currHighlited: CtrRowItem;
     private isScrollOn: boolean;
 
-    constructor( @Host() private completer: CtrCompleter, private el: ElementRef ) {
+    constructor( @Host() private completer: CompleterDirective, private el: ElementRef) {
         this.completer.registerDropdown(this);
     }
 
     public ngOnInit() {
         let css = getComputedStyle(this.el.nativeElement);
-        this.isScrollOn = css.maxHeight && css.overflowY === "auto";
+        this.isScrollOn = css.maxHeight && css.overflowY === 'auto';
     }
 
     public ngOnDestroy() {

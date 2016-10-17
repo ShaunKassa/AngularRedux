@@ -11,7 +11,8 @@ import { Ng2StyledDirective } from './slider/ng2-styled.directive';
 import { OverviewChartComponent } from './overviewChart/overview-chart.component';
 import { DetailviewChartComponent } from './detailviewChart/detailview-chart.component';
 import { MosquadsInputComponent } from './mosquadInput/mosquads-input.component';
-import { Ng2CompleterModule } from './ng2-completer/src/index';
+//import { Ng2CompleterModule } from './ng2-completer/src/index';
+import { CompleterComponent } from './ng2-completer/ng2-completer.component';
 
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
@@ -26,7 +27,7 @@ import actions from './actions/index';
 import services from './services/index';
 
 @NgModule({
-    imports: [ CommonModule, HttpModule, FormsModule, Ng2CompleterModule ],
+    imports: [ CommonModule, HttpModule, FormsModule  ],
     declarations: [
         NavbarComponent,
         AccordionComponent,
@@ -36,11 +37,12 @@ import services from './services/index';
         Ng2StyledDirective,
         OverviewChartComponent,
         DetailviewChartComponent,
-        MosquadsInputComponent ],
+        MosquadsInputComponent,
+        CompleterComponent ],
     exports: [
-        NavbarComponent, Ng2SliderComponent, AccordionComponent, AccordionGroupComponent,
+        NavbarComponent, Ng2SliderComponent, CompleterComponent,  AccordionComponent, AccordionGroupComponent,
         OverviewChartComponent, DetailviewChartComponent, MosquadsInputComponent,
-        CommonModule, FormsModule, ReactiveFormsModule, Ng2CompleterModule ],
+        CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

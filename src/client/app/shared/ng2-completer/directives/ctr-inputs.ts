@@ -1,7 +1,7 @@
-import { Directive, EventEmitter, Host, HostListener, Input, Output } from "@angular/core";
+import { Directive, EventEmitter, Host, HostListener, Input, Output } from '@angular/core';
 
-import { CompleterItem } from "../components/ng2-completer/completer-item";
-import { CtrCompleter } from "./ctr-completer";
+import { CompleterItem } from '../completer-item';
+import { CompleterDirective } from './ctr-completer';
 
 
 // keyboard events
@@ -14,20 +14,20 @@ const KEY_EN = 13;
 const KEY_TAB = 9;
 
 @Directive({
-    selector: "[ctrInput]",
+    selector: '[ctrInput]',
 })
-export class CtrInput {
-    @Input("clearSelected") public clearSelected = false;
-    @Input("overrideSuggested") public overrideSuggested = false;
+export class InputDirective {
+    @Input('clearSelected') public clearSelected = false;
+    @Input('overrideSuggested') public overrideSuggested = false;
     @Output() public ngModelChange: EventEmitter<any> = new EventEmitter();
 
-    private _searchStr = "";
-    private _displayStr = "";
+    private _searchStr = '';
+    private _displayStr = '';
 
-    constructor( @Host() private completer: CtrCompleter) {
+    constructor( @Host() private completer: CompleterDirective) {
         this.completer.selected.subscribe((item: CompleterItem) => {
             if (this.clearSelected) {
-                this.searchStr = "";
+                this.searchStr = '';
             } else {
                 this.searchStr = item.title;
             }
@@ -39,12 +39,12 @@ export class CtrInput {
         });
     }
 
-    @HostListener("input", ["$event"])
+    @HostListener('input', ['$event'])
     public onInputChange(event: any) {
         this.searchStr = event.target.value;
     }
 
-    @HostListener("keyup", ["$event"])
+    @HostListener('keyup', ['$event'])
     public keyupHandler(event: any) {
 
         if (event.keyCode === KEY_LF || event.keyCode === KEY_RT || event.keyCode === KEY_TAB) {
@@ -54,17 +54,14 @@ export class CtrInput {
 
         if (event.keyCode === KEY_UP || event.keyCode === KEY_EN) {
             event.preventDefault();
-        }
-        else if (event.keyCode === KEY_DW) {
+        } else if (event.keyCode === KEY_DW) {
             event.preventDefault();
 
             this.completer.search(this.searchStr);
-        }
-        else if (event.keyCode === KEY_ES) {
+        } else if (event.keyCode === KEY_ES) {
             this._searchStr = this._displayStr;
             this.completer.clear();
-        }
-        else {
+        } else {
             if (!this.searchStr) {
                 this.completer.clear();
                 return;
@@ -75,7 +72,7 @@ export class CtrInput {
 
     }
 
-    @HostListener("keydown", ["$event"])
+    @HostListener('keydown', ['$event'])
     public keydownHandler(event: any) {
 
         if (event.keyCode === KEY_EN) {
@@ -99,12 +96,18 @@ export class CtrInput {
         }
     }
 
-    @HostListener("blur", ["$event"])
-    public onBlur() {
+    @HostListener('blur', ['$event'])
+    public onBlur(event: any) {
         if (this.overrideSuggested) {
             this.completer.onSelected({ title: this.searchStr, originalObject: null });
         } else {
-            this.completer.clear();
+            setTimeout(
+                () => {
+                    this.completer.clear();
+                },
+                200
+            );
+
         }
     }
 

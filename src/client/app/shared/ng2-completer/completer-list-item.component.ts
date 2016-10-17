@@ -1,5 +1,5 @@
-"use strict";
-import {Component, Input, OnInit} from "@angular/core";
+'use strict';
+import {Component, Input, OnInit} from '@angular/core';
 
 export interface MatchPart {
     isMatch: boolean;
@@ -7,10 +7,12 @@ export interface MatchPart {
 }
 
 @Component({
-    selector: "completer-list-item",
-    templateUrl: "./completer-list-item-cmp.html"
+    moduleId: module.id,
+    selector: 'completer-list-item',
+    templateUrl:'completer-list-item.component.html'
+
 })
-export class CompleterListItemCmp implements OnInit {
+export class CompleterListItemComponent implements OnInit {
     @Input() public text: string;
     @Input() public searchStr: string;
     @Input() public matchClass: string;
@@ -39,4 +41,3 @@ export class CompleterListItemCmp implements OnInit {
         }
     }
 }
-

@@ -1,11 +1,11 @@
-import { Directive, Host, Input, OnInit, TemplateRef, ViewContainerRef } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Directive, Host, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 
-import { CtrCompleter, CompleterList } from "./ctr-completer";
-import { CompleterData } from "../components/ng2-completer/services/completer-data";
-import { CompleterItem } from "../components/ng2-completer/completer-item";
-import { MIN_SEARCH_LENGTH, PAUSE } from "../globals";
+import { CompleterDirective, CompleterList } from './ctr-completer';
+import { CompleterData } from '../completer-data';
+import { CompleterItem } from '../completer-item';
+import { MIN_SEARCH_LENGTH, PAUSE } from '../globals';
 
 
 export class CtrListContext {
@@ -17,9 +17,9 @@ export class CtrListContext {
 }
 
 @Directive({
-    selector: "[ctrList]",
+    selector: '[ctrList]',
 })
-export class CtrList implements OnInit, CompleterList {
+export class ListDirective implements OnInit, CompleterList {
     @Input() public ctrListMinSearchLength = MIN_SEARCH_LENGTH;
     @Input() public ctrListPause = PAUSE;
     @Input() public ctrListAutoMatch = false;
@@ -32,7 +32,7 @@ export class CtrList implements OnInit, CompleterList {
     private ctx = new CtrListContext([], false, false);
 
     constructor(
-        @Host() private completer: CtrCompleter,
+        @Host() private completer: CompleterDirective,
         private templateRef: TemplateRef<CtrListContext>,
         private viewContainer: ViewContainerRef) { }
 
@@ -44,7 +44,7 @@ export class CtrList implements OnInit, CompleterList {
         );
     }
 
-    @Input("ctrList")
+    @Input('ctrList')
     set dataService(newService: CompleterData) {
         this._dataService = newService;
         if (this._dataService) {
@@ -69,8 +69,12 @@ export class CtrList implements OnInit, CompleterList {
             if (this.searchTimer) {
                 clearTimeout(this.searchTimer);
             }
-            this.ctx.results = [];
-            this.ctx.searching = true;
+            if (!this.ctx.searching) {
+                this.ctx.results = [];
+                this.ctx.searching = true;
+                this.ctx.searchInitialized = true;
+                this.refreshTemplate();
+            }
 
             this.searchTimer = setTimeout(
                 () => {
@@ -78,7 +82,7 @@ export class CtrList implements OnInit, CompleterList {
                 },
                 this.ctrListPause
             );
-            this.refreshTemplate();
+
 
         }
     }
@@ -109,7 +113,7 @@ export class CtrList implements OnInit, CompleterList {
     private handleError(error: any) {
         this.ctx.searching = false;
         let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : "Server error";
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         if (console && console.error) {
             console.error(errMsg); // log to console 
         }

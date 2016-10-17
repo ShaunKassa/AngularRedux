@@ -1,9 +1,9 @@
-import { Directive, EventEmitter, OnInit, Output } from "@angular/core";
-// import { Observable } from "rxjs/Observable";
+import { Directive, EventEmitter, OnInit, Output } from '@angular/core';
+// import { Observable } from 'rxjs/Observable';
 
 
-// import { CompleterData } from "../components/ng2-completer/services/completer-data";
-import { CompleterItem } from "../components/ng2-completer/completer-item";
+// import { CompleterData } from '../components/ng2-completer/services/completer-data';
+import { CompleterItem } from '../completer-item';
 
 export interface CompleterList {
     search(term: string): void;
@@ -18,15 +18,16 @@ export interface CompleterDropdown {
 }
 
 @Directive({
-    selector: "[ctrCompleter]",
+    selector: '[ctrCompleter]',
 })
-export class CtrCompleter implements OnInit {
+export class CompleterDirective implements OnInit {
     @Output() public selected = new EventEmitter<CompleterItem>();
     @Output() public highlighted = new EventEmitter<CompleterItem>();
 
     private list: CompleterList;
     private dropdown: CompleterDropdown;
 
+    constructor() { return; }
 
     public ngOnInit() {
         //
@@ -82,3 +83,4 @@ export class CtrCompleter implements OnInit {
         }
     }
 }
+

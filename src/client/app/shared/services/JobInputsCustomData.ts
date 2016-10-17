@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CompleterData, CompleterItem } from '../ng2-completer';
+import { CompleterItem } from '../ng2-completer/completer-item';
+import { CompleterData } from '../ng2-completer/completer-data';
 import { Store } from '@ngrx/store';
 import { JobInputsActions } from '../actions/index';
 import { getJobInputsSearchState } from '../reducers/index';
@@ -17,8 +18,10 @@ export class JobInputsCustomData extends Subject<CompleterItem[]> implements Com
             .map(inputs => {
                 let matches: CompleterItem[] = inputs.map((input: any) => {
                 //todo: use regex to extract the name part here for input.type
+                    let indexValue = input.type.lastIndexOf('/');
+                    let fileName = input.type.substr(indexValue + 1);
                     return {
-                        title: input.type,
+                        title: fileName,
                         originalObject: null
                     };
                 });

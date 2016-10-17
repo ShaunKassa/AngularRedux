@@ -1,18 +1,19 @@
-import { Directive, ElementRef, Host, HostListener, Input, Renderer, OnInit } from "@angular/core";
+import { Directive, ElementRef, Host, HostListener, Input, Renderer, OnInit } from '@angular/core';
 
-import { CompleterItem } from "../components/ng2-completer/completer-item";
-import { CtrDropdown, CtrRowElement, CtrRowItem } from "./ctr-dropdown";
+import { CompleterItem } from '../completer-item';
+import { DropdownDirective, CtrRowElement, CtrRowItem } from './ctr-dropdown';
 
 @Directive({
-    selector: "[ctrRow]",
+    selector: '[ctrRow]',
 })
-export class CtrRow implements CtrRowElement, OnInit {
+export class RowDirective implements CtrRowElement, OnInit {
 
     private selected = false;
     private _rowIndex: number;
     private _item: CompleterItem;
 
-    constructor( private el: ElementRef, private renderer: Renderer, @Host() private dropdown: CtrDropdown) {}
+    constructor(private el: ElementRef, private renderer: Renderer, @Host() private dropdown: DropdownDirective) { }
+
     public ngOnInit() {
         this.dropdown.registerRow(new CtrRowItem(this, this._rowIndex));
     }
@@ -27,17 +28,17 @@ export class CtrRow implements CtrRowElement, OnInit {
         this._item = item;
     }
 
-    @HostListener("click", ["$event"]) public onClick(event: any) {
+    @HostListener('click', ['$event']) public onClick(event: any) {
         this.dropdown.onSelected(this._item);
     }
 
-    @HostListener("mouseenter", ["$event"]) public onMouseEnter(event: any) {
+    @HostListener('mouseenter', ['$event']) public onMouseEnter(event: any) {
         this.dropdown.highlightRow(this._rowIndex);
     }
 
     public setHighlited(selected: boolean) {
         this.selected = selected;
-        this.renderer.setElementClass(this.el.nativeElement, "completer-selected-row", this.selected);
+        this.renderer.setElementClass(this.el.nativeElement, 'completer-selected-row', this.selected);
     }
 
     public getNativeElement() {
@@ -48,3 +49,4 @@ export class CtrRow implements CtrRowElement, OnInit {
         return this._item;
     }
 }
+
