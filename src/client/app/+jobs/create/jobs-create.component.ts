@@ -85,8 +85,11 @@ export class JobsCreateComponent implements OnInit {
 	    			  jobInput:[''],
                       mosquadInput:['',Validators.compose([this.emptyLineValidator,
                                                     this.whitespaceValidator,
-                                                    this.mosquadIdValidator])]
-               }, {validator: this.validateMosquadInputs()});
+                                                    this.mosquadIdValidator])],
+                      multiCityInput:['',Validators.compose([this.emptyLineValidator,
+                                                    this.whitespaceValidator,
+                                                    this.postIngestValidator])]
+               }, {validator: this.validatePostIngestInputs()});
 
 
                this.coverageCsvForm= this.formBuilder.group({
@@ -166,13 +169,15 @@ export class JobsCreateComponent implements OnInit {
                  address = address + fileName;
                  if(value.inputType === 'mosquads') {
                     text = value.mosquadInput;
+                 } else if (value.inputType === 'multiCityInput') {
+                     text = value.multiCityInput;
                  } else {
                      text = value.jobInput;
                  }
              }
 
 
-            if(value.inputType === 'mosquads' || value.inputType === 'drives') {
+            if(value.inputType === 'mosquads' || value.inputType === 'drives' || value.inputType === 'multiCityInput') {
                 var bucket = new AWS.S3({params: {Bucket: 'aethicupload'}});
                 var params = {Key: address, Body: text};
                 bucket.upload(params, function (err:any) {
@@ -372,11 +377,18 @@ export class JobsCreateComponent implements OnInit {
                return;
       }
 
+       private postIngestValidator(control: FormControl) {
+                 if(control.value.match(/^[A-Za-z\s,]*"([0-3]{14}\s*)*"$/)) {
+                     return {postIngest: true};
+                 }
+                 return;
+        }
+
 
       private validateMosquadInputs() {
           return (group: FormGroup) => {
-              let mosquadInput = group.controls['mosquadInput'],
-                  jobInput = group.controls['jobInput'];
+              let mosquadInput = group.controls['mosquadInput'];
+              let jobInput = group.controls['jobInput'];
               if(mosquadInput.value === '' && jobInput.value === '') {
                   return {
                       mosquadInputRequired: true
@@ -384,6 +396,20 @@ export class JobsCreateComponent implements OnInit {
               } else return;
           };
       }
+
+       private validatePostIngestInputs() {
+             return (group: FormGroup) => {
+                 let mosquadInput = group.controls['mosquadInput'];
+                 let jobInput = group.controls['jobInput'];
+                 let multiCityInput = group.controls['multiCityInput'];
+                 if(mosquadInput.value === '' && jobInput.value === '' && multiCityInput.value === '') {
+                     return {
+                         inputRequired: true
+                     };
+                 } else return;
+             };
+         }
+
 
       private validateDepthInputs(): (group: FormGroup) => any {
           return (group: FormGroup) => {
