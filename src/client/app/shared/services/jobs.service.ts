@@ -156,7 +156,7 @@ export class JobsService {
       let str = job.statistics;
       let urlRegex = /(https?:\/\/[^\s]+)/g;
       if(str !== null && str.match(urlRegex) !== null) {
-          str = str.replace(urlRegex, '<a href="$1">$1</a>');
+          str = str.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
       }
 
       if(str !== null) {

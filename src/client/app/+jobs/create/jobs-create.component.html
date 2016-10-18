@@ -75,6 +75,10 @@
 
                         <div class= "rightContent"> 
 
+                           <div class="label" >City</div>
+ 						   <input  type="text" placeholder="Enter city name" formControlName="city">
+                           <span *ngIf="postIngestForm.controls['city'].hasError('underscoreValid')" style="color:red">No underscores allowed.</span>
+
                            <div class="label">Publication Date</div>
                            <input  type="date" formControlName="publicationDate">
 
@@ -96,9 +100,16 @@
 
                                <div class="inputOption">Mosquads</div>
                                <div class="inputLabel">
-                                 <input  type="radio" value="mosquads" id="postInput02" name="inputType" formControlName="inputType">
+                                 <input  type="radio" value="mosquads" id="postInput02" name="inputType" formControlName="inputType" disabled>
                                  <label for="postInput02"></label>
                                </div>
+
+                               <div class="inputOption">Multi-City Mosquads</div>
+                               <div class="inputLabel">
+                                 <input  type="radio" value="multiCityInput" id="postInput03" name="inputType" formControlName="inputType" >
+                                 <label for="postInput03"></label>
+                               </div>
+
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'output'">
                                <!--
@@ -116,20 +127,12 @@
                            </div> 
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
                               <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[postIngestForm.controls.inputType.value]"></mosquads-inputs>
-                              <!--<div class="inputs">
-                                 <div class="errorCheck">
-                                     <ul>
-                                         <li>1</li>
-                                     </ul>
-                                 </div>
-                                 <div>
-                                     <textarea  placeholder="Enter mosquads here" formControlName="input" (keyup)="highlightError($event)">  </textarea>            
-                                 </div>
-                              </div>
-                              <div *ngIf="postIngestForm.controls['input'].hasError('emptyLine')" class="alert alert-danger" >Please remove empty lines.</div>
-                              <div *ngIf="postIngestForm.controls['input'].hasError('whitespace')" class="alert alert-danger" >Please remove all whitespaces. </div>
-                              <div *ngIf="postIngestForm.controls['input'].hasError('postIngest')" class="alert alert-danger" >Please follow post_IngestId format. </div>-->
-                           </div>
+                          </div>
+
+                          <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'multiCityInput'">
+                              <textarea formControlName="multiCityInput" ></textarea>
+                          </div>
+  
                         </div>
                         <button type="submit" [disabled]="!postIngestForm.valid">Submit</button>
                      </div>

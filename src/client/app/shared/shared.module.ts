@@ -27,7 +27,7 @@ import actions from './actions/index';
 import services from './services/index';
 
 @NgModule({
-    imports: [ CommonModule, HttpModule, FormsModule  ],
+    imports: [ CommonModule, HttpModule, FormsModule ],
     declarations: [
         NavbarComponent,
         AccordionComponent,
