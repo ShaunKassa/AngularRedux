@@ -2,11 +2,6 @@ import { Component, Input, Output, EventEmitter, OnInit, ViewChild, forwardRef }
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CompleterDirective } from './directives/ctr-completer';
-import { DropdownDirective } from './directives/ctr-dropdown';
-import { InputDirective } from './directives/ctr-inputs';
-import { ListDirective } from './directives/ctr-list';
-import { RowDirective } from './directives/ctr-row';
-import { CompleterListItemComponent } from './completer-list-item.component';
 import { CompleterData } from './completer-data';
 import { CompleterItem } from './completer-item';
 import { MAX_CHARS, MIN_SEARCH_LENGTH, PAUSE, TEXT_SEARCHING, TEXT_NORESULTS } from './globals';
@@ -28,13 +23,7 @@ const COMPLETER_CONTROL_VALUE_ACCESSOR = {
     selector: 'ng2-completer',
     templateUrl: 'ng2-completer.component.html',
     styleUrls: ['ng2-completer.component.css'],
-    providers: [COMPLETER_CONTROL_VALUE_ACCESSOR],
-    directives: [CompleterDirective,
-                 DropdownDirective,
-                 InputDirective,
-                 ListDirective,
-                 RowDirective,
-                 CompleterListItemComponent]
+    providers: [COMPLETER_CONTROL_VALUE_ACCESSOR]
 })
 export class CompleterComponent implements OnInit, ControlValueAccessor {
     @Input() public dataService: CompleterData;
