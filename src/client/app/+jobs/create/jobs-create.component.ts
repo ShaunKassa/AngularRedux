@@ -381,7 +381,7 @@ export class JobsCreateComponent implements OnInit {
       }
 
        private postIngestValidator(control: FormControl) {
-                 if(control.value.match(/^[A-Za-z\s,]*"([0-3]{14}\s*)*"$/)) {
+                 if(!control.value.match(/^[A-Za-z,\s]*_"([0-3]{14}\s*)*"$/)) {
                      return {postIngest: true};
                  }
                  return;
