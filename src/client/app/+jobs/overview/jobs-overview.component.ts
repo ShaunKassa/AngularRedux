@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {JobsActions} from '../../shared/actions/index';
 import { getJobsForGroups } from '../../shared/reducers/index';
+import { SearchComponent } from './search.component';
 
 
 
@@ -10,7 +11,8 @@ import { getJobsForGroups } from '../../shared/reducers/index';
   moduleId: module.id,
   selector: 'jobs-overview',
   templateUrl: 'jobs-overview.component.html',
-  styleUrls: ['jobs-overview.component.css']
+  styleUrls: ['jobs-overview.component.css'],
+  providers:[SearchComponent]
 })
 export class JobsOverviewComponent {
     groups: any;
