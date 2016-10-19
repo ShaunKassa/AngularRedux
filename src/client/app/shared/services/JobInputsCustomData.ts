@@ -22,7 +22,7 @@ export class JobInputsCustomData extends Subject<CompleterItem[]> implements Com
                     let fileName = input.type.substr(indexValue + 1);
                     return {
                         title: fileName,
-                        originalObject: null
+                        originalObject: input
                     };
                 });
 

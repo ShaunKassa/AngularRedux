@@ -91,7 +91,7 @@ export class CompleterComponent implements OnInit, ControlValueAccessor {
     public ngOnInit() {
         this.completerDirective.selected.subscribe((item: CompleterItem) => {
             this.selected.emit(item);
-            this._onChangeCallback(item.title);
+            this._onChangeCallback(item.originalObject);
         });
         this.completerDirective.highlighted.subscribe((item: CompleterItem) => {
             this.highlighted.emit(item);
