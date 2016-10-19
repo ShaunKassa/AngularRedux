@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class JobInputsCustomData extends Subject<CompleterItem[]> implements CompleterData {
+
    constructor(private _store: Store<any>, private jobInputsActions: JobInputsActions) {
       super();
    }
