@@ -1,4 +1,7 @@
 <div class="overview" #groups_container>
+        <div class="searchInput">
+            <input type="text" name="searchJobs" placeholder="Search for jobs"> 
+        </div>
         <aethic-accordion>
             <aethic-accordion-group heading="{{group.name}}" (onExpandGroup)="onExpandGroup($event, group)" 
                                     *ngFor="let group of groups | async; let i = index;">
