@@ -38,6 +38,7 @@
         </form>
         <aethic-accordion>
             <aethic-accordion-group heading="{{group.name + ' (' + group.jobs.length + ')'}}"
+                                    [isOpen]="true"
                                     *ngFor="let group of searchGroupedJobs | async; let i = index;">
                 <div class="instances" >
                     <div class="instance" *ngFor="let runningJob of group.jobs" 

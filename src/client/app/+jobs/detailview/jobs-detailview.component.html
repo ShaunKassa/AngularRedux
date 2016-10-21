@@ -3,6 +3,7 @@
         <aethic-accordion-group class="detailView" 
                                 heading="{{group.name + ' (' + group.jobs.length + ')'}}"
                                 [groupId]="group.name"
+                                [isOpen]="true"
                                 *ngFor="let group of searchGroupedJobs | async; let i = index">
             <div class="detailInstance"  *ngFor="let runningJob of group.jobs" id={{runningJob.id}}>
                 <div class="detailLeft">

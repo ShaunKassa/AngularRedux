@@ -36,7 +36,7 @@ export class JobsDetailviewComponent implements OnInit, AfterViewInit {
                     acc.push(group);
                 }
                 group.jobs.push(job);
-                return acc;
+                return acc.sort((a, b) => a.id - b.id);
             }, []);
         });
         this.searchGroupedJobs = this.groupedJobs.combineLatest(this.groups, (groupedJobs, groups) => {
