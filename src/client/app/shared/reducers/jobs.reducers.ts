@@ -3,48 +3,37 @@ import { Action } from '@ngrx/store';
 import { JobsActions } from '../actions/index';
 
 export interface JobsState {
-    groupJobs: {};
+    loaded: boolean;
+    loading: boolean;
+    loadedBatches: number;
+    jobs: Array<any>;
 }
 
 const initialState: JobsState = {
-    groupJobs: {}
+    loadedBatches: 0,
+    jobs: [],
+    loaded: false,
+    loading: false,
 };
 
 export default (state: JobsState = initialState, action: Action) => {
         switch(action.type) {
-            case JobsActions.LOAD_GROUPJOBS: {
-                const group: any = action.payload.group;
-
-                if(state.groupJobs[group.id]) {
-                    return state;
-                }
-
-                return {
-                    groupJobs: Object.assign({}, state.groupJobs, {
-                        [group.id]: {
-                            loading: true,
-                            loadedBatches: 0,
-                            jobs: []
-                        }
-                    })
-                };
+            case JobsActions.LOAD_JOBS: {
+                return Object.assign({}, state, {
+                    loading: true
+                });
             }
-            case JobsActions.LOAD_GROUPJOBS_SUCCESS: {
-                let groupId = action.payload.group.id;
-
+            case JobsActions.LOAD_JOBS_SUCCESS: {
                 const jobs: any = action.payload.jobs;
-                const newJobs: any = jobs.filter(job => !state.groupJobs[groupId].jobs[job.id]);
+                const newJobs: any = jobs.filter(job => !state.jobs[job.id]);
 
-                return {
-                    groupJobs: Object.assign({}, state.groupJobs, {
-                        [groupId]: {
-                            loadedBatches: state.groupJobs[groupId].loadedBatches + 1,
-                            loading: false,
-                            jobs: [...state.groupJobs[groupId].jobs, ...newJobs]
-                        }
-                    })
-                };
-            }
+                return Object.assign({}, state, {
+                    loaded: true,
+                    loading: false,
+                    loadedBatches: state.loadedBatches + 1,
+                    jobs: [...state.jobs, ...newJobs]
+                });
+             }
             default:
                 return state;
         }
