@@ -59,7 +59,7 @@ export class AccordionGroupComponent implements OnDestroy {
   @Input() heading: string;
   @Output() onExpandGroup = new EventEmitter();
 
-  private _isOpen:boolean = false;
+  private _isOpen:boolean = true;
 
   @Input()
   set isOpen(value: boolean) {
