@@ -1,35 +1,45 @@
 <div class="overview" #groups_container>
-        <input (focus)="showSearchDialog = true">
+        <div class="searchInput">
+           <span></span>
+           <input type="text" name="searchJobs" (focus)="showSearchDialog = true" placeholder="Search for jobs"> 
+        </div>
         <form [formGroup]="jobsSearchForm" (ngSubmit)="onSearchSubmit(jobsSearchForm.value)">
             <div class="searchDialog" [hidden]="!showSearchDialog">
                 <div class="searchPage">
                     <div class="back" (click)="showSearchDialog = false"></div>
                     <div class= "query">
                          <span></span>
-                         <input type="text" formControlName="jobName" placeholder="Enter query"> 
-                         <button class="searchButton">Search</button>
+                         <input type="text" formControlName="jobName" placeholder=" Enter job name"> 
+                         <a class="searchButton">Search</a>
                     </div>
                     <div class="filterOptions">filter options</div>
                     <div class="date">
                         <div class="dateLabel">date</div>
                         <div class="timeSpan">
                               <span>·  all time</span>
-                              <input  type="radio" value="all" formControlName="timeSpan" name="timeSpan" checked> 
+                              <input  type="radio" value="all" id="timeSpan" formControlName="timeSpan" name="timeSpan" checked> 
+                              <label for="timeSpan"></label>
                               <input  type="date" formControlName="startDate">
                               <span>-</span>
                               <input  type="date" formControlName="endDate">
-                              <input  type="radio" value="limited" formControlName="timeSpan" name="timeSpan">
+                              <input  type="radio" value="limited" id="limtedTime" formControlName="timeSpan" name="timeSpan">
+                              <label for="limtedTime"></label>
                         </div>
                     </div>
                     <div class="status">
                         <div class="statusLabel">status</div>
                         <div class="statusOption">
                               <span>·  all</span>
-                              <input  type="radio" value="all" formControlName="states"> 
-                              <label> not started <input type="checkbox" formControlName="notstarted"></label>
-                              <label> running <input type="checkbox" formControlName="running"></label>
-                              <label> successful <input type="checkbox" formControlName="successful"></label>
-                              <label> failed  <input type="checkbox" formControlName="failed"></label>
+                              <input  type="radio" value="all" id="states" formControlName="states"> 
+                              <label for="states"></label>
+                              <span>not started</span> <input type="checkbox" id="notstarted" formControlName="notstarted">
+                              <label for="notstarted"></label>
+                              <span>running</span> <input type="checkbox" id="running" formControlName="running">
+                              <label for="running"></label>
+                              <span> successful</span> <input type="checkbox" id="successful" formControlName="successful">
+                              <label for="successful"></label>
+                              <span> failed </span> <input type="checkbox" id="faild" formControlName="failed">
+                              <label for="faild"></label>
                         </div>
                     </div>
                 </div>
