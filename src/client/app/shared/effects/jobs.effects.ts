@@ -14,14 +14,29 @@ export class JobsEffects {
         .whenAction(JobsActions.SAVE_JOB)
         .map(toPayload)
         .switchMap((job: any) => {
-            /* 
-            let bucket:any = new S3({ params: { Bucket: 'aethicupload' }});
-            let params:any = { Key: job.address, Body: job.text }
-            let upload:any  = Observable.bindCallback(bucket.upload);
-            let result:Observable<any> = upload(params);
-            result.mapTo(this.jobsActions.saveJobSuccess(job));
-            */
             return null;
+        });
+
+    @Effect() loadJobs$ = this._updates$
+        .whenAction(JobsActions.LOAD_JOBS)
+        .map(toPayload)
+        .concatMap(({batch}) => {
+            return this._jobsService
+                    .fetchJobs(batch)
+                    .map((jobs) => this.jobsActions.loadJobsSuccess(
+                                {jobs: jobs}
+                                ));
+        });
+
+    @Effect() searchJobs$ = this._updates$
+        .whenAction(JobsActions.SEARCH_JOBS)
+        .map(toPayload)
+        .concatMap((searchParams) => {
+            return this._jobsService
+                    .searchJobs(searchParams)
+                    .map((jobs) => this.jobsActions.searchCompleteJobs(
+                                {jobs: jobs}
+                                ));
         });
 
     @Effect() loadJobsForGroup$ = this._updates$

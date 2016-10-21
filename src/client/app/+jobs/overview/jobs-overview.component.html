@@ -1,5 +1,21 @@
 <div class="overview" #groups_container>
         <search-jobs></search-jobs>
+        <div>
+            <div class="instances" >
+                <div class="instance" *ngFor="let job of jobs | async" 
+                     routerLink="../detailview" [queryParams]="{jobId: job.id}" >
+                    <p class="instanceName">{{job.uniqueidentifier}}</p>
+                    <overview-chart [slices] ="job.slices"></overview-chart>
+                <p class="timeElapsed">{{job.createdDate}}</p>
+                </div>
+            </div>
+            <div>
+                <input type="hidden" #batch [ngModel]="loadedBatchs | async">
+                <button (click)="onLoadMore(batch.value)" 
+                        [hidden]="batch.value === 0" 
+                        class="loadMore">Load more</button>
+            </div>
+        </div>
         <aethic-accordion>
             <aethic-accordion-group heading="{{group.name}}" (onExpandGroup)="onExpandGroup($event, group)" 
                                     *ngFor="let group of groups | async; let i = index;">

@@ -1,0 +1,72 @@
+.completer-holder {
+    margin-left:15px;
+    width:376px;
+}
+
+.completer-input {
+   width:376px;
+   height:24px;
+   font-size:13px;
+   background-color:#EBF0F2;
+   border:none;
+   color:#00C9FF;
+   outline:none;
+   font-style:Italic;
+   font-family:consolas;
+}
+
+.completer-dropdown-holder {
+   width:376px;
+   background-color:#EBF0F2;
+}
+
+.completer-dropdown {
+    border-color: black;
+    border-width: 0.5px;
+    border-style: solid;
+    border-radius: 4px;
+    width: 390px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    margin-top: -6px;
+    background-color:#EBF0F2;
+    font-style:Italic;
+    font-family:consolas;
+    font-size:13px;
+}
+
+.completer-row {
+    padding: 5px;
+    color: #000000;
+    margin-bottom: 4px;
+    clear: both;
+    display: inline-block;
+    width: 103%;
+}
+
+.completer-selected-row {
+    background-color: lightblue;
+    color: #ffffff;
+    width:378px;
+}
+
+.completer-description {
+    font-size: 14px;
+}
+
+.completer-image-default {
+    width: 16px; 
+    height: 16px;
+    background-image: url("demo/res/img/default.png");
+}
+
+.completer-image-holder {
+    float: left;
+    width: 10%;
+}
+.completer-item-text-image {
+    float: right;
+    width: 90%;
+}

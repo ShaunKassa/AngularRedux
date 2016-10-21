@@ -35,6 +35,41 @@ export class JobsService {
           .map(res => res.json());
   }
 
+  searchJobs(jobSearchParams: any): Observable<any> {
+      let that = this;
+      let searchQuery = '';
+      let conditionCount = 1;
+
+      if(jobSearchParams.jobName && jobSearchParams.jobName !== '') {
+          searchQuery += '&filter[where][and][' + conditionCount++ + '][uniqueidentifier][like]=%' + jobSearchParams.jobName + '%';
+      }
+
+      if(jobSearchParams.dateRange && jobSearchParams.dateRange.startDate) {
+          searchQuery += '&filter[where][and][' + conditionCount++ + '][createDate][gt]=' + jobSearchParams.dateRange.startDate;
+      }
+
+      if(jobSearchParams.dateRange && jobSearchParams.dateRange.endDate) {
+          searchQuery += '&filter[where][and][' + conditionCount++ + '][createDate][lt]=' + jobSearchParams.dateRange.endDate;
+      }
+
+      if(jobSearchParams.status && jobSearchParams.status !== '') {
+          searchQuery += '&filter[where][and][' + conditionCount++ + '][status]=' + jobSearchParams.status;
+      }
+
+      return this.http.get(this.endpoint + 'Jobs' +
+                  '?filter[include]=childJobs' +
+                  '&filter[order]=createDate DESC' +
+                  '&filter[where][and][0][parentjobid]=null' +
+                  searchQuery)
+             .map(res => {
+                 let parentJobs = res.json();
+                 parentJobs.forEach(that.generatePercentages);
+                 parentJobs.forEach(that.generateTimeStamp);
+                 parentJobs.forEach(that.generateStat);
+                 return parentJobs;
+             });
+  }
+
   saveFilters(filtersPayload:any): Observable<any> {
     let body = JSON.stringify(filtersPayload);
     let headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Request-Method': this.filterService });
@@ -57,6 +92,25 @@ export class JobsService {
                     return json;
                 })
                 .catch(this.handleError);
+  }
+
+  fetchJobs(batch): Observable<any> {
+      let that = this;
+      var initialLimit = 10;
+
+      return this.http.get(this.endpoint + 'Jobs' +
+                  '?filter[limit]=' + initialLimit +
+                  '&filter[skip]=' + batch * initialLimit +
+                  '&filter[include]=childJobs' +
+                  '&filter[order]=createDate DESC' +
+                  '&filter[where][parentjobid]=null')
+             .map(res => {
+                 let parentJobs = res.json();
+                 parentJobs.forEach(that.generatePercentages);
+                 parentJobs.forEach(that.generateTimeStamp);
+                 parentJobs.forEach(that.generateStat);
+                 return parentJobs;
+             });
   }
 
 

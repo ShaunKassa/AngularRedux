@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {JobsActions} from '../../shared/actions/index';
-import { getJobsForGroups } from '../../shared/reducers/index';
 import { SearchComponent } from './search.component';
+import { getJobsState, getJobsForGroups } from '../../shared/reducers/index';
 
 
 
@@ -16,9 +16,14 @@ import { SearchComponent } from './search.component';
 })
 export class JobsOverviewComponent {
     groups: any;
+    jobs: any;
+    loadedBatches: any;
 
     constructor(private _store: Store<any>, private jobsActions: JobsActions, private _router: Router) {
         this.groups = _store.let(getJobsForGroups());
+        this.jobs = _store.let(getJobsState()).select(state => state.jobs);
+        this.loadedBatches = _store.let(getJobsState()).select(state => state.loadedBatches);
+        this._store.dispatch(this.jobsActions.loadJobs(0));
     }
 
     onExpandGroup($event, group: any) {
@@ -32,5 +37,9 @@ export class JobsOverviewComponent {
 
     onGetMore(group: any, batch: number) {
         this._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
+    }
+
+    onLoadMore(batch: number) {
+        this._store.dispatch(this.jobsActions.loadJobs(batch));
     }
 }

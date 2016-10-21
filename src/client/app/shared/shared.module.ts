@@ -12,6 +12,14 @@ import { OverviewChartComponent } from './overviewChart/overview-chart.component
 import { DetailviewChartComponent } from './detailviewChart/detailview-chart.component';
 import { MosquadsInputComponent } from './mosquadInput/mosquads-input.component';
 
+import { CompleterDirective } from './ng2-completer/directives/ctr-completer';
+import { DropdownDirective } from './ng2-completer/directives/ctr-dropdown';
+import { InputDirective } from './ng2-completer/directives/ctr-inputs';
+import { ListDirective } from './ng2-completer/directives/ctr-list';
+import { RowDirective } from './ng2-completer/directives/ctr-row';
+import { CompleterListItemComponent } from './ng2-completer/completer-list-item.component';
+import { CompleterComponent } from './ng2-completer/ng2-completer.component';
+
 /* Store related imports */
 import { provideStore } from '@ngrx/store';
 import { runEffects } from '@ngrx/effects';
@@ -35,10 +43,17 @@ import services from './services/index';
         Ng2StyledDirective,
         OverviewChartComponent,
         DetailviewChartComponent,
-        MosquadsInputComponent ],
+        MosquadsInputComponent,
+        CompleterDirective,
+        DropdownDirective,
+        InputDirective,
+        ListDirective,
+        RowDirective,
+        CompleterListItemComponent,
+        CompleterComponent ],
     exports: [
-        NavbarComponent, Ng2SliderComponent, AccordionComponent, AccordionGroupComponent,
-        OverviewChartComponent, DetailviewChartComponent, MosquadsInputComponent,
+        NavbarComponent, Ng2SliderComponent, CompleterComponent,  AccordionComponent, AccordionGroupComponent,
+        OverviewChartComponent, DetailviewChartComponent, MosquadsInputComponent, CompleterComponent,
         CommonModule, FormsModule, ReactiveFormsModule ],
 })
 export class SharedModule {

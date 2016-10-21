@@ -112,18 +112,18 @@
 
                            </div>
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'output'">
+                               <!--
                                <select class="select" formControlName="jobInput">
                                    <option value="" selected>Select</option>
                                    <option *ngFor="let input of inputs | async" [value]="input.jobid">{{input.type}}</option>
                                </select>
-                               <!--
+                               -->
                                <ng2-completer formControlName="jobInput"
                                               [dataService]="inputData"
                                               [minSearchLength]="3"
-                                              [placeholder]="'search job inputs by name'"
+                                              [placeholder]="'Search Job Inputs'"
                                               [textSearching]="'Please wait...'">
                                </ng2-completer>
-                               -->
                            </div> 
                            <div class="inputArea" *ngIf="postIngestForm.controls.inputType.value == 'mosquads'">
                               <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[postIngestForm.controls.inputType.value]"></mosquads-inputs>
@@ -176,18 +176,18 @@
                                  </div>
                             </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'output'">
+                               <!--
                                <select class="select" formControlName="jobInput">
                                    <option value="" selected>Select</option>
                                    <option *ngFor="let input of inputs | async" [value]="input.jobid">{{input.type}}</option>
                                </select>
-                               <!--
+                               -->
                                <ng2-completer formControlName="jobInput"
                                               [dataService]="inputData"
                                               [minSearchLength]="3"
-                                              [placeholder]="'search job inputs by name'"
+                                              [placeholder]="'Search Job Inputs'"
                                               [textSearching]="'Please wait...'">
                                </ng2-completer>
-                               -->
                            </div>
                            <div class="inputArea" *ngIf="coverageCsvForm.controls.inputType.value == 'mosquads'">
                                <mosquads-inputs formControlName="mosquadInput" [regEx]="regExMap[coverageCsvForm.controls.inputType.value]"></mosquads-inputs>

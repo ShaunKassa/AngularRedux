@@ -48,8 +48,10 @@ import { combineReducers } from '@ngrx/store';
  * notation packages up all of the exports into a single object.
  */
 import jobsReducer, * as fromJobs from './jobs.reducers';
+import groupJobsReducer, * as fromGroupJobs from './jobs_group.reducers';
 import jobTypesReducer, * as fromJobTypes from './job_types.reducers';
 import jobInputsReducer, * as fromJobInputs from './job_inputs.reducers';
+import jobsSearchReducer, * as fromJobsSearch from './search_jobs.reducers';
 import jobInputsSearchReducer, * as fromJobInputsSearch from './search_job_inputs.reducers';
 
 /**
@@ -58,8 +60,10 @@ import jobInputsSearchReducer, * as fromJobInputsSearch from './search_job_input
  */
 export interface AppState {
   jobs: fromJobs.JobsState;
+  groupJobs: fromGroupJobs.GroupJobsState;
   jobTypes: fromJobTypes.JobTypesState;
   jobInputs: fromJobInputs.JobInputsState;
+  jobsSearch: fromJobsSearch.JobsSearchState;
   jobInputsSearch: fromJobInputsSearch.JobInputsSearchState;
 }
 
@@ -73,8 +77,10 @@ export interface AppState {
  */
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   jobs: jobsReducer,
+  groupJobs: groupJobsReducer,
   jobTypes: jobTypesReducer,
   jobInputs: jobInputsReducer,
+  jobsSearch: jobsSearchReducer,
   jobInputsSearch: jobInputsSearchReducer
 });
 
@@ -97,7 +103,6 @@ export default compose(storeFreeze, storeLogger(), combineReducers)({
  * ```
  */
 
-
 /*
  *
  *
@@ -106,6 +111,16 @@ export default compose(storeFreeze, storeLogger(), combineReducers)({
  export function getJobsState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.jobs);
+}
+
+/*
+ *
+ *
+ * Selectors for jobs
+ */
+ export function getGroupJobsState() {
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.groupJobs);
 }
 
 
@@ -134,6 +149,16 @@ export function getJobInputsState() {
  *
  * Selectors for search job inputs
  */
+export function getJobsSearchState() {
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.jobsSearch);
+}
+
+/*
+ *
+ *
+ * Selectors for search job inputs
+ */
 export function getJobInputsSearchState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.jobInputsSearch);
@@ -150,7 +175,7 @@ export function getJobsForGroups() {
         .select(s => s.jobTypes)
         .select(jobTypesState$ =>
                 jobTypesState$.jobTypes.map(group => {
-                    let jobsState$ = state$.select(s => s.jobs);
+                    let jobsState$ = state$.select(s => s.groupJobs);
                     return  Object.assign({}, group, {
                                 loadedBatches: jobsState$.select(s => s.groupJobs[group.id] ?
                                                                       s.groupJobs[group.id].loadedBatches :
