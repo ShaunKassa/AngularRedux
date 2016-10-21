@@ -1,5 +1,6 @@
 <div class="overview" #groups_container>
-        <input (focus)="showSearchDialog = true">
+        <input (focus)="showSearchDialog = true" [value]="searchJobName">
+        <span>{{dateRangeText}}</span><span>{{statusText}}</span>
         <form [formGroup]="jobsSearchForm" (ngSubmit)="onSearchSubmit(jobsSearchForm.value)">
             <div class="searchDialog" [hidden]="!showSearchDialog">
                 <div class="searchPage">
@@ -14,7 +15,7 @@
                         <div class="dateLabel">date</div>
                         <div class="timeSpan">
                               <span>·  all time</span>
-                              <input  type="radio" value="all" formControlName="timeSpan" name="timeSpan" checked> 
+                              <input  type="radio" value="all time" formControlName="timeSpan" name="timeSpan" checked> 
                               <input  type="date" formControlName="startDate">
                               <span>-</span>
                               <input  type="date" formControlName="endDate">
@@ -35,16 +36,19 @@
                 </div>
             </div>
         </form>
-        <div>
-            <div class="instances">
-                <div class="instance" *ngFor="let job of searchGroupedJobs | async" 
-                     routerLink="../detailview" [queryParams]="{jobId: job.id}" >
-                    <p class="instanceName">{{job.uniqueidentifier}}</p>
-                    <overview-chart [slices] ="job.slices"></overview-chart>
-                <p class="timeElapsed">{{job.createdDate}}</p>
+        <aethic-accordion>
+            <aethic-accordion-group heading="{{group.name + ' (' + group.jobs.length + ')'}}"
+                                    *ngFor="let group of searchGroupedJobs | async; let i = index;">
+                <div class="instances" >
+                    <div class="instance" *ngFor="let runningJob of group.jobs" 
+                         routerLink="../detailview" [queryParams]="{jobId: runningJob.id, groupId: group.name}" >
+                        <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
+                        <overview-chart [slices] ="runningJob.slices"></overview-chart>
+                    <p class="timeElapsed">{{runningJob.createdDate}}</p>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </aethic-accordion-group>
+        </aethic-accordion>
         <div>
             <div class="instances" >
                 <div class="instance" *ngFor="let job of jobs | async" 
@@ -61,23 +65,4 @@
                         class="loadMore">Load more</button>
             </div>
         </div>
-        <aethic-accordion>
-            <aethic-accordion-group heading="{{group.name}}" (onExpandGroup)="onExpandGroup($event, group)" 
-                                    *ngFor="let group of groups | async; let i = index;">
-                <div class="instances" >
-                    <div class="instance" *ngFor="let runningJob of group.jobs | async" 
-                         routerLink="../detailview" [queryParams]="{jobId: runningJob.id, groupId: group.name}" >
-                        <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
-                        <overview-chart [slices] ="runningJob.slices"></overview-chart>
-                    <p class="timeElapsed">{{runningJob.createdDate}}</p>
-                    </div>
-                </div>
-                <div>
-                    <input type="hidden" #batch [ngModel]="group.loadedBatches | async">
-                    <button (click)="onGetMore(group, batch.value)" 
-                            [hidden]="batch.value === 0" 
-                            class="loadMore">Load more</button>
-                </div>
-            </aethic-accordion-group>
-        </aethic-accordion>
 </div>
