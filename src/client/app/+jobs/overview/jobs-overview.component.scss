@@ -210,10 +210,10 @@ $bec8d2: #bec8d2;
             margin-left:40px;
             height:24px;
             width:540px;
-            span{
+            .searchIcon {
                 height:24px;
                 width:24px;
-                display:inline-block;
+                background-color:#273142;
                 background-image:url("../../assets/icons/btn_search_white_normal.png");
             }
             input {
@@ -221,7 +221,6 @@ $bec8d2: #bec8d2;
                 width:376px;
                 color:#00c9ff;
                 font-size:16px;
-                height:24px;
                 font-family:Consolas;
                 font-style:Italic;
                 outline:none;
@@ -239,6 +238,10 @@ $bec8d2: #bec8d2;
                 text-align:center;
                 font-style:normal;
                 cursor:pointer;
+                font-family:Consolas;
+                vertical-align:top;
+                text-align:center;
+                line-height:24px;
             }
             ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
               color: #fff;
@@ -269,8 +272,18 @@ $bec8d2: #bec8d2;
             margin-bottom:24px;
             color:#FFFFFF;
             .timeSpan {
+                display:flex;
+                flex-direction:row;
                 font-size:13px;
                 color:#BEC8D2;
+                div {
+                    height:24px;
+                    line-height:24px;
+                    input[type=checkbox] + label , input[type=radio] + label {
+                        margin-left:16px;
+                        margin-right:24px;
+                    }
+                }
             }
             input {
                outline:none;
@@ -281,7 +294,7 @@ $bec8d2: #bec8d2;
                font-size:13px;
                color:#BEC8D2;
             }
-            input::-webkit-calendar-picker-indicator{
+            input::-webkit-inner-spin-button{
                 display: none;
             }
         }
@@ -292,8 +305,18 @@ $bec8d2: #bec8d2;
             margin-left:106px;
             color:#FFFFFF;
             .statusOption {
+                display:flex;
+                flex-direction:row;
                 font-size:13px;
                 color:#BEC8D2;
+                div {
+                    height:24px;
+                    line-height:24px;
+                    input[type=checkbox] + label , input[type=radio] + label {
+                        margin-left:16px;
+                        margin-right:24px;
+                    }
+                }
             }
         }
     }
