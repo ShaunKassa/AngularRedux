@@ -68,6 +68,7 @@
         </form>
         <aethic-accordion>
             <aethic-accordion-group heading="{{group.name + ' (' + group.jobs.length + ')'}}"
+                                    [isOpen]="true"
                                     *ngFor="let group of searchGroupedJobs | async; let i = index;">
                 <div class="instances" >
                     <div class="instance" *ngFor="let runningJob of group.jobs" 
@@ -80,6 +81,9 @@
             </aethic-accordion-group>
         </aethic-accordion>
         <div>
+            <div class="panel-heading">
+                <div class="panel-title">Latest Jobs</div>
+            </div>
             <div class="instances" >
                 <div class="instance" *ngFor="let job of jobs | async" 
                      routerLink="../detailview" [queryParams]="{jobId: job.id}" >

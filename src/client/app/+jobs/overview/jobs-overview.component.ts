@@ -39,7 +39,7 @@ export class JobsOverviewComponent {
                     acc.push(group);
                 }
                 group.jobs.push(job);
-                return acc;
+                return acc.sort((a, b) => a.id - b.id);
             }, []);
         });
         this.searchGroupedJobs = this.groupedJobs.combineLatest(this.groups, (groupedJobs, groups) => {
@@ -50,20 +50,6 @@ export class JobsOverviewComponent {
         });
         this.jobs = _store.let(getJobsState()).select(state => state.jobs);
         this.loadedBatches = _store.let(getJobsState()).select(state => state.loadedBatches);
-        this._store.dispatch(this.jobsActions.loadJobs(0));
-    }
-
-    onExpandGroup($event, group: any) {
-        let that = this;
-        group.loadedBatches.subscribe(batch => {
-            if(batch === 0) {
-                that._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
-            }
-        });
-    }
-
-    onGetMore(group: any, batch: number) {
-        this._store.dispatch(this.jobsActions.loadGroupJobs(group, batch));
     }
 
     onLoadMore(batch: number) {
@@ -79,6 +65,7 @@ export class JobsOverviewComponent {
         jobSearchParams.jobName = value.jobName;
         this.searchJobName = value.jobName;
 
+        this.dateRangeText = '';
         if(value.timeSpan !== 'all time') {
             jobSearchParams.dateRange = {
                 startDate: Date.parse(value.startDate),
@@ -89,6 +76,7 @@ export class JobsOverviewComponent {
             this.dateRangeText += 'date: all time';
         }
 
+        this.statusText = '';
         if(value.states !== 'all') {
             jobSearchParams.states = [];
             let states = [];

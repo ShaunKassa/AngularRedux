@@ -1,18 +1,67 @@
 <div class="container">
     <aethic-accordion>
         <aethic-accordion-group class="detailView" 
-                                [heading]="group.name" 
+                                heading="{{group.name + ' (' + group.jobs.length + ')'}}"
                                 [groupId]="group.name"
-                                (onExpandGroup)="onExpandGroup($event, group)"
-                                *ngFor="let group of groups | async; let i = index">
-        <div class="detailInstance"  *ngFor="let runningJob of group.jobs | async" id={{runningJob.id}}>
+                                [isOpen]="true"
+                                *ngFor="let group of searchGroupedJobs | async; let i = index">
+            <div class="detailInstance"  *ngFor="let runningJob of group.jobs" id={{runningJob.id}}>
+                <div class="detailLeft">
+                    <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
+                    <detailview-chart
+                       [slices] ="runningJob.slices"
+                       ></detailview-chart>
+                        <div class="elapsedTime">{{runningJob.createdDate}}</div>
+                        <div class="createdDate">started on: {{runningJob.startedDate}}</div>
+                </div>
+                <div class="detailRight">
+                    <div class="instanceName">instance monitoring</div>
+                    <div class="infoContainer">
+                        <div class="totalJobs">
+                            <div class="name">started instance with</div>
+                            <div class ="number">{{runningJob.TotalCount}} jobs</div>
+                        </div>
+                        <div class="toBeProcessed">
+                            <div class="name">waiting to process</div>
+                            <div class="number">{{runningJob.NotStartedCount}}</div>
+                            <div class="percent">{{runningJob.slices[0]}}%</div>
+                        </div>
+                        <div class="currentlyProccessingJobs">
+                            <div class="name">currently processing</div>
+                            <div class="number">{{runningJob.InProgressCount}}</div>
+                            <div class="percent">{{runningJob.slices[1]}}%</div>
+                        </div>
+                        <div class="jobResults">
+                            <div class="name">finished processing</div>
+                            <div class="success">successful: {{runningJob.SucceededCount}}</div>
+                            <div class="fail">failed:&nbsp;<span>{{runningJob.FailedCount}}</span></div>
+                            <div class="percent">
+                                {{runningJob.slices[2] + runningJob.slices[3]}}%
+                            </div>
+                        </div>
+                        <!-- <div class="createDate" *ngIf ="runningJob.percent == 100">03/01/2016 - 10:11:21 AM</div> -->
+                        <div class="finishedInstance" *ngIf ="runningJob.percent == 100">
+                            <div class="name">finished instance</div>
+                            <div class="timeElapsed">in {{runningJob.hours}} hours, {{runningJob.minutes}} minutes and {{runningJob.seconds}} seconds.</div>
+                        </div>
+                        <div class="stat" [innerHTML] = 'runningJob.statistics'></div>
+                    </div>
+                </div>
+            </div>
+        </aethic-accordion-group>
+    </aethic-accordion>
+    <div class="detailView">
+        <div class="panel-heading">
+            <div class="panel-title">Latest Jobs</div>
+        </div>
+        <div class="detailInstance"  *ngFor="let runningJob of jobs | async" id={{runningJob.id}}>
             <div class="detailLeft">
                 <p class="instanceName">{{runningJob.uniqueidentifier}}</p>
-                  <detailview-chart
-                    [slices] ="runningJob.slices"
-                  ></detailview-chart>
-               <div class="elapsedTime">{{runningJob.createdDate}}</div>
-                <div class="createdDate">started on: {{runningJob.startedDate}}</div>
+                <detailview-chart
+                   [slices] ="runningJob.slices"
+                   ></detailview-chart>
+                    <div class="elapsedTime">{{runningJob.createdDate}}</div>
+                    <div class="createdDate">started on: {{runningJob.startedDate}}</div>
             </div>
             <div class="detailRight">
                 <div class="instanceName">instance monitoring</div>
@@ -49,11 +98,10 @@
             </div>
         </div>
         <div>
-            <input type="hidden" #batch [ngModel]="group.loadedBatches | async">
-            <button (click)="onGetMore(group, batch.value)" 
-                    [hidden]="batch.value === 0" 
-                    class="loadMore">Load more</button>
+            <input type="hidden" #batch [ngModel]="loadedBatches | async">
+            <button (click)="onLoadMore(batch.value)" 
+                   [hidden]="batch.value === 0" 
+                   class="loadMore">Load more</button>
         </div>
-    </aethic-accordion-group>
-    </aethic-accordion>
+    </div>
 </div>
