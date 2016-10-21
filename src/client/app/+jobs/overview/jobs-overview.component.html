@@ -1,5 +1,50 @@
 <div class="overview" #groups_container>
-        <search-jobs></search-jobs>
+        <input (focus)="showSearchDialog = true">
+        <form [formGroup]="jobsSearchForm" (ngSubmit)="onSearchSubmit(jobsSearchForm.value)">
+            <div class="searchDialog" [hidden]="!showSearchDialog">
+                <div class="searchPage">
+                    <div class="back" (click)="showSearchDialog = false"></div>
+                    <div class= "query">
+                         <span></span>
+                         <input type="text" formControlName="jobName" placeholder="Enter query"> 
+                         <button class="searchButton">Search</button>
+                    </div>
+                    <div class="filterOptions">filter options</div>
+                    <div class="date">
+                        <div class="dateLabel">date</div>
+                        <div class="timeSpan">
+                              <span>·  all time</span>
+                              <input  type="radio" value="all" formControlName="timeSpan" name="timeSpan" checked> 
+                              <input  type="date" formControlName="startDate">
+                              <span>-</span>
+                              <input  type="date" formControlName="endDate">
+                              <input  type="radio" value="limited" formControlName="timeSpan" name="timeSpan">
+                        </div>
+                    </div>
+                    <div class="status">
+                        <div class="statusLabel">status</div>
+                        <div class="statusOption">
+                              <span>·  all</span>
+                              <input  type="radio" value="all" formControlName="states"> 
+                              <label> not started <input type="checkbox" formControlName="notstarted"></label>
+                              <label> running <input type="checkbox" formControlName="running"></label>
+                              <label> successful <input type="checkbox" formControlName="successful"></label>
+                              <label> failed  <input type="checkbox" formControlName="failed"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div>
+            <div class="instances">
+                <div class="instance" *ngFor="let job of searchGroupedJobs | async" 
+                     routerLink="../detailview" [queryParams]="{jobId: job.id}" >
+                    <p class="instanceName">{{job.uniqueidentifier}}</p>
+                    <overview-chart [slices] ="job.slices"></overview-chart>
+                <p class="timeElapsed">{{job.createdDate}}</p>
+                </div>
+            </div>
+        </div>
         <div>
             <div class="instances" >
                 <div class="instance" *ngFor="let job of jobs | async" 

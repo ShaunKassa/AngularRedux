@@ -20,24 +20,25 @@ export default (state: JobsSearchState = initialState, action: Action) => {
     case JobsActions.SEARCH_JOBS: {
       const searchParams = action.payload;
 
+      //todo: check the inners of the searchParam to see if this has any new parameters
       if (!searchParams) {
         return {
-          jobInputs: [],
+          job: [],
           loading: false,
           searchParams
         };
       }
 
       return Object.assign({}, state, {
+        jobs: [],
         searchParams,
         loading: true
       });
     }
 
     case JobsActions.SEARCH_COMPLETE_JOBS: {
-
       return {
-        jobs: action.payload,
+        jobs: action.payload.jobs,
         loading: false,
         searchParams: state.searchParams
       };

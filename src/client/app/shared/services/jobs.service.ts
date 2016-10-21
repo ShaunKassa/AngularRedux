@@ -38,22 +38,33 @@ export class JobsService {
   searchJobs(jobSearchParams: any): Observable<any> {
       let that = this;
       let searchQuery = '';
-      let conditionCount = 1;
+      // let conditionCount = 1;
 
-      if(jobSearchParams.jobName && jobSearchParams.jobName !== '') {
-          searchQuery += '&filter[where][and][' + conditionCount++ + '][uniqueidentifier][like]=%' + jobSearchParams.jobName + '%';
-      }
 
       if(jobSearchParams.dateRange && jobSearchParams.dateRange.startDate) {
-          searchQuery += '&filter[where][and][' + conditionCount++ + '][createDate][gt]=' + jobSearchParams.dateRange.startDate;
+          // searchQuery += '&filter[where][and][' + conditionCount++ + '][createDate][gt]=' + jobSearchParams.dateRange.startDate;
+          searchQuery += '&filter[where][createDate][gt]=' + new Date(jobSearchParams.dateRange.startDate).toISOString();
       }
 
       if(jobSearchParams.dateRange && jobSearchParams.dateRange.endDate) {
-          searchQuery += '&filter[where][and][' + conditionCount++ + '][createDate][lt]=' + jobSearchParams.dateRange.endDate;
+          // searchQuery += '&filter[where][and][' + conditionCount++ + '][createDate][lt]=' + jobSearchParams.dateRange.endDate;
+          searchQuery += '&filter[where][createDate][lt]=' + new Date(jobSearchParams.dateRange.endDate).toISOString();
       }
 
-      if(jobSearchParams.status && jobSearchParams.status !== '') {
-          searchQuery += '&filter[where][and][' + conditionCount++ + '][status]=' + jobSearchParams.status;
+      if(jobSearchParams.jobName && jobSearchParams.jobName !== '') {
+          // searchQuery += '&filter[where][and][' + conditionCount++ + '][uniqueidentifier][like]=%' + jobSearchParams.jobName + '%';
+          searchQuery += '&filter[where][uniqueidentifier][like]=%' + jobSearchParams.jobName + '%';
+      }
+
+      if(jobSearchParams.states && jobSearchParams.states.length > 0) {
+          /*
+          jobSearchParams.states.forEach(state => {
+            searchQuery += '&filter[where][and][' + conditonCount++ + '][status]=' + state;
+          });
+          */
+          jobSearchParams.states.forEach(state => {
+            searchQuery += '&filter[where][status][inq]=' + state;
+          });
       }
 
       return this.http.get(this.endpoint + 'Jobs' +
