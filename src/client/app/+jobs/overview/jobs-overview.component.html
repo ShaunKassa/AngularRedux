@@ -50,6 +50,9 @@
             </aethic-accordion-group>
         </aethic-accordion>
         <div>
+            <div class="panel-heading">
+                <div class="panel-title">Latest Jobs</div>
+            </div>
             <div class="instances" >
                 <div class="instance" *ngFor="let job of jobs | async" 
                      routerLink="../detailview" [queryParams]="{jobId: job.id}" >

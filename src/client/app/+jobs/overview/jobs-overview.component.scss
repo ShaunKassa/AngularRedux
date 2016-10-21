@@ -4,6 +4,28 @@ $progress-color2: #273142;
 $font-consolas:  Consolas;
 $bec8d2: #bec8d2;
 
+.panel-heading {
+    border-bottom:  1px solid $bec8d2;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    margin-top:24px;
+    width:980px;
+    margin-left:auto;
+    margin-right:auto;
+    .panel-title {
+        color: #273142;
+        font-family: $font-consolas;
+        font-style: italic;
+        font-size: 16px;
+        height: 24px;
+        line-height: 24px;
+        margin: 0;
+        text-align: left;
+        padding-left:10px;
+    } 
+}
+
 .overview {
   overflow: auto;
   margin-top:105px;
