@@ -39,27 +39,27 @@
                         <div class="statusOption">
                               <div>. all</div>
                               <div>
-                               <input  type="radio" value="all" id="states" formControlName="states"> 
+                               <input  type="radio" value="all" #allStates id="states" (click)="allCheck()" formControlName="states"> 
                               <label for="states"></label>
                               </div>
                               <div>not started</div>
                               <div>
-                              <input type="checkbox" id="notstarted" formControlName="notstarted" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="notstarted" #notstarted formControlName="notstarted" (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="notstarted"></label>
                               </div>
                               <div>running</div> 
                               <div>
-                              <input type="checkbox" id="running" formControlName="running" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="running" #running formControlName="running" (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="running"></label>
                               </div>
                               <div> successful</div> 
                               <div>
-                              <input type="checkbox" id="successful" formControlName="successful" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="successful" #successful formControlName="successful" (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="successful"></label>
                               </div>
                               <div> failed </div> 
                               <div>
-                              <input type="checkbox" id="faild" formControlName="failed" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="faild" formControlName="failed" #failed (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="faild"></label>
                               </div>
                         </div>

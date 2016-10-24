@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -21,6 +21,11 @@ export class JobsOverviewComponent {
     searchJobName: string = '';
     dateRangeText: string = '';
     statusText: string = '';
+    @ViewChild('allStates') allStates:ElementRef;
+    @ViewChild('notstarted') notstarted:ElementRef;
+    @ViewChild('running') running:ElementRef;
+    @ViewChild('successful') successful:ElementRef;
+    @ViewChild('failed') failed:ElementRef;
     private _showSearchDialog = false;
 
     constructor(private _store: Store<any>,
@@ -132,5 +137,28 @@ export class JobsOverviewComponent {
 
     set showSearchDialog(value: boolean) {
         this._showSearchDialog = value;
+    }
+
+    unCheck(event: any): void {
+        if(!event.target.checked) {
+            this.allStates.nativeElement.checked = false;
+            this.allStates.nativeElement.value = '';
+        }
+        if(this.notstarted.nativeElement.checked &&
+           this.running.nativeElement.checked &&
+           this.successful.nativeElement.checked &&
+           this.failed.nativeElement.checked) {
+            this.allStates.nativeElement.checked = true;
+        }
+    }
+
+    allCheck() {
+        if(this.allStates.nativeElement.checked) {
+            this.notstarted.nativeElement.checked = true;
+            this.running.nativeElement.checked = true;
+            this.successful.nativeElement.checked = true;
+            this.failed.nativeElement.checked = true;
+            this.allStates.nativeElement.value = 'all';
+        }
     }
 }
