@@ -81,6 +81,13 @@ $bec8d2: #bec8d2;
            border:0px;
            vertical-align:top;
        }
+       div {
+           margin-left:28px;
+           font-family:Consolas;
+           font-style:Italic;
+           font-size:13px;
+           color:#BEC8D2;
+       }
    }
    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
      color: black;
@@ -237,6 +244,7 @@ $bec8d2: #bec8d2;
                 width:24px;
                 background-color:#273142;
                 background-image:url("../../assets/icons/btn_search_white_normal.png");
+                display:inline-block;
             }
             input {
                 height:24px;
@@ -264,6 +272,7 @@ $bec8d2: #bec8d2;
                 vertical-align:top;
                 text-align:center;
                 line-height:24px;
+                border:none;
             }
             ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
               color: #fff;
@@ -317,6 +326,9 @@ $bec8d2: #bec8d2;
                color:#BEC8D2;
             }
             input::-webkit-inner-spin-button{
+                display: none;
+            }
+            input::-webkit-clear-button {
                 display: none;
             }
         }

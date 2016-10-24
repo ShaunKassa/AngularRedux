@@ -3,7 +3,7 @@
            <a></a>
            <input type="text" name="searchJobs" (focus)="showSearchDialog = true" 
                               [value]="searchJobName" placeholder="Search for jobs"> 
-           <span>{{dateRangeText}}</span><span>{{statusText}}</span>
+           <div><span>{{dateRangeText}}</span><span>{{statusText}}</span></div>
         </div>
         <form [formGroup]="jobsSearchForm" (ngSubmit)="onSearchSubmit(jobsSearchForm.value)">
             <div class="searchDialog" [hidden]="!showSearchDialog">
@@ -24,9 +24,9 @@
                               <label for="timeSpan"></label>
                               </div>
                               <div>
-                              <input  type="date" formControlName="startDate">
+                              <input  type="date" formControlName="startDate" [disabled]="jobsSearchForm.controls.timeSpan.value == 'all time'">
                               <span>-</span>
-                              <input  type="date" formControlName="endDate">
+                              <input  type="date" formControlName="endDate" [disabled]="jobsSearchForm.controls.timeSpan.value == 'all time'">
                               </div>
                               <div>
                               <input  type="radio" value="limited" id="limtedTime" formControlName="timeSpan" name="timeSpan">
@@ -44,22 +44,22 @@
                               </div>
                               <div>not started</div>
                               <div>
-                              <input type="checkbox" id="notstarted" formControlName="notstarted">
+                              <input type="checkbox" id="notstarted" formControlName="notstarted" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="notstarted"></label>
                               </div>
                               <div>running</div> 
                               <div>
-                              <input type="checkbox" id="running" formControlName="running">
+                              <input type="checkbox" id="running" formControlName="running" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="running"></label>
                               </div>
                               <div> successful</div> 
                               <div>
-                              <input type="checkbox" id="successful" formControlName="successful">
+                              <input type="checkbox" id="successful" formControlName="successful" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="successful"></label>
                               </div>
                               <div> failed </div> 
                               <div>
-                              <input type="checkbox" id="faild" formControlName="failed">
+                              <input type="checkbox" id="faild" formControlName="failed" [checked]="jobsSearchForm.controls.states.value == 'all'">
                               <label for="faild"></label>
                               </div>
                         </div>
