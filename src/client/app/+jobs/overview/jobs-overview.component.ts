@@ -62,6 +62,7 @@ export class JobsOverviewComponent {
     }
 
     onSearchSubmit(value: any) {
+        console.log(value);
         let jobSearchParams = {
             jobName: '',
             dateRange: {},
@@ -124,10 +125,10 @@ export class JobsOverviewComponent {
             startDate:[],
             endDate:[],
             states: ['all'],
-            notstarted: [],
-            running: [],
-            successful: [],
-            failed:[]
+            notstarted: [true],
+            running: [true],
+            successful: [true],
+            failed:[true]
         });
     }
 
@@ -142,23 +143,24 @@ export class JobsOverviewComponent {
     unCheck(event: any): void {
         if(!event.target.checked) {
             this.allStates.nativeElement.checked = false;
-            this.allStates.nativeElement.value = '';
+            (<Control>this.jobsSearchForm.controls['states']).updateValue('');
         }
         if(this.notstarted.nativeElement.checked &&
            this.running.nativeElement.checked &&
            this.successful.nativeElement.checked &&
            this.failed.nativeElement.checked) {
             this.allStates.nativeElement.checked = true;
+            (<Control>this.jobsSearchForm.controls['states']).updateValue('all');
         }
     }
 
     allCheck() {
         if(this.allStates.nativeElement.checked) {
-            this.notstarted.nativeElement.checked = true;
-            this.running.nativeElement.checked = true;
-            this.successful.nativeElement.checked = true;
-            this.failed.nativeElement.checked = true;
-            this.allStates.nativeElement.value = 'all';
+           this.notstarted.nativeElement.checked = true;
+           this.running.nativeElement.checked = true;
+           this.successful.nativeElement.checked = true;
+           this.failed.nativeElement.checked = true;
+            (<Control>this.jobsSearchForm.controls['states']).updateValue('all');
         }
     }
 }

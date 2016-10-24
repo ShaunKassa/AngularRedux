@@ -44,22 +44,22 @@
                               </div>
                               <div>not started</div>
                               <div>
-                              <input type="checkbox" id="notstarted" #notstarted formControlName="notstarted" (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="notstarted" #notstarted formControlName="notstarted" (click) = "unCheck($event)" checked>
                               <label for="notstarted"></label>
                               </div>
                               <div>running</div> 
                               <div>
-                              <input type="checkbox" id="running" #running formControlName="running" (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="running" #running formControlName="running" (click) = "unCheck($event)" checked>
                               <label for="running"></label>
                               </div>
                               <div> successful</div> 
                               <div>
-                              <input type="checkbox" id="successful" #successful formControlName="successful" (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="successful" #successful formControlName="successful" (click) = "unCheck($event)" checked >
                               <label for="successful"></label>
                               </div>
                               <div> failed </div> 
                               <div>
-                              <input type="checkbox" id="faild" formControlName="failed" #failed (click) = "unCheck($event)" [checked]="jobsSearchForm.controls.states.value == 'all'">
+                              <input type="checkbox" id="faild" formControlName="failed" #failed (click) = "unCheck($event)" checked>
                               <label for="faild"></label>
                               </div>
                         </div>
