@@ -26,6 +26,8 @@ export class JobsOverviewComponent {
     @ViewChild('running') running:ElementRef;
     @ViewChild('successful') successful:ElementRef;
     @ViewChild('failed') failed:ElementRef;
+    @ViewChild('startDate') startDate:ElementRef;
+    @ViewChild('endDate') endDate:ElementRef;
     private _showSearchDialog = false;
 
     constructor(private _store: Store<any>,
@@ -161,6 +163,16 @@ export class JobsOverviewComponent {
            this.successful.nativeElement.checked = true;
            this.failed.nativeElement.checked = true;
             (<FormControl>this.jobsSearchForm.controls['states']).setValue('all');
+        }
+    }
+
+    disableInput(event: any): void {
+        if(event.target.value === 'all time') {
+             this.startDate.nativeElement.disabled = true;
+             this.endDate.nativeElement.disabled = true;
+        } else {
+             this.startDate.nativeElement.disabled = false;
+             this.endDate.nativeElement.disabled = false;
         }
     }
 }

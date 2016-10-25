@@ -20,16 +20,16 @@
                         <div class="timeSpan">
                               <div>·  all time</div>
                               <div>
-                              <input  type="radio" value="all time" id="timeSpan" formControlName="timeSpan" name="timeSpan" checked> 
+                              <input  type="radio" value="all time" id="timeSpan" formControlName="timeSpan" name="timeSpan" (click)="disableInput($event)" checked> 
                               <label for="timeSpan"></label>
                               </div>
                               <div>
-                              <input  type="date" formControlName="startDate" [disabled]="jobsSearchForm.controls.timeSpan.value == 'all time'">
+                              <input  type="date" formControlName="startDate" #startDate disabled>
                               <span>-</span>
-                              <input  type="date" formControlName="endDate" [disabled]="jobsSearchForm.controls.timeSpan.value == 'all time'">
+                              <input  type="date" formControlName="endDate" #endDate disabled>
                               </div>
                               <div>
-                              <input  type="radio" value="limited" id="limtedTime" formControlName="timeSpan" name="timeSpan">
+                              <input  type="radio" value="limited" id="limtedTime" formControlName="timeSpan" (click)="disableInput($event)" name="timeSpan">
                               <label for="limtedTime"></label>
                               </div>
                         </div>
