@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { JobsActions } from '../../shared/actions/index';
 import { getJobsState, getJobsForGroups, getJobsSearchState } from '../../shared/reducers/index';
@@ -143,14 +143,14 @@ export class JobsOverviewComponent {
     unCheck(event: any): void {
         if(!event.target.checked) {
             this.allStates.nativeElement.checked = false;
-            (<Control>this.jobsSearchForm.controls['states']).updateValue('');
+            (<FormControl>this.jobsSearchForm.controls['states']).setValue('');
         }
         if(this.notstarted.nativeElement.checked &&
            this.running.nativeElement.checked &&
            this.successful.nativeElement.checked &&
            this.failed.nativeElement.checked) {
             this.allStates.nativeElement.checked = true;
-            (<Control>this.jobsSearchForm.controls['states']).updateValue('all');
+            (<FormControl>this.jobsSearchForm.controls['states']).setValue('all');
         }
     }
 
@@ -160,7 +160,7 @@ export class JobsOverviewComponent {
            this.running.nativeElement.checked = true;
            this.successful.nativeElement.checked = true;
            this.failed.nativeElement.checked = true;
-            (<Control>this.jobsSearchForm.controls['states']).updateValue('all');
+            (<FormControl>this.jobsSearchForm.controls['states']).setValue('all');
         }
     }
 }
